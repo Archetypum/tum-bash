@@ -1,0 +1,19 @@
+# Virtual environments:
+env/
+venv/
+pkgenv/
+.env/
+.venv/
+.pkgenv/
+
+# Vim && Neovim:
+.vim/
+*.swp
+*.swo
+Session.vim
+
+# Temporary files:
+*~
+\#'
+\#'\#
+.#'
