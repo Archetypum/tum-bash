@@ -16,12 +16,10 @@ Because interacting with countless package managers and init systems across UNIX
 
 ## Installation
 
-### Manual Build
-
 ```sh
 git clone https://github.com/Archetypum/tum-bash.git
 cd tum-perl
-make
+mv tum your_desired_location/
 ```
 
 ## Supported Package Management Utilities (35)
@@ -104,18 +102,27 @@ make
 
 ```perl
 #!/bin/bash
+
+source tum
+
 ```
 
 ### Service Management:
 
 ```perl
 #!/bin/bash
+
+source tum
+
 ```
 
 ### Package Management
 
 ```perl
 #!/bin/bash
+
+source tum
+
 ```
 
 ## Other Implementations by Archetypum
