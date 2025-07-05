@@ -149,4 +149,4 @@ See:
 
 - [_Free Software Foundation_](https://www.fsf.org/)
 
-![gnu](https://github.com/user-attachments/assets/66935a97-374f-4dbc-9f1c-428070fda139)
+![GNU](https://github.com/user-attachments/assets/66935a97-374f-4dbc-9f1c-428070fda139)
