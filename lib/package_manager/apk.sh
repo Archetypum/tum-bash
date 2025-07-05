@@ -17,6 +17,7 @@ function execute()
     fi
 }
 
+function apk()            { execute apk             "$@"; }
 function apk_help()       { execute apk --help      "$@"; }
 function apk_add()        { execute apk add         "$@"; }
 function apk_del()        { execute apk del         "$@"; }

@@ -17,6 +17,7 @@ function execute()
     fi
 }
 
+function apt_get()                { execute apt-get                "$@"; }
 function apt_get_autoclean()      { execute apt-get autoclean      "$@"; }
 function apt_get_build_dep()      { execute apt-get build-dep      "$@"; }
 function apt_get_check()          { execute apt-get check          "$@"; }

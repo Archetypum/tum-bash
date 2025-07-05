@@ -17,13 +17,13 @@ function execute()
     fi
 }
 
-function apt_mark()                 { execute apt-mark              "$@"; }
-function apt_mark_auto()            { execute apt-mark auto         "$@"; }
-function apt_mark_manual()          { execute apt-mark manual       "$@"; }
+function apt_mark()                 { execute apt-mark                 "$@"; }
+function apt_mark_auto()            { execute apt-mark auto            "$@"; }
+function apt_mark_manual()          { execute apt-mark manual          "$@"; }
 function apt_mark_minimize_manual() { execute apt-mark minimize-manual "$@"; }
-function apt_mark_showauto()        { execute apt-mark showauto     "$@"; }
-function apt_mark_showmanual()      { execute apt-mark showmanual   "$@"; }
-function apt_mark_hold()            { execute apt-mark hold         "$@"; }
-function apt_mark_unhold()          { execute apt-mark unhold       "$@"; }
-function apt_mark_showhold()        { execute apt-mark showhold     "$@"; }
+function apt_mark_showauto()        { execute apt-mark showauto        "$@"; }
+function apt_mark_showmanual()      { execute apt-mark showmanual      "$@"; }
+function apt_mark_hold()            { execute apt-mark hold            "$@"; }
+function apt_mark_unhold()          { execute apt-mark unhold          "$@"; }
+function apt_mark_showhold()        { execute apt-mark showhold        "$@"; }
 

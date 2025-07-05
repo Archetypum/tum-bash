@@ -17,7 +17,5 @@ function execute()
     fi
 }
 
-function apt_cdrom()       { execute apt-cdrom       "$@"; }
-function apt_cdrom_add()   { execute apt-cdrom add   "$@"; }
-function apt_cdrom_ident() { execute apt-cdrom ident "$@"; }
+function pkg_add() { execute pkg_add "$@"; }
 

@@ -17,6 +17,7 @@ function execute()
     fi
 }
 
+function pacman()            { execute pacman             "$@"; }
 function pacman_help()       { execute pacman --help      "$@"; }
 function pacman_version()    { execute pacman --version   "$@"; }
 function pacman_database()   { execute pacman --database  "$@"; }

@@ -17,6 +17,7 @@ function execute()
     fi
 }
 
+function apt_cache()           { execute apt-cache           "$@"; }
 function apt_cache_add()       { execute apt-cache add       "$@"; }
 function apt_cache_depends()   { execute apt-cache depends   "$@"; }
 function apt_cache_dotty()     { execute apt-cache dotty     "$@"; }
