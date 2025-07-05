@@ -100,29 +100,79 @@ mv tum your_desired_location/
 
 ### UNIX:
 
-```perl
+```bash
 #!/bin/bash
 
-source tum
+source unix.sh
 
+DISTRO=$(get_user_distro)
+echo -e "${GREEN}Detected distribution: ${DISTRO}${RESET}"
+
+if macos_based "$DISTRO" "$MACOS_BASED"; then
+    echo -e "${GREEN}This is a macOS-based system.${RESET}"
+else
+    echo -e "${GREEN}This is NOT a macOS-based system.${RESET}"
+fi
+
+INIT_SYSTEM=$(get_init_system)
+echo -e "${GREEN}Detected init system: ${INIT_SYSTEM}${RESET}"
 ```
 
 ### Service Management:
 
-```perl
+```bash
 #!/bin/bash
 
-source tum
+source sysvinit.sh
 
+SERVICE_NAME="ssh"
+
+echo -e "${GREEN}Starting service '$SERVICE_NAME'...${RESET}"
+start_service "$SERVICE_NAME"
+
+echo -e "${GREEN}Checking status of service '$SERVICE_NAME'...${RESET}"
+status_service "$SERVICE_NAME"
+
+echo -e "${GREEN}Restarting service '$SERVICE_NAME' using execute_service function...${RESET}"
+execute_service restart "$SERVICE_NAME"
+
+echo -e "${GREEN}Stopping service '$SERVICE_NAME'...${RESET}"
+stop_service "$SERVICE_NAME"
+
+echo -e "${GREEN}Trying unknown command with execute_service...${RESET}"
+execute_service foobar "$SERVICE_NAME"
 ```
 
 ### Package Management
 
-```perl
+```bash
 #!/bin/bash
 
-source tum
+source apk.sh
 
+echo "=== Display apk version ==="
+apk_version
+
+echo -e "\n=== Show apk help ==="
+apk_help
+
+echo -e "\n=== Update package index ==="
+apk_update
+
+echo -e "\n=== Search for package 'bash' ==="
+apk_search bash
+
+echo -e "\n=== Show info about package 'bash' ==="
+apk_info bash
+
+echo -e "\n=== List installed packages ==="
+apk_list
+
+echo -e "\n=== Add package 'curl' (dry-run) ==="
+apk_add --simulate curl
+
+echo -e "\n=== Remove package 'curl' (dry-run) ==="
+apk_del --simulate curl
 ```
 
 ## Other Implementations by Archetypum
@@ -139,7 +189,7 @@ source tum
 
 ## Legal
 
-**tum-perl** is free software, released under the **GNU Lesser General Public License v3**.
+**tum-bash** is free software, released under the **GNU Lesser General Public License v3**.
 
 See:
 

@@ -1,5 +1,9 @@
 #!/bin/bash
 
+declare -r RED="\033[0;31m"
+declare -r GREEN="\033[0;32m"
+declare -r RESET="\033[0m"
+
 function _run_s6_rc()
 {
     local ACTION="$1"
