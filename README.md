@@ -18,7 +18,7 @@ Because interacting with countless package managers and init systems across UNIX
 
 ```sh
 git clone https://github.com/Archetypum/tum-bash.git
-cd tum-perl
+cd tum-bash
 mv tum your_desired_location/
 ```
 
