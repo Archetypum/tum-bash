@@ -1,4 +1,4 @@
-# tum-perl
+# tum-bash
 
 ![TheUnixManager](https://github.com/user-attachments/assets/6c0b3fbc-1d09-4d35-9dde-33b22a468c45)
 
