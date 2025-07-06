@@ -16,3 +16,1725 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>
+
+#
+# UNIX:
+#
+
+##
+## `tum-bash` version:
+##
+declare VERSION="0.1"
+
+##
+## ANSI Color codes and text formating:
+##
+declare BLACK="\033[90m"
+declare WHITE="\033[97m"
+declare YELLOW="\033[93m"
+declare ORANGE="\033[38;5;214m"
+declare BLUE="\033[94m"
+declare CYAN="\e[0;36m"
+declare PURPLE="\033[95m"
+declare GREEN="\033[92m"
+declare RED="\033[91m"
+
+declare BG_BLACK="\033[40m"
+declare BG_RED="\033[41m"
+declare BG_GREEN="\033[42m"
+declare BG_ORANGE="\033[43m"
+declare BG_BLUE="\033[44m"
+declare BG_MAGENTA="\033[105m"
+declare BG_CYAN="\033[46m"
+declare BG_WHITE="\033[47m"
+
+declare BOLD="\033[1m"
+declare UNDERLINE="\033[4m"
+declare REVERSED="\033[7m"
+declare ITALIC="\033[3m"
+declare CROSSED_OUT="\033[9m"
+declare RESET="\033[0m"
+
+##
+## Supported Package Managers:
+##
+declare SUPPORTED_PMS=(
+    "apt"                          # https://wiki.debian.org/Apt
+    "apt-get"                      # https://manpages.debian.org/bookworm/apt/apt-get.8.en.html
+    "apt-cache"                    # https://manpages.debian.org/bookworm/apt/apt-cache.8.en.html
+    "apt-cdrom"                    # https://manpages.debian.org/bookworm/apt/apt-cdrom.8.en.html
+    "apt-config"                   # https://manpages.debian.org/bookworm/apt/apt-config.8.en.html
+    "apt-extracttemplates"         # https://manpages.debian.org/bookworm/apt-utils/apt-extracttemplates.1.en.html
+    "apt-listchanges"              # https://manpages.debian.org/bookworm/apt-listchanges/apt-listchanges.1.en.html
+    "apt-mark"                     # https://manpages.debian.org/bookworm/apt/apt-mark.8.en.html
+    "apt-sortpkgs"                 # https://manpages.debian.org/bookworm/apt-utils/apt-sortpkgs.1.en.html
+    "aptitude"                     # https://wiki.debian.org/Aptitude
+    "aptitude-create-state-bundle" # https://manpages.debian.org/bookworm/aptitude-common/aptitude-create-state-bundle.1.en.html
+    "aptitude-run-state-bundle"    # https://manpages.debian.org/bookworm/aptitude-common/aptitude-run-state-bundle.1.en.html
+    "apk"                          # https://wiki.alpinelinux.org/wiki/Alpine_Package_Keeper
+    "dnf"                          # https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/9/html-single/managing_software_with_the_dnf_tool/index
+    "dpkg"                         # https://wiki.debian.org/dpkg
+    "guix"                         # https://guix.gnu.org/manual/en/html_node/Package-Management.html
+    "homebrew"                     # https://brew.sh/
+    "pkg"                          # https://man.freebsd.org/cgi/man.cgi?pkg
+    "pkgin"                        # https://pkgin.net/
+    "pkg_add"                      # https://man.openbsd.org/pkg_add
+    "pkg_delete"                   # https://man.netbsd.org/pkg_delete.1
+    "pkg_create"                   # https://man.netbsd.org/pkg_create.1
+    "pkg_info"                     # https://man.netbsd.org/pkg_info.1
+    "pacman"                       # https://wiki.archlinux.org/title/Pacman
+    "yay"                          # https://aur.archlinux.org/packages/yay
+    "pamac"                        # https://aur.archlinux.org/packages/pamac-aur
+    "trizen"                       # https://packages.artixlinux.org/packages/galaxy/any/trizen/
+    "portage"                      # https://wiki.gentoo.org/wiki/Portage
+    "qi"                           # https://dragora.org/handbook/dragora-handbook.html#Introduction-to-Qi
+    "slackpkg"                     # https://slackpkg.org/documentation.html
+    "xbps"                         # https://docs.voidlinux.org/xbps/index.html
+    "yum"                          # https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/6/html/deployment_guide/ch-yum
+    "zypper"                       # https://documentation.suse.com/smart/systems-management/html/concept-zypper/index.html
+    "zypper-log"                   # https://manpages.opensuse.org/Tumbleweed/zypper-log/zypper-log.8.en.html
+)
+
+##
+## Supported Initialization Systems:
+##
+declare SUPPORTED_INITS=(
+    "sysvinit"   # https://wiki.gentoo.org/wiki/Sysvinit
+    "openrc"     # https://wiki.gentoo.org/wiki/OpenRC
+    "s6"         # https://skarnet.org/software/s6/
+    "runit"      # https://smarden.org/runit/
+    "systemd"    # https://systemd.io/
+    "dinit"      # https://davmac.org/projects/dinit/
+    "launchd"    # https://support.apple.com/guide/terminal/script-management-with-launchd-apdc6c1077b-5d5d-4d35-9c19-60f2397b2369/mac
+)
+
+##
+## Supported UNIX Distributions:
+##
+declare DEBIAN_BASED=(
+    # The universal operating system.
+    # <https://www.debian.org/>
+
+    "debian" "ubuntu" "xubuntu" "linuxmint" "lmde" "trisquel" "devuan" "kali" "parrotos" "popos" "elementaryos"
+    "mx" "antix" "crunchbag" "crunchbag++" "pureos" "deepin" "zorinos" "peppermintos" "lubuntu" "kubuntu" "wubuntu"
+    "astra" "tails" "ututos" "ulteo" "aptosid" "canaima" "corel" "dreamlinux" "elive" "finnix" "gibraltar"
+    "linex" "kanotix" "kurumin" "linspire" "maemo" "mepis" "vyatta" "solusos" "openzaurus" "cutefishos" "knoppix"
+    "siduction" "psychos" "neptune" "doglinux" "armbian" "droidian" "mobian" "grml" "backbox" "blacklablinux" "mmabuntus"
+    "galliumos" "linuxschools" "linuxliteos" "mythbuntu" "solydxk" "uberstudent" "q4os" "demolinux" "libranet" "omoikane"
+    "eagle" "college" "blackrhino" "luinux" "bonzai" "oralux" "demudi" "brlspeak" "censornet" "bluewall" "antemium"
+    "knoppel" "skolelinux" "natures" "debxpde" "catix" "brlix" "parsix" "b2d" "troppix" "ging" "zonecd" "archeos"
+    "insigne" "dzongkha" "boss" "resulinux" "epidemic" "clonezilla" "inquisitor" "musix" "satux" "pelicanhpc" "minino"
+    "avlinux" "tangostudio" "doudou" "saline" "rebellin" "rescatux" "forlex" "proxmox" "wmlive" "point" "tanglu"
+    "openmediavault" "vyos" "steamos" "metamorphose" "robolinux" "whonix" "storm" "linuxin" "kinneret" "wienux" "olive"
+    "hymera" "spezzos" "primtux" "rebeccablackos" "uninvention" "handy" "selks" "linuxbbq" "kwheezy" "volumio" "raspbian"
+    "osmc" "pibang" "sparky" "exe" "semplice" "venenux" "descentos" "martiux" "turnkey" "privatix" "estrellaroja" "untangle"
+    "blankon" "webconverger" "swecha" "myrinix" "thisk" "64studio" "gnewsense" "gparted" "pardus" "genieos" "2x" "taprobane"
+    "paipix" "amber" "beatrix" "santafe" "userlinux" "sunwah" "erposs" "munjoy" "smartpeer" "euronode" "kalango" "overclockix"
+    "danix" "aslinux" "sphinxos" "condorux" "indilinux" "morphix" "clusterix" "mockup" "nepalinux" "slotech" "gnustep" "freeducsup"
+    "adamantix" "trx" "freeduc" "slix" "pequelin" "quantian" "shabdix" "defender" "phlak" "std" "zopix" "clusterknoppix" "beernix"
+    "eduknoppix" "roslims" "knoppix64" "slynux" "kaella" "knosciences" "beafanatix" "snappix" "ogoknoppix" "penguinsleuth" "augustux"
+    "julex" "vmknoppix" "insert" "evinux" "xarnoppix" "llgp" "pilot" "slavix" "linespa" "klustrix" "knoppixmame" "bioknoppix" "knopils"
+    "las" "feather" "livux" "featherweight" "lamppix" "damnsmall" "biadix" "hikarunix" "luit" "arabbix" "youresale" "xandros" "bayanihan"
+    "caixamagica" "squiggleos" "miko" "guadalinex" "max" "xfld" "helix" "gnix" "esun" "xevian" "voyager" "ozos" "lliurex" "edubuntu"
+    "impi" "nubuntu" "fluxbuntu" "ufficiozero" "swift" "vast" "commodore" "ubuntuce" "tuquito" "kiwi" "gos" "ultimate" "symphony"
+    "earos" "runtu" "abuledu" "baltix" "debris" "moonos" "caine" "superos" "mangaka" "cae" "monomaxos" "zentyal" "masonux" "asturix"
+    "element" "gnacktrack" "xpud" "vinux" "okatux" "dreamstudio" "pear" "luniux" "bodhi" "hybryde" "iqunix" "ubuntudp" "ubuntukylin"
+    "makulu" "lite" "linuxfx" "peachosi" "emmabuntus" "cub" "auroraos" "suriyan" "bella" "chaletos" "ubuntumate" "kxstudio" "salentos"
+    "centrych" "chitwanix" "ubuntugnome" "ozunity" "redo" "biolinux" "leeenux" "superx" "snowlinux" "arios" "pinguy" "madbox" "ubuntupr"
+    "jolios" "wattos" "nexentastor" "deft" "kuki" "remnux" "lxle" "karoshi" "ubunturescue" "easypeasy" "nova" "qimo" "zevenos" "progex"
+    "bardlinux" "extix" "ulite" "maryan" "greenie" "opengeu" "sabily" "protech" "comfusion" "ubuntustudio" "artistx" "shift" "freespire"
+    "arabian" "poseidon" "alinex" "gnoppix" "openlx" "dynebolic" "molinux" "apodio" "biglinux" "tilix" "imagicos" "pioneer" "ichthux"
+    "klikit" "tupiserver" "geolivre" "dizinha" "ankur" "linuxlte" "esware" "progeny" "liis" "muriqui" "loco"
+)
+
+declare ARCH_BASED=(
+    # A simple, lightweight distribution.
+    # <https://www.archlinux.org/>
+
+    "arch" "artix" "manjaro" "endeavouros" "garuda" "parabola" "hyperbola" "archbang" "blackarch" "librewolf" "archlabs"
+    "chakra" "archex" "archman" "arco" "bluestar" "chimeraos" "instantos" "kaos" "rebornos" "archhurd" "cyberos" "archcraft"
+    "cachyos" "ctlos" "crystallinux" "msys2" "obarun" "parchlinux" "snal" "steamos3" "tearchlinux" "uboslinux" "linhes" "underground"
+    "kdemar" "archie" "faunos" "firefly" "linuxgamers" "kahelos" "netrunner" "ctkarch" "bridge" "sonar" "poliarch" "antergos"
+)
+
+declare ALPINE_BASED=(
+    # Small. Simple. Secure.
+    # <https://www.alpinelinux.org/>
+
+    "alpine" "postmarket"
+)
+
+declare GENTOO_BASED=(
+    # Welcome to Gentoo, a highly flexible, source-based Linux distribution.
+    # <https://www.gentoo.org/>
+
+    "gentoo" "argent" "pentoo" "funtoo" "calculate" "chromeosflex" "vidalinux" "knopperdisk" "gentoox" "sabayon" "chromiumos"
+    "tinhatlinux" "ututo" "exgent" "flatcarlinux" "gentooplayer" "decibel" "liguros" "macaronilinux" "moccacinoos" "xenialinux"
+    "redcorelinux" "porteuskiosk" "navynos" "ututo" "redwall" "papug" "toorox" "librete" "coreos" "shark" "zerahstar" "ibox"
+    "gentooth" "mayix" "bicom" "bintoo" "phaeronix" "flash" "vlos" "systemrescue" "litrix" "iollix"
+)
+
+declare VOID_BASED=(
+    # Void is a general purpose operating system, based on the monolithic Linux kernel.
+    # <https://www.voidlinux.org/>
+
+    "void" "argon" "shikake" "pristine" "projecttrident"
+)
+
+declare DRAGORA_BASED=(
+    # Stable. Secure. Reliable.
+    # <https://www.dragora.org/>
+
+    "dragora"
+)
+
+declare SLACKWARE_BASED=(
+    # The Slackware Linux Project.
+    # <http://www.slackware.com/>
+
+    "slackware" "root" "evilentity" "blin" "stux" "jolinux" "netwosix" "connochaet" "salix" "ultima" "slackintosh" "slamd64" "easys"
+    "topologilinux" "truva" "draco" "slackel" "cdlinux" "kongoni" "sms" "linvo" "rubix" "drinou" "bearops" "rip" "livecdrouter"
+    "porteus" "austrumi" "wifislax" "absolute" "bluewhite64" "howtux" "pqui" "voltalinux" "slampp" "zenwalk" "zencafe" "imagineos"
+    "darkstar" "openlab" "runt" "buffalo" "mutagenix" "klax" "lg3d" "nimblex" "dvl" "arudius" "alixe" "parslinux" "wolvix" "tumix"
+    "saxenos" "nonux" "whoppix" "freepia" "slax" "supergamer" "vector" "plamo" "sentryfirewall"
+)
+
+declare REDHAT_BASED=(
+    # Red Hat is the leading provider of enterprise open source software solutions.
+    # <https://www.redhat.com/>
+
+    "rhel" "fedora" "mos" "rocky" "centos" "almalinux" "oraclelinux" "circlelinux" "clearos" "euleros" "nobara" "yellowdog" "bulinux"
+    "elastix" "digantel" "nethserver" "baruwa" "stella" "asterisknow" "trixbox" "honeywall" "rockscluster" "smeserver" "tao" "niigata"
+    "kondara" "laster5" "wow" "immunix" "startcom" "whitebox" "endian" "userful" "springdale" "holon" "superrescue" "lineox" "fermi"
+    "scientific" "piebox" "wazobia" "tinysofa" "xos" "oeone" "planb" "voodoo" "medialab" "msc" "miracle" "hispafuentes" "mizi" "bluepoint"
+    "redflag" "asianux" "cle" "linpus" "sot" "gelecek" "engarde" "thiz" "nuxone" "idms" "cool" "magic" "aurora" "lorma" "sulix" "ftosx"
+    "hakin9" "opendesktop" "pingo" "freedows" "resala" "linare" "ingalum" "berry" "linuxxp" "atmission" "atomix" "nst" "ekaaty" "elpicx"
+    "ezey" "korora" "olpc" "qubes" "bee" "fox" "dynasoft" "cpubuilders" "chapeau" "pidora" "hanthana" "fusion" "vortexbox" "ojuba" "mythdora"
+    "asianlinux" "edulinux" "sci" "krud" "kore" "cobind" "happymac" "mylinux" "onet" "haansoft" "ezplanet" "rpmlive" "ares" "biobrew" "blag"
+    "openna" "adios" "annyung" "linuxinstall" "phpsol" "aurox" "linuxplus" "jamd" "elx" "openwall" "k12linux" "asp" "tfm" "merdeka"
+    "trustix" "wibni" "hancom" "xteam"
+)
+
+declare OPENSUSE_BASED=(
+    # The makers' choice for sysadmins, developers and desktop users.
+    # <https://www.opensuse.org/>
+
+    "opensuse" "suse" "geckolinux" "linuxkamarada" "united" "kmlinux" "sunjds" "urix" "sle" "karamad" "jacklab" "stresslinux"
+)
+
+declare GUIX_BASED=(
+    # A complete GNU operating system harnessing all the capabilities of the Guix software. Spawned bu Guix itself.
+    # <https://guix.gnu.org/>
+
+    "guix"
+)
+
+declare FREEBSD_BASED=(
+    # FreeBSD is an operating system used to power modern servers, desktops, and embedded platforms.
+    # <https://www.freebsd.org/>
+
+    "freebsd" "midnightbsd" "ghostbsd" "bastillebsd" "cheribsd" "dragonflybsd" "trueos" "hardenedbsd" "hellosystem" "picobsd" "nanobsd"
+    "truenas" "nomadbsd" "clonos" "junosos" "xigmanas" "opnsense" "pfsense" "cellos" "orbisos" "zrouter" "ulbsd" "ravynos" "freenas"
+    "fireflybsd" "freesbie" "desktopbsd" "frenzy" "rofreesbie" "ging" "triance" "gulicbsd" "monowall" "pcbsd" "nas4free" "bsdrp"
+)
+
+declare OPENBSD_BASED=(
+    # Only two remote holes in the default install, in a heck of a long time!
+    # <https://www.openbsd.org/>
+
+    "openbsd" "adj" "libertybsd" "bitrig" "bowlfish" "ekkobsd" "embsd" "fabbsd" "fuguita" "marbsd" "microbsd" "commixwall" "bsdanywhere"
+    "miros" "olivebsd" "psygnat" "quetzal" "sonafr" "hyperbolabsd" "aeriebsd" "anonymos" "utmfw" "gnobsd"
+)
+
+declare NETBSD_BASED=(
+    # NetBSD is a free, fast, secure, and highly portable Unix-like Open Source operating system.
+    # <https://www.netbsd.org/>
+
+    "netbsd" "blackbsd" "edgebsd" "seos" "os108" "jibbed" "fdgw" "g4u" "irbsd" "smolbsd"
+)
+
+declare SOLARIS_ILLUMOS_BASED=(
+    # Oracle Solaris is the trusted business platform that you depend on. Oracle Solaris gives you consistent compatibility, is simple to use, and is designed to always be secure.
+    # <https://www.oracle.com/solaris/solaris11/>
+    #
+    # Unix OS which provides next-generation features for downstream distros, including advanced system debugging, next generation filesystem, networking, and virtualization options.
+    # <https://www.illumos.org/>
+
+    "solaris" "illumos" "opensolaris" "openindiana" "omnios" "tribblix" "smartos" "nexenta" "belenix" "milax" "nexentasor" "schillix"
+    "xstreamos"
+)
+
+declare MACOS_BASED=(
+    # If you can dream it, Mac can do it.
+    # <https://www.apple.com/macos>
+
+    "macos" "darwin"
+)
+
+function is_debian_based()
+{
+    local base_distro
+    local distro="${1,,}"
+    shift
+
+    for base_distro in "$@"; do
+        if [[ "$distro" == "$base_distro" ]]; then
+            return 0
+        fi
+    done
+
+    return 1
+}
+
+function is_arch_based()
+{
+    local base_distro
+    local distro="${1,,}"
+    shift
+
+    for base_distro in "$@"; do
+        if [[ "$distro" == "$base_distro" ]]; then
+            return 0
+        fi
+    done
+
+    return 1
+}
+
+function is_alpine_based()
+{
+    local base_distro
+    local distro="${1,,}"
+    shift
+
+    for base_distro in "$@"; do
+        if [[ "$distro" == "$base_distro" ]]; then
+            return 0
+        fi
+    done
+
+    return 1
+}
+
+function is_gentoo_based()
+{
+    local base_distro
+    local distro="${1,,}"
+    shift
+
+    for base_distro in "$@"; do
+        if [[ "$distro" == "$base_distro" ]]; then
+            return 0
+        fi
+    done
+
+    return 1
+}
+
+function is_void_based
+{
+    local base_distro
+    local distro="${1,,}"
+    shift
+
+    for base_distro in "$@"; do
+        if [[ "$distro" == "$base_distro" ]]; then
+            return 0
+        fi
+    done
+
+    return 1
+}
+
+function is_dragora_based
+{
+    local base_distro
+    local distro="${1,,}"
+    shift
+
+    for base_distro in "$@"; do
+        if [[ "$distro" == "$base_distro" ]]; then
+            return 0
+        fi
+    done
+
+    return 1
+}
+
+function is_slackware_based
+{
+    local base_distro
+    local distro="${1,,}"
+    shift
+
+    for base_distro in "$@"; do
+        if [[ "$distro" == "$base_distro" ]]; then
+            return 0
+        fi
+    done
+
+    return 1
+}
+
+function is_redhat_based
+{
+    local base_distro
+    local distro="${1,,}"
+    shift
+
+    for base_distro in "$@"; do
+        if [[ "$distro" == "$base_distro" ]]; then
+            return 0
+        fi
+    done
+
+    return 1
+}
+
+function is_guix_based
+{
+    local base_distro
+    local distro="${1,,}"
+    shift
+
+    for base_distro in "$@"; do
+        if [[ "$distro" == "$base_distro" ]]; then
+            return 0
+        fi
+    done
+
+    return 1
+}
+
+function is_freebsd_based
+{
+    local base_distro
+    local distro="${1,,}"
+    shift
+
+    for base_distro in "$@"; do
+        if [[ "$distro" == "$base_distro" ]]; then
+            return 0
+        fi
+    done
+
+    return 1
+}
+
+function is_openbsd_based
+{
+    local base_distro
+    local distro="${1,,}"
+    shift
+
+    for base_distro in "$@"; do
+        if [[ "$distro" == "$base_distro" ]]; then
+            return 0
+        fi
+    done
+
+    return 1
+}
+
+function is_netbsd_based
+{
+    local base_distro
+    local distro="${1,,}"
+    shift
+
+    for base_distro in "$@"; do
+        if [[ "$distro" == "$base_distro" ]]; then
+            return 0
+        fi
+    done
+
+    return 1
+}
+
+function is_solaris_illumos_based
+{
+    local base_distro
+    local distro="${1,,}"
+    shift
+
+    for base_distro in "$@"; do
+        if [[ "$distro" == "$base_distro" ]]; then
+            return 0
+        fi
+    done
+
+    return 1
+}
+
+function macos_based
+{
+    local base_distro
+    local distro="${1,,}"
+    shift
+
+    for base_distro in "$@"; do
+        if [[ "$distro" == "$base_distro" ]]; then
+            return 0
+        fi
+    done
+
+    return 1
+}
+
+function get_user_distro()
+{
+    if [[ -f /etc/os-release ]]; then
+        source /etc/os-release
+        echo "$ID"
+    else
+        echo -e "${RED}[!] Error: Cannot detect distribution from /etc/os-release.${RESET}"
+        read -rp "[==>] Write your OS name yourself: " ID
+        echo "$ID"
+	fi
+}
+
+function get_init_system
+{
+    if [[ -d "/run/systemd/system" ]] || [[ "$(get_pid1_comm)" == "systemd" ]]; then
+        echo "systemd"
+        return
+    fi
+
+    if [[ -d "/etc/init.d" ]] && [[ -e "/etc/init.d/openrc" ]]; then
+        echo "openrc"
+        return
+    fi
+
+    if [[ -d "/etc/init.d" ]]; then
+        echo "sysvinit"
+        return
+    fi
+
+    if [[ -d "/etc/s6" ]]; then
+        echo "s6"
+        return
+    fi
+
+    if [[ -d "/etc/runit" ]]; then
+        echo "runit"
+        return
+    fi
+
+    if [[ "$(get_pid1_comm)" == "dinit" ]]; then
+        echo "dinit"
+        return
+    fi
+
+    if [[ "$(get_pid1_comm)" == "launchd" ]]; then
+        echo "launchd"
+        return
+    fi
+
+    echo "unknown"
+}
+
+function get_pid1_comm
+{
+    local COMM
+    COMM=$(ps -p 1 -o COMM= 2>/dev/null)
+    echo "${COMM}"
+}
+
+function clear_screen
+{
+    local CLEAR_COMMAND="clear"
+
+    $CLEAR_COMMAND
+}
+
+function prompt_user()
+{
+    local PROMPT="$1"
+    local DEFAULT="${2:-N}"
+    local USER_INPUT
+
+    read -rp "$PROMPT (y/n): " USER_INPUT
+    USER_INPUT="${USER_INPUT,,}"
+    USER_INPUT="${USER_INPUT##+([[:space:]])}"
+    USER_INPUT="${USER_INPUT%%+([[:space:]])}"
+
+    if [[ -z "$USER_INPUT" ]]; then
+        USER_INPUT="${DEFAULT,,}"
+    fi
+
+    if [[ "$USER_INPUT" =~ ^(y|ye|yes)$ ]]; then
+        return 0
+    elif [[ "$USER_INPUT" =~ ^(n|no)$ ]]; then
+        return 1
+    fi
+
+    return 1
+}
+
+function check_privileges()
+{
+    local UID_VALUE="$EUID"
+
+    if [[ "$UID_VALUE" -eq 0 ]]; then
+        return
+    else
+        echo -e "${RED}[!] Error: This script requires root privileges to work.${RESET}"
+        exit 1
+    fi
+}
+
+#
+# Initialization Systems:
+#
+
+##
+## `dinit`:
+##
+function _run_dinitctl()
+{
+    local ACTION="$1"
+    local SERVICE="$2"
+
+    if dinitctl "$ACTION" "$SERVICE" >/dev/null 2>&1; then
+        echo -e "${GREEN}[*] Success!${RESET}"
+        return 0
+    else
+        echo -e "${RED}[!] Error: dinitctl $ACTION $SERVICE failed.${RESET}"
+        return 1
+    fi
+}
+
+function start_dinitctl()      { _run_dinitctl "start"      "$1"; }
+function stop_dinitctl()       { _run_dinitctl "stop"       "$1"; }
+function status_dinitctl()     { _run_dinitctl "status"     "$1"; }
+function is_started_dinitctl() { _run_dinitctl "is-started" "$1"; }
+function is_failed_dinitctl()  { _run_dinitctl "is-failed"  "$1"; }
+function restart_dinitctl()    { _run_dinitctl "restart"    "$1"; }
+function wake_dinitctl()       { _run_dinitctl "wake"       "$1"; }
+function release_dinitctl()    { _run_dinitctl "release"    "$1"; }
+function unpin_dinitctl()      { _run_dinitctl "unpin"      "$1"; }
+function unload_dinitctl()     { _run_dinitctl "unload"     "$1"; }
+function reload_dinitctl()     { _run_dinitctl "reload"     "$1"; }
+function list_dinitctl()       { _run_dinitctl "list"       "$1"; }
+function shutdown_dinitctl()   { _run_dinitctl "shutdown"   "$1"; }
+function add_dep_dinitctl()    { _run_dinitctl "add-dep"    "$1"; }
+function rm_dep_dinitctl()     { _run_dinitctl "rm-dep"     "$1"; }
+function enable_dinitctl()     { _run_dinitctl "enable"     "$1"; }
+function disable_dinitctl()    { _run_dinitctl "disable"    "$1"; }
+function trigger_dinitctl()    { _run_dinitctl "trigger"    "$1"; }
+function untrigger_dinitctl()  { _run_dinitctl "untrigger"  "$1"; }
+function setenv_dinitctl()     { _run_dinitctl "setenv"     "$1"; }
+function unsetenv_dinitctl()   { _run_dinitctl "unsetenv"   "$1"; }
+function catalog_dinitctl()    { _run_dinitctl "catalog"    "$1"; }
+function signal_dinitctl()     { _run_dinitctl "signal"     "$1"; }
+
+function execute_dinitctl()
+{
+    local COMMAND="$1"
+    local SERVICE="$2"
+    local FUNC_NAME="${COMMAND//-/_}_dinitctl"
+
+    if declare -f "$FUNC_NAME" >/dev/null 2>&1; then
+        $FUNC_NAME "$SERVICE"
+        return $?
+    else
+        echo -e "${RED}[!] Error: Unknown command: $COMMAND${RESET}"
+        return 1
+    fi
+}
+
+##
+## `launchd`:
+##
+function _run_launchctl()
+{
+    local ACTION="$1"
+    local SERVICE="$2"
+
+    if launchctl "$ACTION" "$SERVICE" >/dev/null 2>&1; then
+        echo -e "${GREEN}[*] Success!${RESET}"
+        return 0
+    else
+        echo -e "${RED}[!] Error: launchctl $ACTION $SERVICE failed.${RESET}"
+        return 1
+    fi
+}
+
+function bootstrap_launchctl()      { _run_launchctl "bootstrap"      "$1"; }
+function bootout_launchctl()        { _run_launchctl "bootout"        "$1"; }
+function enable_launchctl()         { _run_launchctl "enable"         "$1"; }
+function disable_launchctl()        { _run_launchctl "disable"        "$1"; }
+function uncache_launchctl()        { _run_launchctl "uncache"        "$1"; }
+function kickstart_launchctl()      { _run_launchctl "kickstart"      "$1"; }
+function attach_launchctl()         { _run_launchctl "attach"         "$1"; }
+function debug_launchctl()          { _run_launchctl "debug"          "$1"; }
+function kill_launchctl()           { _run_launchctl "kill"           "$1"; }
+function blame_launchctl()          { _run_launchctl "blame"          "$1"; }
+function print_launchctl()          { _run_launchctl "print"          "$1"; }
+function print_cache_launchctl()    { _run_launchctl "print-cache"    "$1"; }
+function print_disabled_launchctl() { _run_launchctl "print-disabled" "$1"; }
+function plist_launchctl()          { _run_launchctl "plist"          "$1"; }
+function procinfo_launchctl()       { _run_launchctl "procinfo"       "$1"; }
+function hostinfo_launchctl()       { _run_launchctl "hostinfo"       "$1"; }
+function resolveport_launchctl()    { _run_launchctl "resolveport"    "$1"; }
+function examine_launchctl()        { _run_launchctl "examine"        "$1"; }
+function reboot_launchctl()         { _run_launchctl "reboot"         "$1"; }
+function error_launchctl()          { _run_launchctl "error"          "$1"; }
+function variant_launchctl()        { _run_launchctl "variant"        "$1"; }
+function version_launchctl()        { _run_launchctl "version"        "$1"; }
+function load_launchctl()           { _run_launchctl "load"           "$1"; }
+function unload_launchctl()         { _run_launchctl "unload"         "$1"; }
+function submit_launchctl()         { _run_launchctl "submit"         "$1"; }
+function remove_launchctl()         { _run_launchctl "remove"         "$1"; }
+function start_launchctl()          { _run_launchctl "start"          "$1"; }
+function stop_launchctl()           { _run_launchctl "stop"           "$1"; }
+function list_launchctl()           { _run_launchctl "list"           "$1"; }
+function setenv_launchctl()         { _run_launchctl "setenv"         "$1"; }
+function unsetenv_launchctl()       { _run_launchctl "unsetenv"       "$1"; }
+function getenv_launchctl()         { _run_launchctl "getenv"         "$1"; }
+function export_launchctl()         { _run_launchctl "export"         "$1"; }
+function limit_launchctl()          { _run_launchctl "limit"          "$1"; }
+function bsexec_launchctl()         { _run_launchctl "bsexec"         "$1"; }
+function asuser_launchctl()         { _run_launchctl "asuser"         "$1"; }
+function managerpid_launchctl()     { _run_launchctl "managerpid"     "$1"; }
+function manageruid_launchctl()     { _run_launchctl "manageruid"     "$1"; }
+function managername_launchctl()    { _run_launchctl "managername"    "$1"; }
+function help_launchctl()           { _run_launchctl "help"           "$1"; }
+
+function execute_launchctl()
+{
+    local COMMAND="$1"
+    local SERVICE="$2"
+    local FUNC_NAME="${COMMAND//-/_}_launchctl"
+
+    if declare -f "$FUNC_NAME" >/dev/null 2>&1; then
+        $FUNC_NAME "$SERVICE"
+        return $?
+    else
+        echo -e "${RED}[!] Error: Unknown command: $COMMAND${RESET}"
+        return 1
+    fi
+}
+
+##
+## `openrc`:
+##
+function _run_rc_service()
+{
+    local ACTION="$1"
+    local SERVICE="$2"
+
+    if rc_service "$SERVICE" "$ACTION" >/dev/null 2>&1; then
+        echo -e "${GREEN}[*] Success!${RESET}"
+        return 0
+    else
+        echo -e "${RED}[!] Error: rc_service $SERVICE $ACTION failed.${RESET}"
+        return 1
+    fi
+}
+
+function start_rc_service()        { _run_rc_service "start"        "$1"; }
+function stop_rc_service()         { _run_rc_service "stop"         "$1"; }
+function reload_rc_service()       { _run_rc_service "reload"       "$1"; }
+function force_reload_rc_service() { _run_rc_service "force-reload" "$1"; }
+function restart_rc_service()      { _run_rc_service "restart"      "$1"; }
+function try_restart_rc_service()  { _run_rc_service "try-restart"  "$1"; }
+function status_rc_service()       { _run_rc_service "status"       "$1"; }
+
+function execute_rc_service()
+{
+    local COMMAND="$1"
+    local SERVICE="$2"
+    local FUNC_NAME="${COMMAND//-/_}_rc_service"
+
+    if declare -f "$FUNC_NAME" >/dev/null 2>&1; then
+        $FUNC_NAME "$SERVICE"
+        return $?
+    else
+        echo -e "${RED}[!] Error: Unknown command: $COMMAND${RESET}"
+        return 1
+    fi
+}
+
+##
+## `runit`:
+##
+function _run_sv()
+{
+    local ACTION="$1"
+    local SERVICE="$2"
+
+    if sv "$ACTION" "$SERVICE" >/dev/null 2>&1; then
+        echo -e "${GREEN}[*] Success!${RESET}"
+        return 0
+    else
+        echo -e "${RED}[!] Error: sv $ACTION $SERVICE failed.${RESET}"
+        return 1
+    fi
+}
+
+function status_sv()           { _run_sv "status"           "$1"; }
+function up_sv()               { _run_sv "up"               "$1"; }
+function down_sv()             { _run_sv "down"             "$1"; }
+function once_sv()             { _run_sv "once"             "$1"; }
+function pause_sv()            { _run_sv "pause"            "$1"; }
+function cont_sv()             { _run_sv "cont"             "$1"; }
+function hup_sv()              { _run_sv "hup"              "$1"; }
+function alarm_sv()            { _run_sv "alarm"            "$1"; }
+function interrupt_sv()        { _run_sv "interrupt"        "$1"; }
+function quit_sv()             { _run_sv "quit"             "$1"; }
+function one_sv()              { _run_sv "1"                "$1"; }
+function two_sv()              { _run_sv "2"                "$1"; }
+function term_sv()             { _run_sv "term"             "$1"; }
+function kill_sv()             { _run_sv "kill"             "$1"; }
+function exit_sv()             { _run_sv "exit"             "$1"; }
+function start_sv()            { _run_sv "start"            "$1"; }
+function stop_sv()             { _run_sv "stop"             "$1"; }
+function reload_sv()           { _run_sv "reload"           "$1"; }
+function restart_sv()          { _run_sv "restart"          "$1"; }
+function shutdown_sv()         { _run_sv "shutdown"         "$1"; }
+function force_stop_sv()       { _run_sv "force-stop"       "$1"; }
+function force_restart_sv()    { _run_sv "force-restart"    "$1"; }
+function force_shutdown_sv()   { _run_sv "force-shutdown"   "$1"; }
+function try_restart_sv()      { _run_sv "try-restart"      "$1"; }
+function check_sv()            { _run_sv "check"            "$1"; }
+
+function execute_sv()
+{
+    local COMMAND="$1"
+    local SERVICE="$2"
+    local FUNC_NAME="${COMMAND//-/_}_sv"
+
+    if declare -f "$FUNC_NAME" >/dev/null 2>&1; then
+        $FUNC_NAME "$SERVICE"
+        return $?
+    else
+        echo -e "${RED}[!] Error: Unknown command: $COMMAND${RESET}"
+        return 1
+    fi
+}
+
+##
+## `s6`:
+##
+function _run_s6_rc()
+{
+    local ACTION="$1"
+    local SERVICE="$2"
+
+    if s6-rc "$ACTION" "$SERVICE" >/dev/null 2>&1; then
+        echo -e "${GREEN}[*] Success!${RESET}"
+        return 0
+    else
+        echo -e "${RED}[!] Error: s6-rc $ACTION $SERVICE failed.${RESET}"
+        return 1
+    fi
+}
+
+function help_s6_rc()     { _run_s6_rc "help"     "$1"; }
+function list_s6_rc()     { _run_s6_rc "list"     "$1"; }
+function listall_s6_rc()  { _run_s6_rc "listall"  "$1"; }
+function diff_s6_rc()     { _run_s6_rc "diff"     "$1"; }
+function start_s6_rc()    { _run_s6_rc "start"    "$1"; }
+function stop_s6_rc()     { _run_s6_rc "stop"     "$1"; }
+function change_s6_rc()   { _run_s6_rc "change"   "$1"; }
+
+function execute_s6_rc()
+{
+    local COMMAND="$1"
+    local SERVICE="$2"
+    local FUNC_NAME="${COMMAND//-/_}_s6_rc"
+
+    if declare -f "$FUNC_NAME" >/dev/null 2>&1; then
+        $FUNC_NAME "$SERVICE"
+        return $?
+    else
+        echo -e "${RED}[!] Error: Unknown command: $COMMAND${RESET}"
+        return 1
+    fi
+}
+
+##
+## `systemd`:
+##
+function _run_systemctl()
+{
+    local ACTION="$1"
+    local SERVICE="$2"
+
+    if systemctl "$ACTION" "$SERVICE" >/dev/null 2>&1; then
+        echo -e "${GREEN}[*] Success!${RESET}"
+        return 0
+    else
+        echo -e "${RED}[!] Error: systemctl $ACTION $SERVICE failed.${RESET}"
+        return 1
+    fi
+}
+
+function add_requires_systemctl()           { _run_systemctl "add-requires"                 "$1"; }
+function add_wants_systemctl()              { _run_systemctl "add-wants"                    "$1"; }
+function bind_systemctl()                   { _run_systemctl "bind"                         "$1"; }
+function cancel_systemctl()                 { _run_systemctl "cancel"                       "$1"; }
+function cat_systemctl()                    { _run_systemctl "cat"                          "$1"; }
+function condreload_systemctl()             { _run_systemctl "condreload"                   "$1"; }
+function condrestart_systemctl()            { _run_systemctl "condrestart"                  "$1"; }
+function condstop_systemctl()               { _run_systemctl "condstop"                     "$1"; }
+function daemon_reexec_systemctl()          { _run_systemctl "daemon-reexec"                "$1"; }
+function daemon_reload_systemctl()          { _run_systemctl "daemon-reload"                "$1"; }
+function default_systemctl()                { _run_systemctl "default"                      "$1"; }
+function disable_systemctl()                { _run_systemctl "disable"                      "$1"; }
+function edit_systemctl()                   { _run_systemctl "edit"                         "$1"; }
+function emergency_systemctl()              { _run_systemctl "emergency"                    "$1"; }
+function enable_systemctl()                 { _run_systemctl "enable"                       "$1"; }
+function exit_systemctl()                   { _run_systemctl "exit"                         "$1"; }
+function force_reload_systemctl()           { _run_systemctl "force-reload"                 "$1"; }
+function get_default_systemctl()            { _run_systemctl "get-default"                  "$1"; }
+function halt_systemctl()                   { _run_systemctl "halt"                         "$1"; }
+function help_systemctl()                   { _run_systemctl "help"                         "$1"; }
+function hibernate_systemctl()              { _run_systemctl "hibernate"                    "$1"; }
+function hybrid_sleep_systemctl()           { _run_systemctl "hybrid-sleep"                 "$1"; }
+function import_environment_systemctl()     { _run_systemctl "import-environment"           "$1"; }
+function is_active_systemctl()              { _run_systemctl "is-active"                    "$1"; }
+function is_enabled_systemctl()             { _run_systemctl "is-enabled"                   "$1"; }
+function is_failed_systemctl()              { _run_systemctl "is-failed"                    "$1"; }
+function isolate_systemctl()                { _run_systemctl "isolate"                      "$1"; }
+function is_system_running_systemctl()      { _run_systemctl "is-system-running"            "$1"; }
+function kexec_systemctl()                  { _run_systemctl "kexec"                        "$1"; }
+function kill_systemctl()                   { _run_systemctl "kill"                         "$1"; }
+function link_systemctl()                   { _run_systemctl "link"                         "$1"; }
+function list_automounts_systemctl()        { _run_systemctl "list-automounts"              "$1"; }
+function list_dependencies_systemctl()      { _run_systemctl "list-dependencies"            "$1"; }
+function list_jobs_systemctl()              { _run_systemctl "list-jobs"                    "$1"; }
+function list_machines_systemctl()          { _run_systemctl "list-machines"                "$1"; }
+function list_sockets_systemctl()           { _run_systemctl "list-sockets"                 "$1"; }
+function list_timers_systemctl()            { _run_systemctl "list-timers"                  "$1"; }
+function list_unit_files_systemctl()        { _run_systemctl "list-unit-files"              "$1"; }
+function list_units_systemctl()             { _run_systemctl "list-units"                   "$1"; }
+function log_level_systemctl()              { _run_systemctl "log-level"                    "$1"; }
+function log_target_systemctl()             { _run_systemctl "log-target"                   "$1"; }
+function mask_systemctl()                   { _run_systemctl "mask"                         "$1"; }
+function mount_image_systemctl()            { _run_systemctl "mount-image"                  "$1"; }
+function poweroff_systemctl()               { _run_systemctl "poweroff"                     "$1"; }
+function preset_systemctl()                 { _run_systemctl "preset"                       "$1"; }
+function preset_all_systemctl()             { _run_systemctl "preset-all"                   "$1"; }
+function reboot_systemctl()                 { _run_systemctl "reboot"                       "$1"; }
+function reenable_systemctl()               { _run_systemctl "reenable"                     "$1"; }
+function reload_systemctl()                 { _run_systemctl "reload"                       "$1"; }
+function reload_or_restart_systemctl()      { _run_systemctl "reload-or-restart"            "$1"; }
+function rescue_systemctl()                 { _run_systemctl "rescue"                       "$1"; }
+function reset_failed_systemctl()           { _run_systemctl "reset-failed"                 "$1"; }
+function restart_systemctl()                { _run_systemctl "restart"                      "$1"; }
+function revert_systemctl()                 { _run_systemctl "revert"                       "$1"; }
+function service_log_level_systemctl()      { _run_systemctl "service-log-level"            "$1"; }
+function service_log_target_systemctl()     { _run_systemctl "service-log-target"           "$1"; }
+function service_watchdogs_systemctl()      { _run_systemctl "service-watchdogs"            "$1"; }
+function set_default_systemctl()            { _run_systemctl "set-default"                  "$1"; }
+function set_environment_systemctl()        { _run_systemctl "set-environment"              "$1"; }
+function property_systemctl()               { _run_systemctl "property"                     "$1"; }
+function show_systemctl()                   { _run_systemctl "show"                         "$1"; }
+function show_environment_systemctl()       { _run_systemctl "show-environment"             "$1"; }
+function start_systemctl()                  { _run_systemctl "start"                        "$1"; }
+function status_systemctl()                 { _run_systemctl "status"                       "$1"; }
+function stop_systemctl()                   { _run_systemctl "stop"                         "$1"; }
+function suspend_systemctl()                { _run_systemctl "suspend"                      "$1"; }
+function suspend_then_hibernate_systemctl() { _run_systemctl "suspend-then-hibernate"       "$1"; }
+function switch_root_systemctl()            { _run_systemctl "switch-root"                  "$1"; }
+function try_reload_or_restart_systemctl()  { _run_systemctl "try-reload-or-restart"        "$1"; }
+function try_restart_systemctl()            { _run_systemctl "try-restart"                  "$1"; }
+function unmask_systemctl()                 { _run_systemctl "unmask"                       "$1"; }
+function unset_environment_systemctl()      { _run_systemctl "unset-environment"            "$1"; }
+
+function execute_systemctl()
+{
+    local COMMAND="$1"
+    local SERVICE="$2"
+    local FUNC_NAME="${COMMAND//-/_}_systemctl"
+
+    if declare -f "$FUNC_NAME" >/dev/null 2>&1; then
+        $FUNC_NAME "$SERVICE"
+        return $?
+    else
+        echo -e "${RED}[!] Error: Unknown command: $COMMAND${RESET}"
+        return 1
+    fi
+}
+
+##
+## `sysvinit`:
+##
+function _run_service()
+{
+    local ACTION="$1"
+    local SERVICE="$2"
+
+    if service "$SERVICE" "$ACTION" >/dev/null 2>&1; then
+        echo -e "${GREEN}[*] Success!${RESET}"
+        return 0
+    else
+        echo -e "${RED}[!] Error: service $SERVICE $ACTION failed.${RESET}"
+        return 1
+    fi
+}
+
+function start_service()        { _run_service "start"        "$1"; }
+function stop_service()         { _run_service "stop"         "$1"; }
+function force_reload_service() { _run_service "force-reload" "$1"; }
+function restart_service()      { _run_service "restart"      "$1"; }
+function status_service()       { _run_service "status"       "$1"; }
+
+function execute_service()
+{
+    local COMMAND="$1"
+    local SERVICE="$2"
+    local FUNC_NAME="${COMMAND//-/_}_service"
+
+    if declare -f "$FUNC_NAME" >/dev/null 2>&1; then
+        $FUNC_NAME "$SERVICE"
+        return $?
+    else
+        echo -e "${RED}[!] Error: Unknown command: $COMMAND${RESET}"
+        return 1
+    fi
+}
+
+#
+# Package Managers:
+#
+
+function execute()
+{
+    local CMD=("$@")
+    echo -e "${GREEN}[<==] Executing '${CMD[*]}'...${RESET}"
+    if "${CMD[@]}"; then
+        echo -e "${GREEN}[*] Success!${RESET}"
+        return 0
+    else
+        echo -e "${RED}[!] Error: Failed to execute: '${CMD[*]}'.${RESET}"
+        return 1
+    fi
+}
+
+##
+## `apk`:
+##
+function apk()            { execute apk             "$@"; }
+function apk_help()       { execute apk --help      "$@"; }
+function apk_add()        { execute apk add         "$@"; }
+function apk_del()        { execute apk del         "$@"; }
+function apk_fix()        { execute apk fix         "$@"; }
+function apk_update()     { execute apk update      "$@"; }
+function apk_upgrade()    { execute apk upgrade     "$@"; }
+function apk_cache()      { execute apk cache       "$@"; }
+function apk_info()       { execute apk info        "$@"; }
+function apk_list()       { execute apk list        "$@"; }
+function apk_dot()        { execute apk dot         "$@"; }
+function apk_policy()     { execute apk policy      "$@"; }
+function apk_search()     { execute apk search      "$@"; }
+function apk_index()      { execute apk index       "$@"; }
+function apk_fetch()      { execute apk fetch       "$@"; }
+function apk_manifest()   { execute apk manifest    "$@"; }
+function apk_verify()     { execute apk verify      "$@"; }
+function apk_audit()      { execute apk audit       "$@"; }
+function apk_stats()      { execute apk stats       "$@"; }
+function apk_version()    { execute apk version     "$@"; }
+
+##
+## `apt`:
+##
+function apt()                 { execute apt              "$@"; }
+function apt_autoclean()       { execute apt autoclean    "$@"; }
+function apt_autoremove()      { execute apt autoremove   "$@"; }
+function apt_changelog()       { execute apt changelog    "$@"; }
+function apt_depends()         { execute apt depends      "$@"; }
+function apt_download()        { execute apt download     "$@"; }
+function apt_full_upgrade()    { execute apt full-upgrade "$@"; }
+function apt_install()         { execute apt install      "$@"; }
+function apt_moo()             { execute apt moo          "$@"; }
+function apt_purge()           { execute apt purge        "$@"; }
+function apt_reinstall()       { execute apt reinstall    "$@"; }
+function apt_search()          { execute apt search       "$@"; }
+function apt_showsrc()         { execute apt showsrc      "$@"; }
+function apt_update()          { execute apt update       "$@"; }
+function apt_autopurge()       { execute apt autopurge    "$@"; }
+function apt_build_dep()       { execute apt build-dep    "$@"; }
+function apt_clean()           { execute apt clean        "$@"; }
+function apt_dist_upgrade()    { execute apt dist-upgrade "$@"; }
+function apt_edit_sources()    { execute apt edit-sources "$@"; }
+function apt_help()            { execute apt help         "$@"; }
+function apt_list()            { execute apt list         "$@"; }
+function apt_policy()          { execute apt policy       "$@"; }
+function apt_rdepends()        { execute apt rdepends     "$@"; }
+function apt_remove()          { execute apt remove       "$@"; }
+function apt_show()            { execute apt show         "$@"; }
+function apt_source()          { execute apt source       "$@"; }
+function apt_upgrade()         { execute apt upgrade      "$@"; }
+
+##
+## `apt-cache`:
+##
+function apt_cache()           { execute apt-cache           "$@"; }
+function apt_cache_add()       { execute apt-cache add       "$@"; }
+function apt_cache_depends()   { execute apt-cache depends   "$@"; }
+function apt_cache_dotty()     { execute apt-cache dotty     "$@"; }
+function apt_cache_dump()      { execute apt-cache dump      "$@"; }
+function apt_cache_dumpavail() { execute apt-cache dumpavail "$@"; }
+function apt_cache_gencaches() { execute apt-cache gencaches "$@"; }
+function apt_cache_madison()   { execute apt-cache madison   "$@"; }
+function apt_cache_pkgnames()  { execute apt-cache pkgnames  "$@"; }
+function apt_cache_policy()    { execute apt-cache policy    "$@"; }
+function apt_cache_rdepends()  { execute apt-cache rdepends  "$@"; }
+function apt_cache_search()    { execute apt-cache search    "$@"; }
+function apt_cache_show()      { execute apt-cache show      "$@"; }
+function apt_cache_showpkg()   { execute apt-cache showpkg   "$@"; }
+function apt_cache_showsrc()   { execute apt-cache showsrc   "$@"; }
+function apt_cache_stats()     { execute apt-cache stats     "$@"; }
+function apt_cache_unmet()     { execute apt-cache unmet     "$@"; }
+function apt_cache_xvcg()      { execute apt-cache xvcg      "$@"; }
+
+##
+## `apt-cdrom`:
+##
+function apt_cdrom()       { execute apt-cdrom       "$@"; }
+function apt_cdrom_add()   { execute apt-cdrom add   "$@"; }
+function apt_cdrom_ident() { execute apt-cdrom ident "$@"; }
+
+##
+## `apt-config`:
+##
+function apt_config()       { execute apt-config       "$@"; }
+function apt_config_shell() { execute apt-config shell "$@"; }
+function apt_config_dump()  { execute apt-dump dump    "$@"; }
+
+##
+## `apt-extracttemplates`:
+##
+function apt_extracttemplates() { execute apt-extracttemplates "$@"; }
+
+##
+## `apt-get`:
+##
+function apt_get()                 { execute apt-get                 "$@"; }
+function apt_get_autoclean()       { execute apt-get autoclean       "$@"; }
+function apt_get_build_dep()       { execute apt-get build-dep       "$@"; }
+function apt_get_check()           { execute apt-get check           "$@"; }
+function apt_get_dist_upgrade()    { execute apt-get dist-upgrade    "$@"; }
+function apt_get_dselect_upgrade() { execute apt-get dselect-upgrade "$@"; }
+function apt_get_install()         { execute apt-get install         "$@"; }
+function apt_get_remove()          { execute apt-get remove          "$@"; }
+function apt_get_update()          { execute apt-get update          "$@"; }
+function apt_get_autoremove()      { execute apt-get autoremove      "$@"; }
+function apt_get_changelog()       { execute apt-get changelog       "$@"; }
+function apt_get_clean()           { execute apt-get clean           "$@"; }
+function apt_get_download()        { execute apt-get download        "$@"; }
+function apt_get_indextargets()    { execute apt-get indextargets    "$@"; }
+function apt_get_purge()           { execute apt-get purge           "$@"; }
+function apt_get_source()          { execute apt-get source          "$@"; }
+function apt_get_upgrade()         { execute apt-get upgrade         "$@"; }
+
+##
+## `apt-listchanges`:
+##
+function apt_listchanges() { execute apt-listchanges "$@"; }
+
+##
+## `apt-mark`:
+##
+function apt_mark()                 { execute apt-mark                 "$@"; }
+function apt_mark_auto()            { execute apt-mark auto            "$@"; }
+function apt_mark_manual()          { execute apt-mark manual          "$@"; }
+function apt_mark_minimize_manual() { execute apt-mark minimize-manual "$@"; }
+function apt_mark_showauto()        { execute apt-mark showauto        "$@"; }
+function apt_mark_showmanual()      { execute apt-mark showmanual      "$@"; }
+function apt_mark_hold()            { execute apt-mark hold            "$@"; }
+function apt_mark_unhold()          { execute apt-mark unhold          "$@"; }
+function apt_mark_showhold()        { execute apt-mark showhold        "$@"; }
+
+##
+## `apt-sortpkgs`:
+##
+function apt_sortpkgs() { execute apt-sortpkgs "$@"; }
+
+##
+## `aptitude`:
+##
+function aptitude()                 { execute aptitude                 "$@"; }
+function aptitude_add_user_tag()    { execute aptitude add-user-tag    "$@"; }
+function aptitude_clean()           { execute aptitude clean           "$@"; }
+function aptitude_forget_new()      { execute aptitude forget-new      "$@"; }
+function aptitude_keep()            { execute aptitude keep            "$@"; }
+function aptitude_reinstall()       { execute aptitude reinstall       "$@"; }
+function aptitude_search()          { execute aptitude search          "$@"; }
+function aptitude_update()          { execute aptitude update          "$@"; }
+function aptitude_why_not()         { execute aptitude why-not         "$@"; }
+function aptitude_autoclean()       { execute aptitude autoclean       "$@"; }
+function aptitude_dist_upgrade()    { execute aptitude dist-upgrade    "$@"; }
+function aptitude_full_upgrade()    { execute aptitude full-upgrade    "$@"; }
+function aptitude_keep_all()        { execute aptitude keep-all        "$@"; }
+function aptitude_remove()          { execute aptitude remove          "$@"; }
+function aptitude_show()            { execute aptitude show            "$@"; }
+function aptitude_upgrade()         { execute aptitude upgrade         "$@"; }
+function aptitude_build_dep()       { execute aptitude build-dep       "$@"; }
+function aptitude_download()        { execute aptitude download        "$@"; }
+function aptitude_hold()            { execute aptitude hold            "$@"; }
+function aptitude_markauto()        { execute aptitude markauto        "$@"; }
+function aptitude_remove_user_tag() { execute aptitude remove-user-tag "$@"; }
+function aptitude_unhold()          { execute aptitude unhold          "$@"; }
+function aptitude_versions()        { execute aptitude versions        "$@"; }
+function aptitude_changelog()       { execute aptitude changelog       "$@"; }
+function aptitude_forbid_version()  { execute aptitude forbid_version  "$@"; }
+function aptitude_install()         { execute aptitude install         "$@"; }
+function aptitude_purge()           { execute aptitude purge           "$@"; }
+function aptitude_safe_upgrade()    { execute aptitude safe-upgrade    "$@"; }
+function aptitude_unmarkauto()      { execute aptitude unmarkauto      "$@"; }
+function aptitude_why()             { execute aptitude why             "$@"; }
+
+##
+## `aptitude-create-state-bundle`:
+##
+function aptitude_create_state_bundle()              { execute aptitude-create-state-bundle                   "$@"; }
+function aptitude_create_state_bundle_help()         { execute aptitude-create_state-bundle --help            "$@"; }
+function aptitude_create_state_bundle_print_inputs() { execute aptitude-create_state_bundle --print-inputs    "$@"; }
+function aptitude_create_state_bundle_force_bzip2()  { execute aptitude-create_state-bundle --force-bzip2     "$@"; }
+function aptitude_create_state_bundle_force_gzip()   { execute aptitude-create_state-bundle --force-gzip      "$@"; }
+
+##
+## `aptitude-run-state-bundle`:
+##
+function aptitude_run_state_bundle() { execute aptitude-run-state-bundle "$@"; }
+
+##
+## `dnf`:
+##
+function dnf()                    { execute dnf                    "$@"; }
+function dnf_advisory()           { execute dnf advisory           "$@"; }
+function dnf_autoremove()         { execute dnf autoremove         "$@"; }
+function dnf_check()              { execute dnf check              "$@"; }
+function dnf_check_upgrade()      { execute dnf check-upgrade      "$@"; }
+function dnf_clean()              { execute dnf clean              "$@"; }
+function dnf_distro_sync()        { execute dnf distro-sync        "$@"; }
+function dnf_downgrade()          { execute dnf downgrade          "$@"; }
+function dnf_download()           { execute dnf download           "$@"; }
+function dnf_environment()        { execute dnf environment        "$@"; }
+function dnf_group()              { execute dnf group              "$@"; }
+function dnf_history()            { execute dnf history            "$@"; }
+function dnf_info()               { execute dnf info               "$@"; }
+function dnf_install()            { execute dnf install            "$@"; }
+function dnf_leaves()             { execute dnf leaves             "$@"; }
+function dnf_list()               { execute dnf list               "$@"; }
+function dnf_makecache()          { execute dnf makecache          "$@"; }
+function dnf_mark()               { execute dnf mark               "$@"; }
+function dnf_module()             { execute dnf module             "$@"; }
+function dnf_offline()            { execute dnf offline            "$@"; }
+function dnf_provides()           { execute dnf provides           "$@"; }
+function dnf_reinstall()          { execute dnf reinstall          "$@"; }
+function dnf_remove()             { execute dnf remove             "$@"; }
+function dnf_replay()             { execute dnf replay             "$@"; }
+function dnf_repo()               { execute dnf repo               "$@"; }
+function dnf_repoquery()          { execute dnf repoquery          "$@"; }
+function dnf_search()             { execute dnf search             "$@"; }
+function dnf_swap()               { execute dnf swap               "$@"; }
+function dnf_system_upgrade()     { execute dnf system-upgrade     "$@"; }
+function dnf_upgrade()            { execute dnf upgrade            "$@"; }
+function dnf_versionlock()        { execute dnf versionlock        "$@"; }
+function dnf_debuginfo_install()  { execute dnf debuginfo-install  "$@"; }
+function dnf_offline_distrosync() { execute dnf offline-distrosync "$@"; }
+function dnf_offline_upgrade()    { execute dnf offline-upgrade    "$@"; }
+function dnf_config_manager()     { execute dnf config-manager     "$@"; }
+function dnf_builddep()           { execute dnf builddep           "$@"; }
+function dnf_changelog()          { execute dnf changelog          "$@"; }
+function dnf_copr()               { execute dnf copr               "$@"; }
+function dnf_needs_restarting()   { execute dnf needs-restarting   "$@"; }
+function dnf_repoclosure()        { execute dnf repoclosure        "$@"; }
+function dnf_reposync()           { execute dnf reposync           "$@"; }
+
+##
+## `dpkg`:
+##
+function dpkg()                             { execute dpkg                               "$@"; }
+function dpkg_abort_after()                 { execute dpkg --abort-after                 "$@"; }
+function dpkg_add_architecture()            { execute dpkg --add-architecture            "$@"; }
+function dpkg_audit()                       { execute dpkg --audit                       "$@"; }
+function dpkg_auto_deconfigure()            { execute dpkg --auto-deconfigure            "$@"; }
+function dpkg_clear_avail()                 { execute dpkg --clear-avail                 "$@"; }
+function dpkg_clear_selection()             { execute dpkg --clear-selections            "$@"; }
+function dpkg_compare_versions()            { execute dpkg --compare-versions            "$@"; }
+function dpkg_configure()                   { execute dpkg --configure                   "$@"; }
+function dpkg_field()                       { execute dpkg --field                       "$@"; }
+function dpkg_forget_old_unavail()          { execute dpkg --forget-old-unavail          "$@"; }
+function dpkg_get_selections()              { execute dpkg --get-selections              "$@"; }
+function dpkg_help()                        { execute dpkg --help                        "$@"; }
+function dpkg_install()                     { execute dpkg --install                     "$@"; }
+function dpkg_list()                        { execute dpkg --list                        "$@"; }
+function dpkg_listfiles()                   { execute dpkg --listfiles                   "$@"; }
+function dpkg_merge_avail()                 { execute dpkg --merge-avail                 "$@"; }
+function dpkg_predep_package()              { execute dpkg --predep-package              "$@"; }
+function dpkg_print_architecture()          { execute dpkg --print-architecture          "$@"; }
+function dpkg_print_avail()                 { execute dpkg --print-avail                 "$@"; }
+function dpkg_print_foreign_architectures() { execute dpkg --print-foreign-architectures "$@"; }
+function dpkg_purge()                       { execute dpkg --purge                       "$@"; }
+function dpkg_record_avail()                { execute dpkg --record-avail                "$@"; }
+function dpkg_remove()                      { execute dpkg --remove                      "$@"; }
+function dpkg_remove_architecture()         { execute dpkg --remove-architecture         "$@"; }
+function dpkg_search()                      { execute dpkg --search                      "$@"; }
+function dpkg_set_selections()              { execute dpkg --set-selections              "$@"; }
+function dpkg_status()                      { execute dpkg --status                      "$@"; }
+function dpkg_unpack()                      { execute dpkg --unpack                      "$@"; }
+function dpkg_update_avail()                { execute dpkg --update-avail                "$@"; }
+function dpkg_verify()                      { execute dpkg --verify                      "$@"; }
+function dpkg_version()                     { execute dpkg --version                     "$@"; }
+
+##
+## `guix`:
+##
+function guix()                  { execute guix              "$@"; }
+function guix_archive()          { execute guix archive      "$@"; }
+function guix_build()            { execute guix build        "$@"; }
+function guix_challenge()        { execute guix challenge    "$@"; }
+function guix_container()        { execute guix container    "$@"; }
+function guix_copy()             { execute guix copy         "$@"; }
+function guix_deploy()           { execute guix deploy       "$@"; }
+function guix_describe()         { execute guix describe     "$@"; }
+function guix_download()         { execute guix download     "$@"; }
+function guix_edit()             { execute guix edit         "$@"; }
+function guix_environment()      { execute guix environment  "$@"; }
+function guix_gc()               { execute guix gc           "$@"; }
+function guix_git()              { execute guix git          "$@"; }
+function guix_graph()            { execute guix graph        "$@"; }
+function guix_hash()             { execute guix hash         "$@"; }
+function guix_help()             { execute guix --help       "$@"; }
+function guix_home()             { execute guix home         "$@"; }
+function guix_import()           { execute guix import       "$@"; }
+function guix_install()          { execute guix install      "$@"; }
+function guix_lint()             { execute guix lint         "$@"; }
+function guix_offload()          { execute guix offload      "$@"; }
+function guix_pack()             { execute guix pack         "$@"; }
+function guix_package()          { execute guix package      "$@"; }
+function guix_processes()        { execute guix processes    "$@"; }
+function guix_publish()          { execute guix publish      "$@"; }
+function guix_pull()             { execute guix pull         "$@"; }
+function guix_refresh()          { execute guix refresh      "$@"; }
+function guix_remove()           { execute guix remove       "$@"; }
+function guix_repl()             { execute guix repl         "$@"; }
+function guix_search()           { execute guix search       "$@"; }
+function guix_shell()            { execute guix shell        "$@"; }
+function guix_show()             { execute guix show         "$@"; }
+function guix_size()             { execute guix size         "$@"; }
+function guix_style()            { execute guix style        "$@"; }
+function guix_system()           { execute guix system       "$@"; }
+function guix_time_machine()     { execute guix time-machine "$@"; }
+function guix_upgrade()          { execute guix upgrade      "$@"; }
+function guix_weather()          { execute guix weather      "$@"; }
+
+##
+## `homebrew`:
+##
+function brew()                          { execute brew                  "$@"; }
+function brew_alias()                    { execute brew alias            "$@"; }
+function brew_analytics()                { execute brew analytics        "$@"; }
+function brew_autoremove()               { execute brew autoremove       "$@"; }
+function brew_bundle()                   { execute brew bundle           "$@"; }
+function brew_casks()                    { execute brew casks            "$@"; }
+function brew_cleanup()                  { execute brew cleanup          "$@"; }
+function brew_command()                  { execute brew command          "$@"; }
+function brew_commands()                 { execute brew commands         "$@"; }
+function brew_completions()              { execute brew completions      "$@"; }
+function brew_config()                   { execute brew config           "$@"; }
+function brew_deps()                     { execute brew deps             "$@"; }
+function brew_desc()                     { execute brew desc             "$@"; }
+function brew_developer()                { execute brew developer        "$@"; }
+function brew_docs()                     { execute brew docs             "$@"; }
+function brew_fetch()                    { execute brew fetch            "$@"; }
+function brew_formulae()                 { execute brew formulae         "$@"; }
+function brew_gist_logs()                { execute brew gist-logs        "$@"; }
+function brew_help()                     { execute brew help             "$@"; }
+function brew_home()                     { execute brew home             "$@"; }
+function brew_install()                  { execute brew install          "$@"; }
+function brew_leaves()                   { execute brew leaves           "$@"; }
+function brew_link()                     { execute brew link             "$@"; }
+function brew_list()                     { execute brew list             "$@"; }
+function brew_log()                      { execute brew log              "$@"; }
+function brew_mcp_server()               { execute brew mcp-server       "$@"; }
+function brew_migrate()                  { execute brew migrate          "$@"; }
+function brew_missing()                  { execute brew missing          "$@"; }
+function brew_nodenv_sync()              { execute brew nodenv-sync      "$@"; }
+function brew_options()                  { execute brew options          "$@"; }
+function brew_outdated()                 { execute brew outdated         "$@"; }
+function brew_pin()                      { execute brew pin              "$@"; }
+function brew_postinstall()              { execute brew postinstall      "$@"; }
+function brew_pyenv_sync()               { execute brew pyenv-sync       "$@"; }
+function brew_rbenv_sync()               { execute brew rbenv-sync       "$@"; }
+function brew_readall()                  { execute brew readall          "$@"; }
+function brew_reinstall()                { execute brew reinstall        "$@"; }
+function brew_search()                   { execute brew search           "$@"; }
+function brew_services()                 { execute brew services         "$@"; }
+function brew_setup_ruby()               { execute brew setup-ruby       "$@"; }
+function brew_shellenv()                 { execute brew shellenv         "$@"; }
+function brew_tab()                      { execute brew tab              "$@"; }
+function brew_tap()                      { execute brew tap              "$@"; }
+function brew_tap_info()                 { execute brew tap-info         "$@"; }
+function brew_unalias()                  { execute brew unalias          "$@"; }
+function brew_uninstall()                { execute brew uninstall        "$@"; }
+function brew_unlink()                   { execute brew unlink           "$@"; }
+function brew_unpin()                    { execute brew unpin            "$@"; }
+function brew_untap()                    { execute brew untap            "$@"; }
+function brew_update()                   { execute brew update           "$@"; }
+function brew_update_if_needed()         { execute brew update-if-needed "$@"; }
+function brew_update_reset()             { execute brew update-reset     "$@"; }
+function brew_upgrade()                  { execute brew upgrade          "$@"; }
+function brew_uses()                     { execute brew uses             "$@"; }
+function brew_cache()                    { execute brew --cache          "$@"; }
+function brew_caskroom()                 { execute brew --caskroom       "$@"; }
+function brew_cellar()                   { execute brew --cellar         "$@"; }
+function brew_env()                      { execute brew --env            "$@"; }
+function brew_prefix()                   { execute brew --prefix         "$@"; }
+function brew_repository()               { execute brew --repository     "$@"; }
+function brew_version()                  { execute brew --version        "$@"; }
+
+##
+## `pacman`:
+##
+function pacman()            { execute pacman             "$@"; }
+function pacman_help()       { execute pacman --help      "$@"; }
+function pacman_version()    { execute pacman --version   "$@"; }
+function pacman_database()   { execute pacman --database  "$@"; }
+function pacman_files()      { execute pacman --files     "$@"; }
+function pacman_query()      { execute pacman --query     "$@"; }
+function pacman_remove()     { execute pacman --remove    "$@"; }
+function pacman_sync()       { execute pacman --sync      "$@"; }
+function pacman_deptest()    { execute pacman --deptest   "$@"; }
+function pacman_upgrade()    { execute pacman --upgrade   "$@"; }
+
+##
+## `pamac`:
+##
+function pamac()              { execute pamac                  "$@"; }
+function pamac_version()      { execute pamac --version        "$@"; }
+function pamac_help()         { execute pamac --help           "$@"; }
+function pamac_search()       { execute pamac search           "$@"; }
+function pamac_list()         { execute pamac list             "$@"; }
+function pamac_info()         { execute pamac info             "$@"; }
+function pamac_install()      { execute pamac install          "$@"; }
+function pamac_reinstall()    { execute pamac reinstall        "$@"; }
+function pamac_remove()       { execute pamac remove           "$@"; }
+function pamac_checkupdates() { execute pamac checkupdates     "$@"; }
+function pamac_upgrade()      { execute pamac upgrade          "$@"; }
+function pamac_update()       { execute pamac update           "$@"; }
+function pamac_clone()        { execute pamac clone            "$@"; }
+function pamac_build()        { execute pamac build            "$@"; }
+function pamac_clean()        { execute pamac clean            "$@"; }
+
+##
+## `pkg` (FreeBSD):
+##
+
+function pkg()                     { execute pkg                  "$@"; }
+function freebsd_pkg_add()         { execute pkg add              "$@"; }
+function pkg_alias()               { execute pkg alias            "$@"; }
+function pkg_all_depends()         { execute pkg all-depends      "$@"; }
+function pkg_annotate()            { execute pkg annotate         "$@"; }
+function pkg_annotations()         { execute pkg annotations      "$@"; }
+function pkg_audit()               { execute pkg audit            "$@"; }
+function pkg_autoremove()          { execute pkg autoremove       "$@"; }
+function pkg_backup()              { execute pkg backup           "$@"; }
+function pkg_bootstrap()           { execute pkg bootstrap        "$@"; }
+function pkg_build_depends()       { execute pkg build-depends    "$@"; }
+function pkg_check()               { execute pkg check            "$@"; }
+function pkg_cinfo()               { execute pkg cinfo            "$@"; }
+function pkg_clean()               { execute pkg clean            "$@"; }
+function pkg_comment()             { execute pkg comment          "$@"; }
+function pkg_convert()             { execute pkg convert          "$@"; }
+function freebsd_pkg_create()      { execute pkg create           "$@"; }
+function pkg_csearch()             { execute pkg csearch          "$@"; }
+function freebsd_pkg_delete()      { execute pkg delete           "$@"; }
+function pkg_desc()                { execute pkg desc             "$@"; }
+function pkg_download()            { execute pkg download         "$@"; }
+function pkg_fetch()               { execute pkg fetch            "$@"; }
+function pkg_help()                { execute pkg help             "$@"; }
+function pkg_iinfo()               { execute pkg iinfo            "$@"; }
+function freebsd_pkg_info()        { execute pkg info             "$@"; }
+function pkg_install()             { execute pkg install          "$@"; }
+function pkg_isearch()             { execute pkg isearch          "$@"; }
+function pkg_leaf()                { execute pkg leaf             "$@"; }
+function pkg_list()                { execute pkg list             "$@"; }
+function pkg_lock()                { execute pkg lock             "$@"; }
+function pkg_noauto()              { execute pkg noauto           "$@"; }
+function pkg_options()             { execute pkg options          "$@"; }
+function pkg_origin()              { execute pkg options          "$@"; }
+function pkg_orphans()             { execute pkg orphans          "$@"; }
+function pkg_plugins()             { execute pkg plugins          "$@"; }
+function pkg_prime_list()          { execute pkg prime-list       "$@"; }
+function pkg_prime_origins()       { execute pkg prime-origins    "$@"; }
+function pkg_provided_depends()    { execute pkg provided-depends "$@"; }
+function pkg_query()               { execute pkg query            "$@"; }
+function pkg_rall_depends()        { execute pkg rall-depends     "$@"; }
+function pkg_raw()                 { execute pkg raw              "$@"; }
+function pkg_rcomment()            { execute pkg rcomment         "$@"; }
+function pkg_rdesc()               { execute pkg rdesc            "$@"; }
+function pkg_register()            { execute pkg register         "$@"; }
+function pkg_remove()              { execute pkg remove           "$@"; }
+function pkg_repo()                { execute pkg repo             "$@"; }
+function pkg_required_depends()    { execute pkg required-depends "$@"; }
+function pkg_roptions()            { execute pkg roptions         "$@"; }
+function pkg_rquery()              { execute pkg rquery           "$@"; }
+function pkg_runmaintained()       { execute pkg runmaintained    "$@"; }
+function pkg_search()              { execute pkg search           "$@"; }
+function pkg_set()                 { execute pkg set              "$@"; }
+function pkg_shared_depends()      { execute pkg shared-depends   "$@"; }
+function pkg_shell()               { execute pkg shell            "$@"; }
+function pkg_shlib()               { execute pkg shlib            "$@"; }
+function pkg_show()                { execute pkg show             "$@"; }
+function pkg_size()                { execute pkg size             "$@"; }
+function pkg_stats()               { execute pkg stats            "$@"; }
+function pkg_unlock()              { execute pkg unlock           "$@"; }
+function pkg_unmaintained()        { execute pkg unmaintained     "$@"; }
+function pkg_update()              { execute pkg update           "$@"; }
+function pkg_updating()            { execute pkg updating         "$@"; }
+function pkg_upgrade()             { execute pkg upgrade          "$@"; }
+function pkg_version()             { execute pkg version          "$@"; }
+function pkg_which()               { execute pkg which            "$@"; }
+
+##
+## `pkg_add`:
+##
+function pkg_add() { execute pkg_add "$@"; }
+
+##
+## `pkg_create`:
+##
+function pkg_create() { execute pkg_create "$@"; }
+
+##
+## `pkg_delete`:
+##
+function pkg_delete() { execute pkg_delete "$@"; }
+
+##
+## `pkg_info`:
+##
+function pkg_info() { execute pkg_info "$@"; }
+
+##
+## `pkgin`:
+##
+function pkgin()                         { execute pkgin                     "$@"; }
+function pkgin_list()                    { execute pkgin list                "$@"; }
+function pkgin_avail()                   { execute pkgin avail               "$@"; }
+function pkgin_search()                  { execute pkgin search              "$@"; }
+function pkgin_install()                 { execute pkgin install             "$@"; }
+function pkgin_update()                  { execute pkgin update              "$@"; }
+function pkgin_upgrade()                 { execute pkgin upgrade             "$@"; }
+function pkgin_full_upgrade()            { execute pkgin full-upgrade        "$@"; }
+function pkgin_remove()                  { execute pkgin remove              "$@"; }
+function pkgin_keep()                    { execute pkgin keep                "$@"; }
+function pkgin_unkeep()                  { execute pkgin unkeep              "$@"; }
+function pkgin_export()                  { execute pkgin export              "$@"; }
+function pkgin_import()                  { execute pkgin import              "$@"; }
+function pkgin_show_keep()               { execute pkgin show-keep           "$@"; }
+function pkgin_show_no_keep()            { execute pkgin show-no-keep        "$@"; }
+function pkgin_autoremove()              { execute pkgin autoremove          "$@"; }
+function pkgin_clean()                   { execute pkgin clean               "$@"; }
+function pkgin_show_deps()               { execute pkgin show-deps           "$@"; }
+function pkgin_show_full_deps()          { execute pkgin show-full-deps      "$@"; }
+function pkgin_show_rev_deps()           { execute pkgin show-rev-deps       "$@"; }
+function pkgin_provides()                { execute pkgin provides            "$@"; }
+function pkgin_requires()                { execute pkgin requires            "$@"; }
+function pkgin_show_category()           { execute pkgin show-category       "$@"; }
+function pkgin_show_pkg_category()       { execute pkgin show-pkg-category   "$@"; }
+function pkgin_show_all_categories()     { execute pkgin show-all-categories "$@"; }
+function pkgin_pkg_content()             { execute pkgin pkg-content         "$@"; }
+function pkgin_pkg_descr()               { execute pkgin pkg-descr           "$@"; }
+function pkgin_pkg_build_defs()          { execute pkgin pkg-build-defs      "$@"; }
+function pkgin_stats()                   { execute pkgin stats               "$@"; }
+
+##
+## `portage` (open for pull requests):
+##
+
+##
+## `qi`:
+##
+function qi()          { execute qi 		"$@"; }
+function qi_warn()     { execute qi warn 	"$@"; }
+function qi_install()  { execute qi install "$@"; }
+function qi_remove()   { execute qi remove  "$@"; }
+function qi_upgrade()  { execute qi upgrade "$@"; }
+function qi_extract()  { execute qi extract "$@"; }
+function qi_create()   { execute qi create  "$@"; }
+function qi_build()    { execute qi build   "$@"; }
+function qi_order()    { execute qi order   "$@"; }
+
+##
+## `slackpkg`:
+##
+function slackpkg()                     { execute slackpkg               "$@"; }
+function slackpkg_search()              { execute slackpkg search        "$@"; }
+function slackpkg_install()             { execute slackpkg install       "$@"; }
+function slackpkg_upgrade()             { execute slackpkg upgrade       "$@"; }
+function slackpkg_reinstall()           { execute slackpkg reinstall     "$@"; }
+function slackpkg_remove()              { execute slackpkg remove        "$@"; }
+function slackpkg_blacklist()           { execute slackpkg blacklist     "$@"; }
+function slackpkg_download()            { execute slackpkg download      "$@"; }
+function slackpkg_info()                { execute slackpkg info          "$@"; }
+function slackpkg_clean_system()        { execute slackpkg clean-system  "$@"; }
+function slackpkg_upgrade_all()         { execute slackpkg upgrade-all   "$@"; }
+function slackpkg_install_new()         { execute slackpkg install-new   "$@"; }
+function slackpkg_check_updates()       { execute slackpkg check-updates "$@"; }
+function slackpkg_update()              { execute slackpkg update        "$@"; }
+
+##
+## `trizen`:
+##
+function trizen()          { execute trizen             "$@"; }
+function trizen_sync()     { execute trizen --sync      "$@"; }
+function trizen_comments() { execute trizen --comments  "$@"; }
+function trizen_get()      { execute trizen --get       "$@"; }
+function trizen_remove()   { execute trizen --remove    "$@"; }
+function trizen_query()    { execute trizen --query     "$@"; }
+function trizen_files()    { execute trizen --files     "$@"; }
+function trizen_database() { execute trizen --database  "$@"; }
+function trizen_deptest()  { execute trizen --deptest   "$@"; }
+function trizen_upgrade()  { execute trizen --upgrade   "$@"; }
+
+##
+## `xbps-install`:
+##
+function xbps_install() { execute xbps-install "$@"; }
+
+##
+## `xbps-query`:
+##
+function xbps_query()                  { execute xbps-query                    "$@"; }
+function xbps_query_list_pkgs()        { execute xbps-query --list-pkgs        "$@"; }
+function xbps_query_list_hold_pkgs()   { execute xbps-query --list-hold-pkgs   "$@"; }
+function xbps_query_list_repos()       { execute xbps-query --list-repos       "$@"; }
+function xbps_query_list_manual_pkgs() { execute xbps-query --list-manual-pkgs "$@"; }
+function xbps_query_list_orphans()     { execute xbps-query --list-orphans     "$@"; }
+function xbps_query_ownedby()          { execute xbps-query --ownedby          "$@"; }
+function xbps_query_show()             { execute xbps-query --show             "$@"; }
+function xbps_query_search()           { execute xbps-query --search           "$@"; }
+function xbps_query_files()            { execute xbps-query --files            "$@"; }
+function xbps_query_deps()             { execute xbps-query --deps             "$@"; }
+function xbps_query_revdeps()          { execute xbps-query --revdeps          "$@"; }
+function xbps_query_cat()              { execute xbps-query cat                "$@"; }
+
+##
+## `xbps-remove`:
+##
+function xbps_remove() { execute xbps-remove "$@"; }
+
+##
+## `yay`:
+##
+function yay()             { execute yay                   "$@"; }
+function yay_build()       { execute yay --build           "$@"; }
+function yay_show()        { execute yay --show            "$@"; }
+function yay_getpkgbuild() { execute yay --getpkgbuild     "$@"; }
+function yay_web()         { execute yay --web             "$@"; }
+
+##
+## `yum`:
+##
+function yum()                    { execute yum                    "$@"; }
+function yum_advisory()           { execute yum advisory           "$@"; }
+function yum_autoremove()         { execute yum autoremove         "$@"; }
+function yum_check()              { execute yum check              "$@"; }
+function yum_check_upgrade()      { execute yum check-upgrade      "$@"; }
+function yum_clean()              { execute yum clean              "$@"; }
+function yum_distro_sync()        { execute yum distro-sync        "$@"; }
+function yum_downgrade()          { execute yum downgrade          "$@"; }
+function yum_download()           { execute yum download           "$@"; }
+function yum_environment()        { execute yum environment        "$@"; }
+function yum_group()              { execute yum group              "$@"; }
+function yum_history()            { execute yum history            "$@"; }
+function yum_info()               { execute yum info               "$@"; }
+function yum_install()            { execute yum install            "$@"; }
+function yum_leaves()             { execute yum leaves             "$@"; }
+function yum_list()               { execute yum list               "$@"; }
+function yum_makecache()          { execute yum makecache          "$@"; }
+function yum_mark()               { execute yum mark               "$@"; }
+function yum_module()             { execute yum module             "$@"; }
+function yum_offline()            { execute yum offline            "$@"; }
+function yum_provides()           { execute yum provides           "$@"; }
+function yum_reinstall()          { execute yum reinstall          "$@"; }
+function yum_remove()             { execute yum remove             "$@"; }
+function yum_replay()             { execute yum replay             "$@"; }
+function yum_repo()               { execute yum repo               "$@"; }
+function yum_repoquery()          { execute yum repoquery          "$@"; }
+function yum_search()             { execute yum search             "$@"; }
+function yum_swap()               { execute yum swap               "$@"; }
+function yum_system_upgrade()     { execute yum system-upgrade     "$@"; }
+function yum_upgrade()            { execute yum upgrade            "$@"; }
+function yum_versionlock()        { execute yum versionlock        "$@"; }
+function yum_debuginfo_install()  { execute yum debuginfo-install  "$@"; }
+function yum_offline_distrosync() { execute yum offline-distrosync "$@"; }
+function yum_offline_upgrade()    { execute yum offline-upgrade    "$@"; }
+function yum_config_manager()     { execute yum config-manager     "$@"; }
+function yum_builddep()           { execute yum builddep           "$@"; }
+function yum_changelog()          { execute yum changelog          "$@"; }
+function yum_copr()               { execute yum copr               "$@"; }
+function yum_needs_restarting()   { execute yum needs-restarting   "$@"; }
+function yum_repoclosure()        { execute yum repoclosure        "$@"; }
+function yum_reposync()           { execute yum reposync           "$@"; }
+
+##
+## `zypper`:
+##
+function zypper()                             { execute zypper                        "$@"; }
+function zypper_addlocale()                   { execute zypper addlocale              "$@"; }
+function zypper_addlock()                     { execute zypper addlock                "$@"; }
+function zypper_addrepo()                     { execute zypper addrepo                "$@"; }
+function zypper_addservice()                  { execute zypper addservice             "$@"; }
+function zypper_appsteam_cache()              { execute zypper appstream-cache        "$@"; }
+function zypper_clean()                       { execute zypper clean                  "$@"; }
+function zypper_cleanlocks()                  { execute zypper cleanlocks             "$@"; }
+function zypper_dist_upgrade()                { execute zypper dist-upgrade           "$@"; }
+function zypper_download()                    { execute zypper download               "$@"; }
+function zypper_help()                        { execute zypper help                   "$@"; }
+function zypper_info()                        { execute zypper info                   "$@"; }
+function zypper_install()                     { execute zypper install                "$@"; }
+function zypper_install_new_recommends()      { execute zypper install-new-recommends "$@"; }
+function zypper_licenses()                    { execute zypper licenses               "$@"; }
+function zypper_list_patches()                { execute zypper list-patches           "$@"; }
+function zypper_list_updates()                { execute zypper list-updates           "$@"; }
+function zypper_locales()                     { execute zypper locales                "$@"; }
+function zypper_locks()                       { execute zypper locks                  "$@"; }
+function zypper_modifyrepo()                  { execute zypper modifyrepo             "$@"; }
+function zypper_modifyservice()               { execute zypper modifyservice          "$@"; }
+function zypper_needs_rebooting()             { execute zypper needs-rebooting        "$@"; }
+function zypper_packages()                    { execute zypper packages               "$@"; }
+function zypper_patch()                       { execute zypper patch                  "$@"; }
+function zypper_patch_check()                 { execute zypper patch-check            "$@"; }
+function zypper_patches()                     { execute zypper patches                "$@"; }
+function zypper_patch_info()                  { execute zypper patch-info             "$@"; }
+function zypper_patterns()                    { execute zypper patterns               "$@"; }
+function zypper_product_info()                { execute zypper product-info           "$@"; }
+function zypper_products()                    { execute zypper products               "$@"; }
+function zypper_purge_kernels()               { execute zypper purge-kernels          "$@"; }
+function zypper_ps()                          { execute zypper ps                     "$@"; }
+function zypper_refresh()                     { execute zypper refresh                "$@"; }
+function zypper_refresh_services()            { execute zypper refresh-services       "$@"; }
+function zypper_remove()                      { execute zypper remove                 "$@"; }
+function zypper_removelocale()                { execute zypper removelocale           "$@"; }
+function zypper_removelock()                  { execute zypper removelock             "$@"; }
+function zypper_removeptf()                   { execute zypper removeptf              "$@"; }
+function zypper_removerepo()                  { execute zypper removerepo             "$@"; }
+function zypper_removeservice()               { execute zypper removeservice          "$@"; }
+function zypper_renamerepo()                  { execute zypper renamerepo             "$@"; }
+function zypper_repos()                       { execute zypper repos                  "$@"; }
+function zypper_search()                      { execute zypper search                 "$@"; }
+function zypper_services()                    { execute zypper services               "$@"; }
+function zypper_shell()                       { execute zypper shell                  "$@"; }
+function zypper_source_download()             { execute zypper source-download        "$@"; }
+function zypper_source_install()              { execute zypper source-install         "$@"; }
+function zypper_subcommand()                  { execute zypper subcommand             "$@"; }
+function zypper_system_architecture()         { execute zypper system-architecture    "$@"; }
+function zypper_targetos()                    { execute zypper targetos               "$@"; }
+function zypper_update()                      { execute zypper update                 "$@"; }
+function zypper_versioncmp()                  { execute zypper versioncmp             "$@"; }
+function zypper_verify()                      { execute zypper verify                 "$@"; }
+function zypper_what_provides()               { execute zypper what-provides          "$@"; }
+
+##
+## `zypper-log`:
+##
+function zypper_log() { execute zypper-log "$@"; }

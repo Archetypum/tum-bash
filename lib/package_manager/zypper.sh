@@ -87,5 +87,4 @@ function zypper_update()                      { execute zypper update           
 function zypper_versioncmp()                  { execute zypper versioncmp             "$@"; }
 function zypper_verify()                      { execute zypper verify                 "$@"; }
 function zypper_what_provides()               { execute zypper what-provides          "$@"; }
-function zypper_install_new_recommends()       { execute zypper install-new-recommends "$@"; }
 

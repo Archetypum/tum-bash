@@ -34,5 +34,5 @@ function execute()
     fi
 }
 
-function aptitude_run_state_bundle() { execute aptitude_run_state_bundle "$@"; }
+function aptitude_run_state_bundle() { execute aptitude-run-state-bundle "$@"; }
 

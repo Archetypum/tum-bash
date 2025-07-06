@@ -20,10 +20,24 @@ Because interacting with countless package managers and init systems across UNIX
 
 ## Installation
 
+You can use `tum-bash` modules separately 
+
 ```sh
 git clone https://github.com/Archetypum/tum-bash.git
 cd tum-bash
-mv tum your_desired_location/  # we recommend '/usr/bin/tum'
+
+mv lib/unix.sh your_desired_location/
+mv lib/package_manager/apt.sh your_desired_location/
+mv lib/init_system/systemd.sh your_desired_location/
+```
+
+Or use the whole `tum-bash` in a single file:
+
+```sh
+git clone https://github.com/Archetypum/tum-bash.git
+cd tum-bash
+
+mv tum your_desired_location/  # For convenience, Archetypum recommends '/usr/bin/tum' path. 
 ```
 
 ## Supported Package Management Utilities (35)

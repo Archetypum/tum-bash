@@ -483,7 +483,7 @@ function get_user_distro()
         echo "$ID"
     else
         echo -e "${RED}[!] Error: Cannot detect distribution from /etc/os-release.${RESET}"
-        read -rp "[==>] Write your OS name yourself: " local ID
+        read -rp "[==>] Write your OS name yourself: " ID
         echo "$ID"
 	fi
 }
@@ -539,7 +539,7 @@ function clear_screen
 {
     local CLEAR_COMMAND="clear"
 
-    $clear_command
+    $CLEAR_COMMAND
 }
 
 function prompt_user()

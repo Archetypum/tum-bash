@@ -34,9 +34,9 @@ function execute()
     fi
 }
 
-function aptitude_create_state_bundle()              { execute aptitude_create_state_bundle                   "$@"; }
-function aptitude_create_state_bundle_help()         { execute aptitude_create_state_bundle --help            "$@"; }
-function aptitude_create_state_bundle_print_inputs() { execute aptitude_create_state_bundle --print-inputs    "$@"; }
-function aptitude_create_state_bundle_force_bzip2()  { execute aptitude_create_state_bundle --force-bzip2     "$@"; }
-function aptitude_create_state_bundle_force_gzip()   { execute aptitude_create_state_bundle --force-gzip      "$@"; }
+function aptitude_create_state_bundle()              { execute aptitude-create-state-bundle                   "$@"; }
+function aptitude_create_state_bundle_help()         { execute aptitude-create_state-bundle --help            "$@"; }
+function aptitude_create_state_bundle_print_inputs() { execute aptitude-create_state_bundle --print-inputs    "$@"; }
+function aptitude_create_state_bundle_force_bzip2()  { execute aptitude-create_state-bundle --force-bzip2     "$@"; }
+function aptitude_create_state_bundle_force_gzip()   { execute aptitude-create_state-bundle --force-gzip      "$@"; }
 
