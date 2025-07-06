@@ -17,11 +17,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>
 
-declare -r RED="\033[0;31m"
 declare -r GREEN="\033[0;32m"
 declare -r RESET="\033[0m"
-
-DRY_RUN_ARGS=(--dryrun --noconfirm)
 
 function main
 {
