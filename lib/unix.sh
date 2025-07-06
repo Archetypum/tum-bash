@@ -577,4 +577,3 @@ function check_privileges()
         exit 1
     fi
 }
-
