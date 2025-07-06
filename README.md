@@ -14,12 +14,16 @@ Because interacting with countless package managers and init systems across UNIX
 
 ---
 
+## Requirements
+
+`tum` requires only one dependency - **GNU Bash**. You can install it on practically any UNIX-lie operating system.
+
 ## Installation
 
 ```sh
 git clone https://github.com/Archetypum/tum-bash.git
 cd tum-bash
-mv tum your_desired_location/
+mv tum your_desired_location/  # we recommend '/usr/bin/tum'
 ```
 
 ## Supported Package Management Utilities (35)
