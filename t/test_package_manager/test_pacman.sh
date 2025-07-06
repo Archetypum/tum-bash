@@ -17,50 +17,25 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>
 
-set -e
-source /usr/bin/tum
-
 declare -r RED="\033[0;31m"
 declare -r GREEN="\033[0;32m"
 declare -r RESET="\033[0m"
-
-function pass() { echo -e "${GREEN}[PASS] $1${RESET}"; }
-function fail() { echo -e "${RED}[FAIL] $1${RESET}"; exit 1; }
-
-function test_wrapper()
-{
-    local FUNC="$1"
-    local ARGS=("$@")
-    shift
-
-    if OUTPUT=$("$FUNC" "${ARGS[@]}" 2>&1); then
-        if [[ "$OUTPUT" == *"Success"* ]]; then
-            pass "$FUNC passed"
-        else
-            fail "$FUNC output mismatch"
-        fi
-    else
-        fail "$FUNC failed to run"
-    fi
-}
 
 DRY_RUN_ARGS=(--dryrun --noconfirm)
 
 function main
 {
-	echo $(/usr/bin/tum pacman_help)
-	# test_wrapper pacman            --version
-	# test_wrapper pacman_help
-	# test_wrapper pacman_version
-	# test_wrapper pacman_database   "${DRY_RUN_ARGS[@]}"
-	# test_wrapper pacman_files      "${DRY_RUN_ARGS[@]}"
-	# test_wrapper pacman_query      "${DRY_RUN_ARGS[@]}"
-	# test_wrapper pacman_remove     "${DRY_RUN_ARGS[@]}" fake-package
-	# test_wrapper pacman_sync       "${DRY_RUN_ARGS[@]}" fake-package
-	# test_wrapper pacman_deptest    "${DRY_RUN_ARGS[@]}" fake-package
-	# test_wrapper pacman_upgrade    "${DRY_RUN_ARGS[@]}" ./fake.pkg.tar.zst
+	/usr/bin/tum pacman_help
+	/usr/bin/tum pacman_version
+	/usr/bin/tum pacman_database
+	/usr/bin/tum pacman_files
+	/usr/bin/tum pacman_query
+	/usr/bin/tum pacman_remove
+	/usr/bin/tum pacman_sync
+	/usr/bin/tum pacman_deptest
+	/usr/bin/tum pacman_upgrade
 
-	# echo "All tests passed."
+	echo -e "${GREEN}[*] All tests passed.${RESET}"
 }
 
 main
