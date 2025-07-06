@@ -16,7 +16,7 @@ Because interacting with countless package managers and init systems across UNIX
 
 ## Requirements
 
-`tum` requires only one dependency - **GNU Bash**. You can install it on practically any UNIX-lie operating system.
+`tum` requires only one dependency - **GNU Bash**. You can install it on practically any UNIX-like operating system.
 
 ## Installation
 
