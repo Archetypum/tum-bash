@@ -1,4 +1,4 @@
-# `lib/package_manager/yay.sh` — pacman Wrapper Library
+# `lib/package_manager/yay.sh` — yay Wrapper Library
 
 Bash wrapper for interacting with the `yay` package manager. Provides convenient functions to run common `yay` commands with standardized success/error output and execution logging.
 
