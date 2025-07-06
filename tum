@@ -24,7 +24,7 @@
 ##
 ## `tum-bash` version:
 ##
-declare VERSION="0.1"
+declare VERSION="0.0.1-stable"
 
 ##
 ## ANSI Color codes and text formating:
@@ -1004,8 +1004,10 @@ function execute_service()
 function execute()
 {
     local CMD=("$@")
+
     echo -e "${GREEN}[<==] Executing '${CMD[*]}'...${RESET}"
-    if "${CMD[@]}"; then
+
+    if command "${CMD[@]}"; then
         echo -e "${GREEN}[*] Success!${RESET}"
         return 0
     else
@@ -1013,6 +1015,7 @@ function execute()
         return 1
     fi
 }
+
 
 ##
 ## `apk`:
@@ -1738,3 +1741,49 @@ function zypper_what_provides()               { execute zypper what-provides    
 ## `zypper-log`:
 ##
 function zypper_log() { execute zypper-log "$@"; }
+
+#
+# Main:
+#
+function main()
+{
+    local cmd="$1"
+    shift
+
+	if [[ -z "$cmd" ]]; then
+        return
+    fi
+
+    case "$cmd" in
+        "-h" | "--help")
+        	echo "==== Archetypum TheUnixManager ===="
+            echo "[*] Usage: tum <command> [arguments]"
+            echo
+            echo "[...] Options:"
+            echo "  -h, --help       Show this help message."
+            echo "  -c, --commands   List all available commands."
+            echo "  -v, --version    Show tum version."
+            exit 0
+            ;;
+
+        "-c" | "--commands")
+            echo "[...] Available commands:"
+            declare -F | awk '{print "  - " $3}' | grep -v '^main$' | sort
+            exit 0
+            ;;
+
+        "-v" | "--version")
+        	echo $VERSION
+        	exit 0
+        	;;
+    esac
+
+    if declare -F -- "$cmd" > /dev/null; then
+        "$cmd" "$@"
+    else
+        echo -e "${RED}[!] Error: Unknown command '$cmd'${RESET}" >&2
+        exit 1
+    fi
+}
+
+main "$@"
