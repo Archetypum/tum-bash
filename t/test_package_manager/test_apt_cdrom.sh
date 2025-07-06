@@ -16,3 +16,19 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>
+
+declare -r GREEN="\033[0;32m"
+declare -r RESET="\033[0m"
+
+function main
+{
+	echo -e "\n[<==] Starting tests for 'apt-cdrom'...\n"
+
+	/usr/bin/tum apt_cdrom
+	/usr/bin/tum apt_cdrom_add
+	/usr/bin/tum apt_cdrom_ident
+
+	echo -e "\n${GREEN}[*] All tests passed.${RESET}"
+}
+
+main

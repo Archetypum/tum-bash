@@ -16,3 +16,30 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>
+
+declare -r GREEN="\033[0;32m"
+declare -r RESET="\033[0m"
+
+function main
+{
+    echo -e "\n[<==] Starting tests for 'slackpkg'...\n"
+
+    /usr/bin/tum slackpkg
+    /usr/bin/tum slackpkg_search
+    /usr/bin/tum slackpkg_install
+    /usr/bin/tum slackpkg_upgrade
+    /usr/bin/tum slackpkg_reinstall
+    /usr/bin/tum slackpkg_remove
+    /usr/bin/tum slackpkg_blacklist
+    /usr/bin/tum slackpkg_download
+    /usr/bin/tum slackpkg_info
+    /usr/bin/tum slackpkg_clean_system
+    /usr/bin/tum slackpkg_upgrade_all
+    /usr/bin/tum slackpkg_install_new
+    /usr/bin/tum slackpkg_check_updates
+    /usr/bin/tum slackpkg_update
+
+    echo -e "\n${GREEN}[*] All tests passed.${RESET}"
+}
+
+main

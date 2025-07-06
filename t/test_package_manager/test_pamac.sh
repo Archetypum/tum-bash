@@ -16,3 +16,31 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>
+
+declare -r GREEN="\033[0;32m"
+declare -r RESET="\033[0m"
+
+function main
+{
+	echo -e "\n[<==] Starting tests for 'pamac'...\n"
+
+	/usr/bin/tum pamac
+	/usr/bin/tum pamac_version
+	/usr/bin/tum pamac_help
+	/usr/bin/tum pamac_search
+	/usr/bin/tum pamac_list
+	/usr/bin/tum pamac_info
+	/usr/bin/tum pamac_install
+	/usr/bin/tum pamac_reinstall
+	/usr/bin/tum pamac_remove
+	/usr/bin/tum pamac_checkupdates
+	/usr/bin/tum pamac_upgrade
+	/usr/bin/tum pamac_update
+	/usr/bin/tum pamac_clone
+	/usr/bin/tum pamac_build
+	/usr/bin/tum pamac_clean
+
+	echo -e "\n${GREEN}[*] All tests passed.${RESET}"
+}
+
+main

@@ -22,6 +22,8 @@ declare -r RESET="\033[0m"
 
 function main
 {
+	echo -e "\n[<==] Starting tests for 'pacman'...\n"
+
 	/usr/bin/tum pacman_help
 	/usr/bin/tum pacman_version
 	/usr/bin/tum pacman_database
@@ -32,7 +34,7 @@ function main
 	/usr/bin/tum pacman_deptest
 	/usr/bin/tum pacman_upgrade
 
-	echo -e "${GREEN}[*] All tests passed.${RESET}"
+	echo -e "\n${GREEN}[*] All tests passed.${RESET}"
 }
 
 main

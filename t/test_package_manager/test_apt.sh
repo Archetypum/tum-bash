@@ -16,3 +16,43 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>
+
+declare -r GREEN="\033[0;32m"
+declare -r RESET="\033[0m"
+
+function main
+{
+	echo -e "\n[<==] Starting tests for 'apt'...\n"
+
+	/usr/bin/tum apt
+	/usr/bin/tum apt_autoclean
+	/usr/bin/tum apt_autoremove
+	/usr/bin/tum apt_changelog
+	/usr/bin/tum apt_depends
+	/usr/bin/tum apt_download
+	/usr/bin/tum apt_full_upgrade
+	/usr/bin/tum apt_install
+	/usr/bin/tum apt_moo
+	/usr/bin/tum apt_purge
+	/usr/bin/tum apt_reinstall
+	/usr/bin/tum apt_search
+	/usr/bin/tum apt_showsrc
+	/usr/bin/tum apt_update
+	/usr/bin/tum apt_autopurge
+	/usr/bin/tum apt_build_dep
+	/usr/bin/tum apt_clean
+	/usr/bin/tum apt_dist_upgrade
+	/usr/bin/tum apt_edit_sources
+	/usr/bin/tum apt_help
+	/usr/bin/tum apt_list
+	/usr/bin/tum apt_policy
+	/usr/bin/tum apt_rdepends
+	/usr/bin/tum apt_remove
+	/usr/bin/tum apt_show
+	/usr/bin/tum apt_source
+	/usr/bin/tum apt_upgrade
+
+	echo -e "\n${GREEN}[*] All tests passed.${RESET}"
+}
+
+main

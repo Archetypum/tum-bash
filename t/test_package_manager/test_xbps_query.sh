@@ -16,3 +16,31 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>
+
+#!/bin/bash
+
+declare -r GREEN="\033[0;32m"
+declare -r RESET="\033[0m"
+
+function main
+{
+    echo -e "\n[<==] Starting tests for 'xbps-query'...\n"
+
+    /usr/bin/tum xbps_query
+    /usr/bin/tum xbps_query_list_pkgs
+    /usr/bin/tum xbps_query_list_hold_pkgs
+    /usr/bin/tum xbps_query_list_repos
+    /usr/bin/tum xbps_query_list_manual_pkgs
+    /usr/bin/tum xbps_query_list_orphans
+    /usr/bin/tum xbps_query_ownedby
+    /usr/bin/tum xbps_query_show
+    /usr/bin/tum xbps_query_search
+    /usr/bin/tum xbps_query_files
+    /usr/bin/tum xbps_query_deps
+    /usr/bin/tum xbps_query_revdeps
+    /usr/bin/tum xbps_query_cat
+
+    echo -e "\n${GREEN}[*] All tests passed.${RESET}"
+}
+
+main

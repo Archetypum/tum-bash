@@ -16,3 +16,34 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>
+
+declare -r GREEN="\033[0;32m"
+declare -r RESET="\033[0m"
+
+function main
+{
+	echo -e "\n[<==] Starting tests for 'apt-cache'...\n"
+
+	/usr/bin/tum apt_cache
+	/usr/bin/tum apt_cache_add
+	/usr/bin/tum apt_cache_depends
+	/usr/bin/tum apt_cache_dotty
+	/usr/bin/tum apt_cache_dump
+	/usr/bin/tum apt_cache_dumpavail
+	/usr/bin/tum apt_cache_gencaches
+	/usr/bin/tum apt_cache_madison
+	/usr/bin/tum apt_cache_pkgnames
+	/usr/bin/tum apt_cache_policy
+	/usr/bin/tum apt_cache_rdepends
+	/usr/bin/tum apt_cache_search
+	/usr/bin/tum apt_cache_show
+	/usr/bin/tum apt_cache_showpkg
+	/usr/bin/tum apt_cache_showsrc
+	/usr/bin/tum apt_cache_stats
+	/usr/bin/tum apt_cache_unmet
+	/usr/bin/tum apt_cache_xvcg
+
+	echo -e "\n${GREEN}[*] All tests passed.${RESET}"
+}
+
+main

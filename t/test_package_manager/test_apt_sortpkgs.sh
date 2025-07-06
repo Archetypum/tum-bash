@@ -16,3 +16,17 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>
+
+declare -r GREEN="\033[0;32m"
+declare -r RESET="\033[0m"
+
+function main
+{
+	echo -e "\n[<==] Starting test for 'apt-sortpkgs'...\n"
+
+	/usr/bin/tum apt_sortpkgs
+
+	echo -e "\n${GREEN}[*] All tests passed.${RESET}"
+}
+
+main

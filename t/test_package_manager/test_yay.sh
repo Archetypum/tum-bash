@@ -16,3 +16,21 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>
+
+declare -r GREEN="\033[0;32m"
+declare -r RESET="\033[0m"
+
+function main
+{
+    echo -e "\n[<==] Starting tests for 'yay'...\n"
+
+    /usr/bin/tum yay
+    /usr/bin/tum yay_build
+    /usr/bin/tum yay_show
+    /usr/bin/tum yay_getpkgbuild
+    /usr/bin/tum yay_web
+
+    echo -e "\n${GREEN}[*] All tests passed.${RESET}"
+}
+
+main
