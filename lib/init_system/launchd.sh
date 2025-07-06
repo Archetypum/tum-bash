@@ -91,4 +91,3 @@ function execute_launchctl()
         return 1
     fi
 }
-

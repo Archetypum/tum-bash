@@ -40,6 +40,20 @@ cd tum-bash
 mv tum your_desired_location/  # For convenience, Archetypum recommends '/usr/bin/tum' path. 
 ```
 
+## Documentation
+
+You can find `tum-bash` documentation inside the `doc/` directory.
+
+## Tests
+
+You can find automatic tests inside the `t/` directory.
+
+If you want test your installation manually:
+
+```sh
+./autotests.sh
+```
+
 ## Supported Package Management Utilities (35)
 
 ### Debian-based:

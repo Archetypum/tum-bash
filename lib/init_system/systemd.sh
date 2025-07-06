@@ -123,4 +123,3 @@ function execute_systemctl()
         return 1
     fi
 }
-
