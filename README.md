@@ -25,6 +25,7 @@ Because interacting with countless package managers and init systems across UNIX
 ```sh
 git clone https://github.com/Archetypum/tum-bash.git
 cd tum-bash/
+
 sudo make dependencies
 sudo make install
 ```
