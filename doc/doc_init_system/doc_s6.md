@@ -38,7 +38,7 @@ Each of these functions wraps a corresponding `s6-rc` subcommand.
 
 ### Dispatcher
 
-`execute_s6-rc <command> <service>`
+`execute_s6_rc <command> <service>`
 
 Dynamically maps the given <command> (e.g., start, stop, change) to the corresponding wrapper function (e.g., start_s6_rc, stop_s6_rc, change_s6_rc) and executes it.
 

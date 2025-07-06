@@ -16,6 +16,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>
+
 declare -r RED="\033[0;31m"
 declare -r GREEN="\033[0;32m"
 declare -r RESET="\033[0m"
@@ -43,4 +44,3 @@ function pacman_remove()     { execute pacman --remove    "$@"; }
 function pacman_sync()       { execute pacman --sync      "$@"; }
 function pacman_deptest()    { execute pacman --deptest   "$@"; }
 function pacman_upgrade()    { execute pacman --upgrade   "$@"; }
-
