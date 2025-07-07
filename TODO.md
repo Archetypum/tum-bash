@@ -2,7 +2,7 @@
 
 ## Short-term
 
-1) ~~Finish main UNIX module~~.
+1) **FINISHED!** ~~Finish main UNIX module~~.
 
 2) **FINISHED!**: Add ~~**dinit**~~, ~~**launchd**~~, ~~**s6**~~, ~~**openrc**~~, ~~**runit**~~ init support.
 
@@ -12,7 +12,7 @@
 
 5) Write tests.
 
-6) Debug.
+6) **FINISHED!**: ~~Debug~~.
 
 ## Long-term
 
