@@ -16,6 +16,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>
+
 declare -r RED="\033[0;31m"
 declare -r GREEN="\033[0;32m"
 declare -r RESET="\033[0m"
@@ -62,4 +63,3 @@ function pkgin_pkg_content()             { execute pkgin pkg-content         "$@
 function pkgin_pkg_descr()               { execute pkgin pkg-descr           "$@"; }
 function pkgin_pkg_build_defs()          { execute pkgin pkg-build-defs      "$@"; }
 function pkgin_stats()                   { execute pkgin stats               "$@"; }
-

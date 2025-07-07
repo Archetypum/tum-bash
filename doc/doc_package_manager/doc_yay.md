@@ -2,6 +2,8 @@
 
 Bash wrapper for interacting with the `yay` package manager. Provides convenient functions to run common `yay` commands with standardized success/error output and execution logging.
 
+`yay` is commonly used on **Arch GNU/Linux**-based operating systems.
+
 ## Usage
 
 Import this library in your Bash script:

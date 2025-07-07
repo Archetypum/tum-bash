@@ -263,7 +263,7 @@ declare MACOS_BASED=(
     # If you can dream it, Mac can do it.
     # <https://www.apple.com/macos>
 
-    "macos" "darwin"
+    "macos" "darwin" "xnu"
 )
 
 function is_debian_based()

@@ -2,6 +2,8 @@
 
 Bash wrapper for interacting with the `pacman` package manager. Provides convenient functions to run common `pacman` commands with standardized success/error output and execution logging.
 
+`pacman` is commonly used on **Arch GNU/Linux**-based operating systems.
+
 ## Usage
 
 Import this library in your Bash script:
