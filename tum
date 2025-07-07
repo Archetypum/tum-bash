@@ -24,36 +24,36 @@
 ##
 ## `tum-bash` version:
 ##
-declare VERSION="0.0.1-stable"
+declare -r VERSION="0.0.1-stable"
 
 ##
 ## ANSI Color codes and text formating:
 ##
-declare BLACK="\033[90m"
-declare WHITE="\033[97m"
-declare YELLOW="\033[93m"
-declare ORANGE="\033[38;5;214m"
-declare BLUE="\033[94m"
-declare CYAN="\e[0;36m"
-declare PURPLE="\033[95m"
-declare GREEN="\033[92m"
-declare RED="\033[91m"
+declare -r BLACK="\033[90m"
+declare -r WHITE="\033[97m"
+declare -r YELLOW="\033[93m"
+declare -r ORANGE="\033[38;5;214m"
+declare -r BLUE="\033[94m"
+declare -r CYAN="\e[0;36m"
+declare -r PURPLE="\033[95m"
+declare -r GREEN="\033[92m"
+declare -r RED="\033[91m"
 
-declare BG_BLACK="\033[40m"
-declare BG_RED="\033[41m"
-declare BG_GREEN="\033[42m"
-declare BG_ORANGE="\033[43m"
-declare BG_BLUE="\033[44m"
-declare BG_MAGENTA="\033[105m"
-declare BG_CYAN="\033[46m"
-declare BG_WHITE="\033[47m"
+declare -r BG_BLACK="\033[40m"
+declare -r BG_RED="\033[41m"
+declare -r BG_GREEN="\033[42m"
+declare -r BG_ORANGE="\033[43m"
+declare -r BG_BLUE="\033[44m"
+declare -r BG_MAGENTA="\033[105m"
+declare -r BG_CYAN="\033[46m"
+declare -r BG_WHITE="\033[47m"
 
-declare BOLD="\033[1m"
-declare UNDERLINE="\033[4m"
-declare REVERSED="\033[7m"
-declare ITALIC="\033[3m"
-declare CROSSED_OUT="\033[9m"
-declare RESET="\033[0m"
+declare -r BOLD="\033[1m"
+declare -r UNDERLINE="\033[4m"
+declare -r REVERSED="\033[7m"
+declare -r ITALIC="\033[3m"
+declare -r CROSSED_OUT="\033[9m"
+declare -r RESET="\033[0m"
 
 ##
 ## Supported Package Managers:
@@ -536,7 +536,7 @@ function get_init_system
 function get_pid1_comm
 {
     local COMM
-    COMM=$(ps -p 1 -o COMM= 2>/dev/null)
+    COMM=$(ps -p 1 -o comm= 2>/dev/null)
     echo "${COMM}"
 }
 
