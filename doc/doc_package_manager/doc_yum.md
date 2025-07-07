@@ -26,49 +26,49 @@ Runs the given command with arguments, printing a green success message if the c
 
 Each function wraps a specific `yum` command or flag:
 
-| **Function**             | **Equivalent `yum` command**     |
-|--------------------------|----------------------------------|
-| yum                      | yum `<args>`                     |
-| yum_advisory             | yum advisory `<args>`            |
-| yum_autoremove           | yum autoremove `<args>`          |
-| yum_check                | yum check `<args>`               |
-| yum_check_upgrade        | yum check-upgrade `<args>`       |
-| yum_clean                | yum clean `<args>`               |
-| yum_distro_sync          | yum distro-sync `<args>`         |
-| yum_downgrade            | yum downgrade `<args>`           |
-| yum_download             | yum download `<args>`            |
-| yum_environment          | yum environment `<args>`         |
-| yum_group                | yum group `<args>`               |
-| yum_history              | yum history `<args>`             |
-| yum_info                 | yum info `<args>`                |
-| yum_install              | yum install `<args>`             |
-| yum_leaves               | yum leaves `<args>`              |
-| yum_list                 | yum list `<args>`                |
-| yum_makecache            | yum makecache `<args>`           |
-| yum_mark                 | yum mark `<args>`                |
-| yum_module               | yum module `<args>`              |
-| yum_offline              | yum offline `<args>`             |
-| yum_provides             | yum provides `<args>`            |
-| yum_reinstall            | yum reinstall `<args>`           |
-| yum_remove               | yum remove `<args>`              |
-| yum_replay               | yum replay `<args>`              |
-| yum_repo                 | yum repo `<args>`                |
-| yum_repoquery            | yum repoquery `<args>`           |
-| yum_search               | yum search `<args>`              |
-| yum_swap                 | yum swap `<args>`                |
-| yum_system_upgrade       | yum system-upgrade `<args>`      |
-| yum_upgrade              | yum upgrade `<args>`             |
-| yum_versionlock          | yum versionlock `<args>`         |
-| yum_debuginfo_install    | yum debuginfo-install `<args>`   |
-| yum_offline_distrosync   | yum offline-distrosync `<args>`  |
-| yum_offline_upgrade      | yum offline-upgrade `<args>`     |
-| yum_config_manager       | yum config-manager `<args>`      |
-| yum_builddep             | yum builddep `<args>`            |
-| yum_changelog            | yum changelog `<args>`           |
-| yum_copr                 | yum copr `<args>`                |
-| yum_needs_restarting     | yum needs-restarting `<args>`    |
-| yum_repoclosure          | yum repoclosure `<args>`         |
-| yum_reposync             | yum reposync `<args>`            |
+| **Function**           | **Equivalent `yum` command**    |
+|------------------------|---------------------------------|
+| yum                    | yum `<args>`                    |
+| yum_advisory           | yum advisory `<args>`           |
+| yum_autoremove         | yum autoremove `<args>`         |
+| yum_check              | yum check `<args>`              |
+| yum_check_upgrade      | yum check-upgrade `<args>`      |
+| yum_clean              | yum clean `<args>`              |
+| yum_distro_sync        | yum distro-sync `<args>`        |
+| yum_downgrade          | yum downgrade `<args>`          |
+| yum_download           | yum download `<args>`           |
+| yum_environment        | yum environment `<args>`        |
+| yum_group              | yum group `<args>`              |
+| yum_history            | yum history `<args>`            |
+| yum_info               | yum info `<args>`               |
+| yum_install            | yum install `<args>`            |
+| yum_leaves             | yum leaves `<args>`             |
+| yum_list               | yum list `<args>`               |
+| yum_makecache          | yum makecache `<args>`          |
+| yum_mark               | yum mark `<args>`               |
+| yum_module             | yum module `<args>`             |
+| yum_offline            | yum offline `<args>`            |
+| yum_provides           | yum provides `<args>`           |
+| yum_reinstall          | yum reinstall `<args>`          |
+| yum_remove             | yum remove `<args>`             |
+| yum_replay             | yum replay `<args>`             |
+| yum_repo               | yum repo `<args>`               |
+| yum_repoquery          | yum repoquery `<args>`          |
+| yum_search             | yum search `<args>`             |
+| yum_swap               | yum swap `<args>`               |
+| yum_system_upgrade     | yum system-upgrade `<args>`     |
+| yum_upgrade            | yum upgrade `<args>`            |
+| yum_versionlock        | yum versionlock `<args>`        |
+| yum_debuginfo_install  | yum debuginfo-install `<args>`  |
+| yum_offline_distrosync | yum offline-distrosync `<args>` |
+| yum_offline_upgrade    | yum offline-upgrade `<args>`    |
+| yum_config_manager     | yum config-manager `<args>`     |
+| yum_builddep           | yum builddep `<args>`           |
+| yum_changelog          | yum changelog `<args>`          |
+| yum_copr               | yum copr `<args>`               |
+| yum_needs_restarting   | yum needs-restarting `<args>`   |
+| yum_repoclosure        | yum repoclosure `<args>`        |
+| yum_reposync           | yum reposync `<args>`           |
 
 
 ## Example

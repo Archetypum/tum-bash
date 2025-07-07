@@ -26,26 +26,26 @@ Runs the given command with arguments, printing a green success message if the c
 
 Each function wraps a specific `apt-cache` command or flag:
 
-| **Function**         | **Equivalent `apt-cache` command** |
-|----------------------|------------------------------------|
-| apt_cache            | apt-cache `<args>`                 |
-| apt_cache_add        | apt-cache add `<args>`             |
-| apt_cache_depends    | apt-cache depends `<args>`         |
-| apt_cache_dotty      | apt-cache dotty `<args>`           |
-| apt_cache_dump       | apt-cache dump `<args>`            |
-| apt_cache_dumpavail  | apt-cache dumpavail `<args>`       |
-| apt_cache_gencaches  | apt-cache gencaches `<args>`       |
-| apt_cache_madison    | apt-cache madison `<args>`         |
-| apt_cache_pkgnames   | apt-cache pkgnames `<args>`        |
-| apt_cache_policy     | apt-cache policy `<args>`          |
-| apt_cache_rdepends   | apt-cache rdepends `<args>`        |
-| apt_cache_search     | apt-cache search `<args>`          |
-| apt_cache_show       | apt-cache show `<args>`            |
-| apt_cache_showpkg    | apt-cache showpkg `<args>`         |
-| apt_cache_showsrc    | apt-cache showsrc `<args>`         |
-| apt_cache_stats      | apt-cache stats `<args>`           |
-| apt_cache_unmet      | apt-cache unmet `<args>`           |
-| apt_cache_xvcg       | apt-cache xvcg `<args>`            |
+| **Function**        | **Equivalent `apt-cache` command** |
+|---------------------|------------------------------------|
+| apt_cache           | apt-cache `<args>`                 |
+| apt_cache_add       | apt-cache add `<args>`             |
+| apt_cache_depends   | apt-cache depends `<args>`         |
+| apt_cache_dotty     | apt-cache dotty `<args>`           |
+| apt_cache_dump      | apt-cache dump `<args>`            |
+| apt_cache_dumpavail | apt-cache dumpavail `<args>`       |
+| apt_cache_gencaches | apt-cache gencaches `<args>`       |
+| apt_cache_madison   | apt-cache madison `<args>`         |
+| apt_cache_pkgnames  | apt-cache pkgnames `<args>`        |
+| apt_cache_policy    | apt-cache policy `<args>`          |
+| apt_cache_rdepends  | apt-cache rdepends `<args>`        |
+| apt_cache_search    | apt-cache search `<args>`          |
+| apt_cache_show      | apt-cache show `<args>`            |
+| apt_cache_showpkg   | apt-cache showpkg `<args>`         |
+| apt_cache_showsrc   | apt-cache showsrc `<args>`         |
+| apt_cache_stats     | apt-cache stats `<args>`           |
+| apt_cache_unmet     | apt-cache unmet `<args>`           |
+| apt_cache_xvcg      | apt-cache xvcg `<args>`            |
 
 
 ## Example

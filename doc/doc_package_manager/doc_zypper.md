@@ -83,8 +83,6 @@ Each function wraps a specific `zypper` command or flag:
 | zypper_verify                 | zypper verify `<args>`                 |
 | zypper_what_provides          | zypper what-provides `<args>`          |
 
-
-
 ## Example
 
 ```bash
@@ -92,7 +90,7 @@ Each function wraps a specific `zypper` command or flag:
 
 source lib/package_manager/zypper.sh
 
-# Update system
+# Update ** Upgrade the system
 zypper_refresh
 zypper_update
 

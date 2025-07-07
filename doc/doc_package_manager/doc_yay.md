@@ -22,7 +22,7 @@ source lib/package_manager/yay.sh
 
 Runs the given command with arguments, printing a green success message if the command succeeds or a red error message if it fails.
 
-### Yay Command Wrappers
+### yay Command Wrappers
 
 Each function wraps a specific `yay` command or flag:
 

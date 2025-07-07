@@ -36,5 +36,5 @@ function execute()
 
 function apt_config()       { execute apt-config       "$@"; }
 function apt_config_shell() { execute apt-config shell "$@"; }
-function apt_config_dump()  { execute apt-dump dump    "$@"; }
+function apt_config_dump()  { execute apt-config dump    "$@"; }
 

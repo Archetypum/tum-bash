@@ -26,35 +26,35 @@ Runs the given command with arguments, printing a green success message if the c
 
 Each function wraps a specific `apt` command or flag:
 
-| **Function**           | **Equivalent `apt` command**           |
-|------------------------|----------------------------------------|
-| apt                    | apt `<args>`                           |
-| apt_autoclean          | apt autoclean `<args>`                 |
-| apt_autoremove         | apt autoremove `<args>`                |
-| apt_changelog          | apt changelog `<args>`                 |
-| apt_depends            | apt depends `<args>`                   |
-| apt_download           | apt download `<args>`                  |
-| apt_full_upgrade       | apt full-upgrade `<args>`              |
-| apt_install            | apt install `<args>`                   |
-| apt_moo                | apt moo `<args>`                       |
-| apt_purge              | apt purge `<args>`                     |
-| apt_reinstall          | apt reinstall `<args>`                 |
-| apt_search             | apt search `<args>`                    |
-| apt_showsrc            | apt showsrc `<args>`                   |
-| apt_update             | apt update `<args>`                    |
-| apt_autopurge          | apt autopurge `<args>`                 |
-| apt_build_dep          | apt build-dep `<args>`                 |
-| apt_clean              | apt clean `<args>`                     |
-| apt_dist_upgrade       | apt dist-upgrade `<args>`              |
-| apt_edit_sources       | apt edit-sources `<args>`              |
-| apt_help               | apt help `<args>`                      |
-| apt_list               | apt list `<args>`                      |
-| apt_policy             | apt policy `<args>`                    |
-| apt_rdepends           | apt rdepends `<args>`                  |
-| apt_remove             | apt remove `<args>`                    |
-| apt_show               | apt show `<args>`                      |
-| apt_source             | apt source `<args>`                    |
-| apt_upgrade            | apt upgrade `<args>`                   |
+| **Function**     | **Equivalent `apt` command** |
+|------------------|------------------------------|
+| apt              | apt `<args>`                 |
+| apt_autoclean    | apt autoclean `<args>`       |
+| apt_autoremove   | apt autoremove `<args>`      |
+| apt_changelog    | apt changelog `<args>`       |
+| apt_depends      | apt depends `<args>`         |
+| apt_download     | apt download `<args>`        |
+| apt_full_upgrade | apt full-upgrade `<args>`    |
+| apt_install      | apt install `<args>`         |
+| apt_moo          | apt moo `<args>`             |
+| apt_purge        | apt purge `<args>`           |
+| apt_reinstall    | apt reinstall `<args>`       |
+| apt_search       | apt search `<args>`          |
+| apt_showsrc      | apt showsrc `<args>`         |
+| apt_update       | apt update `<args>`          |
+| apt_autopurge    | apt autopurge `<args>`       |
+| apt_build_dep    | apt build-dep `<args>`       |
+| apt_clean        | apt clean `<args>`           |
+| apt_dist_upgrade | apt dist-upgrade `<args>`    |
+| apt_edit_sources | apt edit-sources `<args>`    |
+| apt_help         | apt help `<args>`            |
+| apt_list         | apt list `<args>`            |
+| apt_policy       | apt policy `<args>`          |
+| apt_rdepends     | apt rdepends `<args>`        |
+| apt_remove       | apt remove `<args>`          |
+| apt_show         | apt show `<args>`            |
+| apt_source       | apt source `<args>`          |
+| apt_upgrade      | apt upgrade `<args>`         |
 
 ## Example
 

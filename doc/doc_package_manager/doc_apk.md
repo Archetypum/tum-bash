@@ -26,28 +26,28 @@ Runs the given command with arguments, printing a green success message if the c
 
 Each function wraps a specific `apk` command or flag:
 
-| **Function**        | **Equivalent `apk` command**          |
-|---------------------|---------------------------------------|
-| apk                 | apk `<args>`                          |
-| apk_help            | apk --help `<args>`                   |
-| apk_add             | apk add `<args>`                      |
-| apk_del             | apk del `<args>`                      |
-| apk_fix             | apk fix `<args>`                      |
-| apk_update          | apk update `<args>`                   |
-| apk_upgrade         | apk upgrade `<args>`                  |
-| apk_cache           | apk cache `<args>`                    |
-| apk_info            | apk info `<args>`                     |
-| apk_list            | apk list `<args>`                     |
-| apk_dot             | apk dot `<args>`                      |
-| apk_policy          | apk policy `<args>`                   |
-| apk_search          | apk search `<args>`                   |
-| apk_index           | apk index `<args>`                    |
-| apk_fetch           | apk fetch `<args>`                    |
-| apk_manifest        | apk manifest `<args>`                 |
-| apk_verify          | apk verify `<args>`                   |
-| apk_audit           | apk audit `<args>`                    |
-| apk_stats           | apk stats `<args>`                    |
-| apk_version         | apk version `<args>`                  |
+| **Function**        | **Equivalent `apk` command** |
+|---------------------|------------------------------|
+| apk                 | apk `<args>`                 |
+| apk_help            | apk --help `<args>`          |
+| apk_add             | apk add `<args>`             |
+| apk_del             | apk del `<args>`             |
+| apk_fix             | apk fix `<args>`             |
+| apk_update          | apk update `<args>`          |
+| apk_upgrade         | apk upgrade `<args>`         |
+| apk_cache           | apk cache `<args>`           |
+| apk_info            | apk info `<args>`            |
+| apk_list            | apk list `<args>`            |
+| apk_dot             | apk dot `<args>`             |
+| apk_policy          | apk policy `<args>`          |
+| apk_search          | apk search `<args>`          |
+| apk_index           | apk index `<args>`           |
+| apk_fetch           | apk fetch `<args>`           |
+| apk_manifest        | apk manifest `<args>`        |
+| apk_verify          | apk verify `<args>`          |
+| apk_audit           | apk audit `<args>`           |
+| apk_stats           | apk stats `<args>`           |
+| apk_version         | apk version `<args>`         |
 
 ## Example
 

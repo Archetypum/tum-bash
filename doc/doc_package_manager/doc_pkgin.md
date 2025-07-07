@@ -26,37 +26,37 @@ Runs the given command with arguments, printing a green success message if the c
 
 Each function wraps a specific `pkgin` command or flag:
 
-| **Function**              | **Equivalent `pkgin` command**      |
-|---------------------------|-------------------------------------|
-| pkgin                     | pkgin `<args>`                      |
-| pkgin_list                | pkgin list `<args>`                 |
-| pkgin_avail               | pkgin avail `<args>`                |
-| pkgin_search              | pkgin search `<args>`               |
-| pkgin_install             | pkgin install `<args>`              |
-| pkgin_update              | pkgin update `<args>`               |
-| pkgin_upgrade             | pkgin upgrade `<args>`              |
-| pkgin_full_upgrade        | pkgin full-upgrade `<args>`         |
-| pkgin_remove              | pkgin remove `<args>`               |
-| pkgin_keep                | pkgin keep `<args>`                 |
-| pkgin_unkeep              | pkgin unkeep `<args>`               |
-| pkgin_export              | pkgin export `<args>`               |
-| pkgin_import              | pkgin import `<args>`               |
-| pkgin_show_keep           | pkgin show-keep `<args>`            |
-| pkgin_show_no_keep        | pkgin show-no-keep `<args>`         |
-| pkgin_autoremove          | pkgin autoremove `<args>`           |
-| pkgin_clean               | pkgin clean `<args>`                |
-| pkgin_show_deps           | pkgin show-deps `<args>`            |
-| pkgin_show_full_deps      | pkgin show-full-deps `<args>`       |
-| pkgin_show_rev_deps       | pkgin show-rev-deps `<args>`        |
-| pkgin_provides            | pkgin provides `<args>`             |
-| pkgin_requires            | pkgin requires `<args>`             |
-| pkgin_show_category       | pkgin show-category `<args>`        |
-| pkgin_show_pkg_category   | pkgin show-pkg-category `<args>`    |
-| pkgin_show_all_categories | pkgin show-all-categories `<args>`  |
-| pkgin_pkg_content         | pkgin pkg-content `<args>`          |
-| pkgin_pkg_descr           | pkgin pkg-descr `<args>`            |
-| pkgin_pkg_build_defs      | pkgin pkg-build-defs `<args>`       |
-| pkgin_stats               | pkgin stats `<args>`                |
+| **Function**              | **Equivalent `pkgin` command**     |
+|---------------------------|------------------------------------|
+| pkgin                     | pkgin `<args>`                     |
+| pkgin_list                | pkgin list `<args>`                |
+| pkgin_avail               | pkgin avail `<args>`               |
+| pkgin_search              | pkgin search `<args>`              |
+| pkgin_install             | pkgin install `<args>`             |
+| pkgin_update              | pkgin update `<args>`              |
+| pkgin_upgrade             | pkgin upgrade `<args>`             |
+| pkgin_full_upgrade        | pkgin full-upgrade `<args>`        |
+| pkgin_remove              | pkgin remove `<args>`              |
+| pkgin_keep                | pkgin keep `<args>`                |
+| pkgin_unkeep              | pkgin unkeep `<args>`              |
+| pkgin_export              | pkgin export `<args>`              |
+| pkgin_import              | pkgin import `<args>`              |
+| pkgin_show_keep           | pkgin show-keep `<args>`           |
+| pkgin_show_no_keep        | pkgin show-no-keep `<args>`        |
+| pkgin_autoremove          | pkgin autoremove `<args>`          |
+| pkgin_clean               | pkgin clean `<args>`               |
+| pkgin_show_deps           | pkgin show-deps `<args>`           |
+| pkgin_show_full_deps      | pkgin show-full-deps `<args>`      |
+| pkgin_show_rev_deps       | pkgin show-rev-deps `<args>`       |
+| pkgin_provides            | pkgin provides `<args>`            |
+| pkgin_requires            | pkgin requires `<args>`            |
+| pkgin_show_category       | pkgin show-category `<args>`       |
+| pkgin_show_pkg_category   | pkgin show-pkg-category `<args>`   |
+| pkgin_show_all_categories | pkgin show-all-categories `<args>` |
+| pkgin_pkg_content         | pkgin pkg-content `<args>`         |
+| pkgin_pkg_descr           | pkgin pkg-descr `<args>`           |
+| pkgin_pkg_build_defs      | pkgin pkg-build-defs `<args>`      |
+| pkgin_stats               | pkgin stats `<args>`               |
 
 ## Example
 

@@ -1,4 +1,4 @@
-# `lib/package_manager/qi.sh` — brew Wrapper Library
+# `lib/package_manager/qi.sh` — qi Wrapper Library
 
 Bash wrapper for interacting with the `qi` package manager. Provides convenient functions to run common `qi` commands with standardized success/error output and execution logging.
 

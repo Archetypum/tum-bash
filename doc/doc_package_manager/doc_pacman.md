@@ -26,18 +26,18 @@ Runs the given command with arguments, printing a green success message if the c
 
 Each function wraps a specific `pacman` command or flag:
 
-| **Function**        | **Equivalent `pacman` command**  |
-|---------------------|----------------------------------|
-| pacman              | pacman `<args>`                  |
-| pacman_help         | pacman --help `<args>`           |
-| pacman_version      | pacman --version `<args>`        |
-| pacman_database     | pacman --database `<args>`       |
-| pacman_files        | pacman --files `<args>`          |
-| pacman_query        | pacman --query `<args>`          |
-| pacman_remove       | pacman --remove `<args>`         |
-| pacman_sync         | pacman --sync `<args>`           |
-| pacman_deptest      | pacman --deptest `<args>`        |
-| pacman_upgrade      | pacman --upgrade `<args>`        |
+| **Function**        | **Equivalent `pacman` command** |
+|---------------------|---------------------------------|
+| pacman              | pacman `<args>`                 |
+| pacman_help         | pacman --help `<args>`          |
+| pacman_version      | pacman --version `<args>`       |
+| pacman_database     | pacman --database `<args>`      |
+| pacman_files        | pacman --files `<args>`         |
+| pacman_query        | pacman --query `<args>`         |
+| pacman_remove       | pacman --remove `<args>`        |
+| pacman_sync         | pacman --sync `<args>`          |
+| pacman_deptest      | pacman --deptest `<args>`       |
+| pacman_upgrade      | pacman --upgrade `<args>`       |
 
 ## Example
 

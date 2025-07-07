@@ -26,49 +26,49 @@ Runs the given command with arguments, printing a green success message if the c
 
 Each function wraps a specific `dnf` command or flag:
 
-| **Function**           | **Equivalent `dnf` command**     |
-|------------------------|----------------------------------|
-| dnf                    | dnf `<args>`                     |
-| dnf_advisory           | dnf advisory `<args>`            |
-| dnf_autoremove         | dnf autoremove `<args>`          |
-| dnf_check              | dnf check `<args>`               |
-| dnf_check_upgrade      | dnf check-upgrade `<args>`       |
-| dnf_clean              | dnf clean `<args>`               |
-| dnf_distro_sync        | dnf distro-sync `<args>`         |
-| dnf_downgrade          | dnf downgrade `<args>`           |
-| dnf_download           | dnf download `<args>`            |
-| dnf_environment        | dnf environment `<args>`         |
-| dnf_group              | dnf group `<args>`               |
-| dnf_history            | dnf history `<args>`             |
-| dnf_info               | dnf info `<args>`                |
-| dnf_install            | dnf install `<args>`             |
-| dnf_leaves             | dnf leaves `<args>`              |
-| dnf_list               | dnf list `<args>`                |
-| dnf_makecache          | dnf makecache `<args>`           |
-| dnf_mark               | dnf mark `<args>`                |
-| dnf_module             | dnf module `<args>`              |
-| dnf_offline            | dnf offline `<args>`             |
-| dnf_provides           | dnf provides `<args>`            |
-| dnf_reinstall          | dnf reinstall `<args>`           |
-| dnf_remove             | dnf remove `<args>`              |
-| dnf_replay             | dnf replay `<args>`              |
-| dnf_repo               | dnf repo `<args>`                |
-| dnf_repoquery          | dnf repoquery `<args>`           |
-| dnf_search             | dnf search `<args>`              |
-| dnf_swap               | dnf swap `<args>`                |
-| dnf_system_upgrade     | dnf system-upgrade `<args>`      |
-| dnf_upgrade            | dnf upgrade `<args>`             |
-| dnf_versionlock        | dnf versionlock `<args>`         |
-| dnf_debuginfo_install  | dnf debuginfo-install `<args>`   |
-| dnf_offline_distrosync | dnf offline-distrosync `<args>`  |
-| dnf_offline_upgrade    | dnf offline-upgrade `<args>`     |
-| dnf_config_manager     | dnf config-manager `<args>`      |
-| dnf_builddep           | dnf builddep `<args>`            |
-| dnf_changelog          | dnf changelog `<args>`           |
-| dnf_copr               | dnf copr `<args>`                |
-| dnf_needs_restarting   | dnf needs-restarting `<args>`    |
-| dnf_repoclosure        | dnf repoclosure `<args>`         |
-| dnf_reposync           | dnf reposync `<args>`            |
+| **Function**           | **Equivalent `dnf` command**    |
+|------------------------|---------------------------------|
+| dnf                    | dnf `<args>`                    |
+| dnf_advisory           | dnf advisory `<args>`           |
+| dnf_autoremove         | dnf autoremove `<args>`         |
+| dnf_check              | dnf check `<args>`              |
+| dnf_check_upgrade      | dnf check-upgrade `<args>`      |
+| dnf_clean              | dnf clean `<args>`              |
+| dnf_distro_sync        | dnf distro-sync `<args>`        |
+| dnf_downgrade          | dnf downgrade `<args>`          |
+| dnf_download           | dnf download `<args>`           |
+| dnf_environment        | dnf environment `<args>`        |
+| dnf_group              | dnf group `<args>`              |
+| dnf_history            | dnf history `<args>`            |
+| dnf_info               | dnf info `<args>`               |
+| dnf_install            | dnf install `<args>`            |
+| dnf_leaves             | dnf leaves `<args>`             |
+| dnf_list               | dnf list `<args>`               |
+| dnf_makecache          | dnf makecache `<args>`          |
+| dnf_mark               | dnf mark `<args>`               |
+| dnf_module             | dnf module `<args>`             |
+| dnf_offline            | dnf offline `<args>`            |
+| dnf_provides           | dnf provides `<args>`           |
+| dnf_reinstall          | dnf reinstall `<args>`          |
+| dnf_remove             | dnf remove `<args>`             |
+| dnf_replay             | dnf replay `<args>`             |
+| dnf_repo               | dnf repo `<args>`               |
+| dnf_repoquery          | dnf repoquery `<args>`          |
+| dnf_search             | dnf search `<args>`             |
+| dnf_swap               | dnf swap `<args>`               |
+| dnf_system_upgrade     | dnf system-upgrade `<args>`     |
+| dnf_upgrade            | dnf upgrade `<args>`            |
+| dnf_versionlock        | dnf versionlock `<args>`        |
+| dnf_debuginfo_install  | dnf debuginfo-install `<args>`  |
+| dnf_offline_distrosync | dnf offline-distrosync `<args>` |
+| dnf_offline_upgrade    | dnf offline-upgrade `<args>`    |
+| dnf_config_manager     | dnf config-manager `<args>`     |
+| dnf_builddep           | dnf builddep `<args>`           |
+| dnf_changelog          | dnf changelog `<args>`          |
+| dnf_copr               | dnf copr `<args>`               |
+| dnf_needs_restarting   | dnf needs-restarting `<args>`   |
+| dnf_repoclosure        | dnf repoclosure `<args>`        |
+| dnf_reposync           | dnf reposync `<args>`           |
 
 ## Example
 
