@@ -12,17 +12,17 @@ Happy building cross-platform UNIX software, happy hacking.
      120 unique files.                                          
        3 files ignored.
 
-github.com/AlDanial/cloc v 2.04  T=0.03 s (3595.2 files/s, 280874.6 lines/s)
+github.com/AlDanial/cloc v 2.04  T=0.03 s (3891.7 files/s, 306016.8 lines/s)
 --------------------------------------------------------------------------------
 Language                      files          blank        comment           code
 --------------------------------------------------------------------------------
 Bourne Shell                     89            566           1564           3518
 Bourne Again Shell                1            183            206           1402
-Markdown                         21            602              0           1104
-XML                               7              0              0            208
+Markdown                         21            627              0           1139
+XML                               7              0              0            209
 make                              1              5              0             16
 YAML                              1              0              0              1
 --------------------------------------------------------------------------------
-SUM:                            120           1356           1770           6249
+SUM:                            120           1381           1770           6285
 --------------------------------------------------------------------------------
 ```
