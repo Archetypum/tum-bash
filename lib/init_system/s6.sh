@@ -47,13 +47,17 @@ function execute_s6_rc()
 {
     local COMMAND="$1"
     local SERVICE="$2"
-    local FUNC_NAME="${COMMAND//-/_}_s6_rc"
 
-    if declare -f "$FUNC_NAME" >/dev/null 2>&1; then
-        $FUNC_NAME "$SERVICE"
-        return $?
-    else
-        echo -e "${RED}[!] Error: Unknown command: $COMMAND${RESET}"
-        return 1
-    fi
+    case "$COMMAND" in
+    	"help" | "list" | "listall" | "diff" | "start" | "stop" | "change")
+    		;;
+
+        *)
+            echo -e "${RED}[!] Error: Unsupported command: $COMMAND${RESET}"
+            return 1
+            ;;
+    esac
+
+    local FUNC_NAME="${COMMAND//-/_}_s6_rc"
+    "$FUNC_NAME" "$SERVICE"
 }

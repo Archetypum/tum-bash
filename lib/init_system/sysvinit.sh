@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# `lib/init_system/sysvinit`
+# `lib/init_system/sysvinit.sh`
 #
 # Copyright (C) 2025 Archetypum
 #
@@ -45,14 +45,17 @@ function execute_service()
 {
     local COMMAND="$1"
     local SERVICE="$2"
+
+    case "$COMMAND" in
+        "start" | "stop" | "restart" | "force-reload" | "status")
+        	;;
+
+        *)
+            echo -e "${RED}[!] Error: Unsupported command: $COMMAND${RESET}"
+            return 1
+            ;;
+    esac
+
     local FUNC_NAME="${COMMAND//-/_}_service"
-
-    if declare -f "$FUNC_NAME" >/dev/null 2>&1; then
-        $FUNC_NAME "$SERVICE"
-        return $?
-    else
-        echo -e "${RED}[!] Error: Unknown command: $COMMAND${RESET}"
-        return 1
-    fi
+    "$FUNC_NAME" "$SERVICE"
 }
-

@@ -63,14 +63,19 @@ function execute_dinitctl()
 {
     local COMMAND="$1"
     local SERVICE="$2"
+
+    case "$COMMAND" in
+        "start" | "stop" | "status" | "is-started" | "is-failed" | "restart" | "wake" | "release" | \
+        "unpin" | "unload" | "reload" | "list" | "shutdown" | "add-dep" | "rm-dep" | "enable" | "disable" | \
+        "trigger" | "untrigger" | "setenv" | "unsetenv" | "catalog" | "signal")
+        	;;
+
+        *)
+            echo -e "${RED}[!] Error: Unsupported command: $COMMAND${RESET}"
+            return 1
+            ;;
+    esac
+
     local FUNC_NAME="${COMMAND//-/_}_dinitctl"
-
-    if declare -f "$FUNC_NAME" >/dev/null 2>&1; then
-        $FUNC_NAME "$SERVICE"
-        return $?
-    else
-        echo -e "${RED}[!] Error: Unknown command: $COMMAND${RESET}"
-        return 1
-    fi
+    "$FUNC_NAME" "$SERVICE"
 }
-

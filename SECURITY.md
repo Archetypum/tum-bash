@@ -1,41 +1,55 @@
-## Contact information
+# Security Policy for tum-bash
 
-If you found vulnerability, you can send the issue on GitHub tum-bash in "Issues" -> "New Issue" -> "Submit New Issue"
+## Reporting Vulnerabilities
 
-## Security Policy
+If you discover a security vulnerability in `tum-bash`, please report it by opening a new issue on the [tum-bash GitHub repository](https://github.com/Archetypum/tum-bash/issues):
 
-If you found a vulnerability in tum-bash, please, provide us next information:
-- Your GNU/Linux, BSD distro
-- Line of code where vulnerability located
-- If it was found while code was running, leave error message and what you did to get that behavior
+1. Go to **Issues** → **New Issue**  
+2. Select **Submit New Issue**
 
-We will try to fix the vulnerability as fast as possible, we really appreciate the help in finding vulnerabilities, don't be silent if you found something.
+When reporting, please include:
 
-After vulnerability got fixed we will:
-- Say very big thank with all our heart.
+- Your operating system and version (e.g., GNU/Linux distribution, macOS or BSD);
+- 
+- The exact line(s) of code where the vulnerability occurs;
+- 
+- If the issue happens during runtime, include any error messages and steps to reproduce the behavior.
 
-After vulnerability got fixed we will not:
-- Not send you in jail;
-- Not force you to eat hot potatoes with extra ketchup;
-- Not sue you.
+Your help in identifying security issues is greatly appreciated — please don’t hesitate to share your findings!
+
+---
+
+## What We Do After Receiving a Report
+
+- We will acknowledge your report and work to fix the vulnerability as quickly as possible.  
+- We will sincerely thank you for your contribution to improving `tum-bash`.
+
+---
+
+## What We Do NOT Do
+
+- We will **not** take legal action against you.  
+- We will **not** punish or harass you in any way.  
+- We will **not** force you to eat hot potatoes with extra ketchup (unless you want to, of course).
+
+---
 
 ## Known Vulnerabilities
 
-*Shell injections* are might be common within `tum-bash` and `tum` projects in general. Be aware of what you are writing,
-even with all the *Shell injection* negotiations that Archetypum implements into `tum-bash`.
+Please be aware that **shell injection vulnerabilities** might exist within `tum-bash` and the wider `tum` projects despite our best efforts to mitigate them. Always carefully review and sanitize any code or input you write or use.
 
-## Recommendations on tum-bash usage
+---
 
-Be careful while using tum-bash, it always works with root privileges,
-and we are not responsible for all your actions.
+## Usage Recommendations
 
-DO NOT CHANGE anything in the code unless you know what you are doing.
+- **`tum-bash` requires root privileges** to operate. Use it with caution.  
+- You are fully responsible for your actions when using `tum-bash`.  
+- Do **not** modify the code unless you are confident in what you are doing.
 
-## Related resources
+---
 
-- _LICENSE-LGPLv3.md_
+## Related Resources
 
-- _CONTRIBUTING.md_
-
-- _CODE_OF_CONDUCT.md_
-
+- [_LICENSE-LGPLv3.md_](./LICENSE-LGPLv3.md)  
+- [_CONTRIBUTING.md_](./CONTRIBUTING.md)  
+- [_CODE_OF_CONDUCT.md_](./CODE_OF_CONDUCT.md)

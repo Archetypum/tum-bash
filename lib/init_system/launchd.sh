@@ -80,13 +80,21 @@ function execute_launchctl()
 {
     local COMMAND="$1"
     local SERVICE="$2"
-    local FUNC_NAME="${COMMAND//-/_}_launchctl"
 
-    if declare -f "$FUNC_NAME" >/dev/null 2>&1; then
-        $FUNC_NAME "$SERVICE"
-        return $?
-    else
-        echo -e "${RED}[!] Error: Unknown command: $COMMAND${RESET}"
-        return 1
-    fi
+    case "$COMMAND" in
+        "bootstrap" | "bootout" | "enable" | "disable" | "uncache" | "kickstart" | "attach" | "debug" | \
+        "kill" | "blame" | "print" | "print-cache" | "print-disabled" | "plist" | "procinfo" | "hostinfo" | \
+        "resolveport" | "examine" | "reboot" | "error" | "variant" | "version" | "load" | "unload" | "submit" | \
+        "remove" | "start" | "stop" | "list" | "setenv" | "unsetenv" | "getenv" | "export" | "limit" | "bsexec" | \
+        "asuser" | "managerpid" | "manageruid" | "managername" | "help")
+        	;;
+
+        *)
+            echo -e "${RED}[!] Error: Unsupported command: $COMMAND${RESET}"
+            return 1
+            ;;
+    esac
+
+    local FUNC_NAME="${COMMAND//-/_}_launchctl"
+    "$FUNC_NAME" "$SERVICE"
 }

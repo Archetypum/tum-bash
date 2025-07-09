@@ -17,7 +17,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>
 
-
 declare -r RED="\033[0;31m"
 declare -r GREEN="\033[0;32m"
 declare -r RESET="\033[0m"
@@ -113,13 +112,26 @@ function execute_systemctl()
 {
     local COMMAND="$1"
     local SERVICE="$2"
-    local FUNC_NAME="${COMMAND//-/_}_systemctl"
 
-    if declare -f "$FUNC_NAME" >/dev/null 2>&1; then
-        $FUNC_NAME "$SERVICE"
-        return $?
-    else
-        echo -e "${RED}[!] Error: Unknown command: $COMMAND${RESET}"
-        return 1
-    fi
+    case "$COMMAND" in
+        "add-requires" | "add-wants" | "bind" | "cancel" | "cat" | "condreload" | "condrestart" | "condstop" | \
+        "daemon-reexec" | "daemon-reload" | "default" | "disable" | "edit" | "emergency" | "enable" | "exit" | \
+        "force-reload" | "get-default" | "halt" | "help" | "hibernate" | "hybrid-sleep" | "import-environment" | \
+        "is-active" | "is-enabled" | "is-failed" | "isolate" | "is-system-running" | "kexec" | "kill" | "link" | \
+        "list-automounts" | "list-dependencies" | "list-jobs" | "list-machines" | "list-sockets" | "list-timers" | \
+        "list-unit-files" | "list-units" | "log-level" | "log-target" | "mask" | "mount-image" | "poweroff" | \
+        "preset" | "preset-all" | "reboot" | "reenable" | "reload" | "reload-or-restart" | "rescue" | "reset-failed" | \
+        "restart" | "revert" | "service-log-level" | "service-log-target" | "service-watchdogs" | "set-default" | \
+        "set-environment" | "property" | "show" | "show-environment" | "start" | "status" | "stop" | "suspend" | \
+        "suspend-then-hibernate" | "switch-root" | "try-reload-or-restart" | "try-restart" | "unmask" | "unset-environment")
+        	;;
+
+    	*)
+        	echo -e "${RED}[!] Error: Unsupported command: $COMMAND${RESET}"
+        	return 1
+        	;;
+    esac
+
+    local FUNC_NAME="${COMMAND//-/_}_systemctl"
+    "$FUNC_NAME" "$SERVICE"
 }

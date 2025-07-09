@@ -636,15 +636,21 @@ function execute_dinitctl()
 {
     local COMMAND="$1"
     local SERVICE="$2"
-    local FUNC_NAME="${COMMAND//-/_}_dinitctl"
 
-    if declare -f "$FUNC_NAME" >/dev/null 2>&1; then
-        $FUNC_NAME "$SERVICE"
-        return $?
-    else
-        echo -e "${RED}[!] Error: Unknown command: $COMMAND${RESET}"
-        return 1
-    fi
+    case "$COMMAND" in
+        "start" | "stop" | "status" | "is-started" | "is-failed" | "restart" | "wake" | "release" | \
+        "unpin" | "unload" | "reload" | "list" | "shutdown" | "add-dep" | "rm-dep" | "enable" | "disable" | \
+        "trigger" | "untrigger" | "setenv" | "unsetenv" | "catalog" | "signal")
+        	;;
+
+        *)
+            echo -e "${RED}[!] Error: Unsupported command: $COMMAND${RESET}"
+            return 1
+            ;;
+    esac
+
+    local FUNC_NAME="${COMMAND//-/_}_dinitctl"
+    "$FUNC_NAME" "$SERVICE"
 }
 
 ##
@@ -709,15 +715,23 @@ function execute_launchctl()
 {
     local COMMAND="$1"
     local SERVICE="$2"
-    local FUNC_NAME="${COMMAND//-/_}_launchctl"
 
-    if declare -f "$FUNC_NAME" >/dev/null 2>&1; then
-        $FUNC_NAME "$SERVICE"
-        return $?
-    else
-        echo -e "${RED}[!] Error: Unknown command: $COMMAND${RESET}"
-        return 1
-    fi
+    case "$COMMAND" in
+        "bootstrap" | "bootout" | "enable" | "disable" | "uncache" | "kickstart" | "attach" | "debug" | \
+        "kill" | "blame" | "print" | "print-cache" | "print-disabled" | "plist" | "procinfo" | "hostinfo" | \
+        "resolveport" | "examine" | "reboot" | "error" | "variant" | "version" | "load" | "unload" | "submit" | \
+        "remove" | "start" | "stop" | "list" | "setenv" | "unsetenv" | "getenv" | "export" | "limit" | "bsexec" | \
+        "asuser" | "managerpid" | "manageruid" | "managername" | "help")
+        	;;
+
+        *)
+            echo -e "${RED}[!] Error: Unsupported command: $COMMAND${RESET}"
+            return 1
+            ;;
+    esac
+
+    local FUNC_NAME="${COMMAND//-/_}_launchctl"
+    "$FUNC_NAME" "$SERVICE"
 }
 
 ##
@@ -749,15 +763,19 @@ function execute_rc_service()
 {
     local COMMAND="$1"
     local SERVICE="$2"
-    local FUNC_NAME="${COMMAND//-/_}_rc_service"
 
-    if declare -f "$FUNC_NAME" >/dev/null 2>&1; then
-        $FUNC_NAME "$SERVICE"
-        return $?
-    else
-        echo -e "${RED}[!] Error: Unknown command: $COMMAND${RESET}"
-        return 1
-    fi
+    case "$COMMAND" in
+        "start" | "stop" | "restart" | "reload" | "force-reload" | "try-restart" | "status")
+        	;;
+
+        *)
+            echo -e "${RED}[!] Error: Unsupported command: $COMMAND${RESET}"
+            return 1
+            ;;
+    esac
+
+    local FUNC_NAME="${COMMAND//-/_}_rc_service"
+    "$FUNC_NAME" "$SERVICE"
 }
 
 ##
@@ -807,15 +825,21 @@ function execute_sv()
 {
     local COMMAND="$1"
     local SERVICE="$2"
-    local FUNC_NAME="${COMMAND//-/_}_sv"
 
-    if declare -f "$FUNC_NAME" >/dev/null 2>&1; then
-        $FUNC_NAME "$SERVICE"
-        return $?
-    else
-        echo -e "${RED}[!] Error: Unknown command: $COMMAND${RESET}"
-        return 1
-    fi
+    case "$COMMAND" in
+        "status" | "up" | "down" | "once" | "pause" | "cont" | "hup" | "alarm" | "interrupt" | \
+        "quit" | "1" | "2" | "term" | "kill" | "exit" | "start" | "stop" | "reload" | "restart" | \
+        "shutdown" | "force-stop" | "force-restart" | "force-shutdown" | "try-restart" | "check")
+        	;;
+
+        *)
+            echo -e "${RED}[!] Error: Unsupported command: $COMMAND${RESET}"
+            return 1
+            ;;
+    esac
+
+    local FUNC_NAME="${COMMAND//-/_}_sv"
+    "$FUNC_NAME" "$SERVICE"
 }
 
 ##
@@ -847,15 +871,19 @@ function execute_s6_rc()
 {
     local COMMAND="$1"
     local SERVICE="$2"
-    local FUNC_NAME="${COMMAND//-/_}_s6_rc"
 
-    if declare -f "$FUNC_NAME" >/dev/null 2>&1; then
-        $FUNC_NAME "$SERVICE"
-        return $?
-    else
-        echo -e "${RED}[!] Error: Unknown command: $COMMAND${RESET}"
-        return 1
-    fi
+    case "$COMMAND" in
+    	"help" | "list" | "listall" | "diff" | "start" | "stop" | "change")
+    		;;
+
+        *)
+            echo -e "${RED}[!] Error: Unsupported command: $COMMAND${RESET}"
+            return 1
+            ;;
+    esac
+
+    local FUNC_NAME="${COMMAND//-/_}_s6_rc"
+    "$FUNC_NAME" "$SERVICE"
 }
 
 ##
@@ -952,15 +980,28 @@ function execute_systemctl()
 {
     local COMMAND="$1"
     local SERVICE="$2"
-    local FUNC_NAME="${COMMAND//-/_}_systemctl"
 
-    if declare -f "$FUNC_NAME" >/dev/null 2>&1; then
-        $FUNC_NAME "$SERVICE"
-        return $?
-    else
-        echo -e "${RED}[!] Error: Unknown command: $COMMAND${RESET}"
-        return 1
-    fi
+    case "$COMMAND" in
+        "add-requires" | "add-wants" | "bind" | "cancel" | "cat" | "condreload" | "condrestart" | "condstop" | \
+        "daemon-reexec" | "daemon-reload" | "default" | "disable" | "edit" | "emergency" | "enable" | "exit" | \
+        "force-reload" | "get-default" | "halt" | "help" | "hibernate" | "hybrid-sleep" | "import-environment" | \
+        "is-active" | "is-enabled" | "is-failed" | "isolate" | "is-system-running" | "kexec" | "kill" | "link" | \
+        "list-automounts" | "list-dependencies" | "list-jobs" | "list-machines" | "list-sockets" | "list-timers" | \
+        "list-unit-files" | "list-units" | "log-level" | "log-target" | "mask" | "mount-image" | "poweroff" | \
+        "preset" | "preset-all" | "reboot" | "reenable" | "reload" | "reload-or-restart" | "rescue" | "reset-failed" | \
+        "restart" | "revert" | "service-log-level" | "service-log-target" | "service-watchdogs" | "set-default" | \
+        "set-environment" | "property" | "show" | "show-environment" | "start" | "status" | "stop" | "suspend" | \
+        "suspend-then-hibernate" | "switch-root" | "try-reload-or-restart" | "try-restart" | "unmask" | "unset-environment")
+        	;;
+
+    	*)
+        	echo -e "${RED}[!] Error: Unsupported command: $COMMAND${RESET}"
+        	return 1
+        	;;
+    esac
+
+    local FUNC_NAME="${COMMAND//-/_}_systemctl"
+    "$FUNC_NAME" "$SERVICE"
 }
 
 ##
@@ -990,15 +1031,19 @@ function execute_service()
 {
     local COMMAND="$1"
     local SERVICE="$2"
-    local FUNC_NAME="${COMMAND//-/_}_service"
 
-    if declare -f "$FUNC_NAME" >/dev/null 2>&1; then
-        $FUNC_NAME "$SERVICE"
-        return $?
-    else
-        echo -e "${RED}[!] Error: Unknown command: $COMMAND${RESET}"
-        return 1
-    fi
+    case "$COMMAND" in
+        "start" | "stop" | "restart" | "force-reload" | "status")
+        	;;
+
+        *)
+            echo -e "${RED}[!] Error: Unsupported command: $COMMAND${RESET}"
+            return 1
+            ;;
+    esac
+
+    local FUNC_NAME="${COMMAND//-/_}_service"
+    "$FUNC_NAME" "$SERVICE"
 }
 
 #

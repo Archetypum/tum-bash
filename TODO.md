@@ -4,11 +4,13 @@
 
 1) Make code more secure, robust && clean;
 
-2) Add illustrations.
+2) Add illustrations;
+
+3) **FINISHED**!: Remaster `SECURITY.md`.
 
 ## Oldstable release
 
-1) **FINISHED!** ~~Finish main UNIX module~~.
+1) **FINISHED!**: ~~Finish main UNIX module~~.
 
 2) **FINISHED!**: Add ~~**dinit**~~, ~~**launchd**~~, ~~**s6**~~, ~~**openrc**~~, ~~**runit**~~ init support.
 

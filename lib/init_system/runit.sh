@@ -65,13 +65,19 @@ function execute_sv()
 {
     local COMMAND="$1"
     local SERVICE="$2"
-    local FUNC_NAME="${COMMAND//-/_}_sv"
 
-    if declare -f "$FUNC_NAME" >/dev/null 2>&1; then
-        $FUNC_NAME "$SERVICE"
-        return $?
-    else
-        echo -e "${RED}[!] Error: Unknown command: $COMMAND${RESET}"
-        return 1
-    fi
+    case "$COMMAND" in
+        "status" | "up" | "down" | "once" | "pause" | "cont" | "hup" | "alarm" | "interrupt" | \
+        "quit" | "1" | "2" | "term" | "kill" | "exit" | "start" | "stop" | "reload" | "restart" | \
+        "shutdown" | "force-stop" | "force-restart" | "force-shutdown" | "try-restart" | "check")
+        	;;
+
+        *)
+            echo -e "${RED}[!] Error: Unsupported command: $COMMAND${RESET}"
+            return 1
+            ;;
+    esac
+
+    local FUNC_NAME="${COMMAND//-/_}_sv"
+    "$FUNC_NAME" "$SERVICE"
 }
