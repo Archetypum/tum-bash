@@ -21,19 +21,56 @@ declare -r RED="\033[0;31m"
 declare -r GREEN="\033[0;32m"
 declare -r RESET="\033[0m"
 
-function execute()
+readonly SAFE_ARG_PATTERN="^[a-zA-Z0-9@._/:+=-]+$"
+
+function is_safe_argument()
 {
-    local CMD=("$@")
-    echo -e "${GREEN}[<==] Executing '${CMD[*]}'...${RESET}"
-    if "${CMD[@]}"; then
-        echo -e "${GREEN}[*] Success!${RESET}"
+    local ARG="$1"
+
+    if [[ "$ARG" =~ $SAFE_ARG_PATTERN ]]; then
         return 0
     else
-        echo -e "${RED}[!] Error: Failed to execute: '${CMD[*]}'.${RESET}"
         return 1
     fi
 }
 
+function validate_command()
+{
+    local ARG
+
+    if (( $# == 0 )); then
+        echo -e "${RED}[!] Error: Empty command${RESET}" >&2
+        return 1
+    fi
+
+    for ARG in "$@"; do
+        if ! is_safe_argument "$ARG"; then
+            echo -e "${RED}[!] Error: Unsafe or invalid argument detected: '$ARG'${RESET}" >&2
+            return 1
+        fi
+    done
+
+    return 0
+}
+
+function execute()
+{
+    local CMD=("$@")
+
+    if ! validate_command "${CMD[@]}"; then
+        return 1
+    fi
+
+    echo -e "${GREEN}[<==] Executing '${CMD[*]}'...${RESET}"
+
+    if command "${CMD[@]}"; then
+        echo -e "${GREEN}[*] Success!${RESET}"
+        return 0
+    else
+        echo -e "${RED}[!] Error: Failed to execute: '${CMD[*]}'.${RESET}" >&2
+        return 1
+    fi
+}
 function trizen()          { execute trizen             "$@"; }
 function trizen_sync()     { execute trizen --sync      "$@"; }
 function trizen_comments() { execute trizen --comments  "$@"; }

@@ -20,10 +20,6 @@
 set -e
 source /usr/bin/tum
 
-declare -r RESET="\033[0m"
-declare -r GREEN="\033[92m"
-declare -r RED="\033[91m"
-
 function pass() { echo -e "${GREEN}[PASS] $1${RESET}"; }
 function fail() { echo -e "${RED}[FAIL] $1${RESET}"; exit 1; }
 

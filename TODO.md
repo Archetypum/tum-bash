@@ -2,6 +2,12 @@
 
 ## Short-term (current stable release)
 
+1) Make code more secure, robust && clean;
+
+2) Add illustrations.
+
+## Oldstable release
+
 1) **FINISHED!** ~~Finish main UNIX module~~.
 
 2) **FINISHED!**: Add ~~**dinit**~~, ~~**launchd**~~, ~~**s6**~~, ~~**openrc**~~, ~~**runit**~~ init support.

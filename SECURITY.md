@@ -15,17 +15,18 @@ After vulnerability got fixed we will:
 - Say very big thank with all our heart.
 
 After vulnerability got fixed we will not:
-- Not send you in jail
-- Not force you to eat hot potatoes with extra ketchup 
-- Not sue you
+- Not send you in jail;
+- Not force you to eat hot potatoes with extra ketchup;
+- Not sue you.
 
 ## Known Vulnerabilities
 
-Currently, we don't have any known vulnerabilities...
+*Shell injections* are might be common within `tum-bash` and `tum` projects in general. Be aware of what you are writing,
+even with all the *Shell injection* negotiations that Archetypum implements into `tum-bash`.
 
 ## Recommendations on tum-bash usage
 
-Be careful while using tum-bash, it always work with root privileges,
+Be careful while using tum-bash, it always works with root privileges,
 and we are not responsible for all your actions.
 
 DO NOT CHANGE anything in the code unless you know what you are doing.

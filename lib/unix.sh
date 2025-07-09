@@ -478,15 +478,17 @@ function macos_based
 }
 
 function get_user_distro()
-{	
+{
+    local ID
+
     if [[ -f /etc/os-release ]]; then
-        source /etc/os-release
+        ID=$(grep "^ID=" /etc/os-release | cut -d= -f2 | tr -d '"')
         echo "$ID"
     else
-        echo -e "${RED}[!] Error: Cannot detect distribution from /etc/os-release.${RESET}"
+        echo -e "${RED}[!] Error: Cannot detect distribution from '/etc/os-release'.${RESET}"
         read -rp "[==>] Write your OS name yourself: " ID
         echo "$ID"
-	fi
+    fi
 }
 
 function get_init_system
@@ -538,24 +540,30 @@ function get_pid1_comm
 
 function clear_screen
 {
-    local CLEAR_COMMAND="clear"
-
-    $CLEAR_COMMAND
+    if command -v clear >/dev/null 2>&1; then
+        clear
+    else
+        echo -e "${YELLOW}[!] Warning: 'clear' command not found.${RESET}" >&2
+    fi
 }
 
 function prompt_user()
 {
+    shopt -s extglob
+
     local PROMPT="$1"
     local DEFAULT="${2:-N}"
     local USER_INPUT
 
-    read -rp "$PROMPT (y/n): " USER_INPUT
+    DEFAULT="${DEFAULT,,}"
+
+    read -rp "$PROMPT (y/n) [${DEFAULT^^}]: " USER_INPUT
     USER_INPUT="${USER_INPUT,,}"
     USER_INPUT="${USER_INPUT##+([[:space:]])}"
     USER_INPUT="${USER_INPUT%%+([[:space:]])}"
 
     if [[ -z "$USER_INPUT" ]]; then
-        USER_INPUT="${DEFAULT,,}"
+        USER_INPUT="$DEFAULT"
     fi
 
     if [[ "$USER_INPUT" =~ ^(y|ye|yes)$ ]]; then
@@ -569,12 +577,8 @@ function prompt_user()
 
 function check_privileges()
 {
-    local UID_VALUE="$EUID"
-
-    if [[ "$UID_VALUE" -eq 0 ]]; then
-        return
-    else
-        echo -e "${RED}[!] Error: This script requires root privileges to work.${RESET}"
+    if [[ "$EUID" -ne 0 ]]; then
+        echo "${RED}[!] Error: This script requires root privileges to work.${RESET}" >&2
         exit 1
     fi
 }
