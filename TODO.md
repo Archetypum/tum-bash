@@ -2,7 +2,7 @@
 
 ## Short-term (current stable release)
 
-1) Make code more secure, robust && clean;
+1) **FINISHED**!: ~~Make code more secure, robust && clean~~;
 
 2) Add illustrations;
 

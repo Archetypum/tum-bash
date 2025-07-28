@@ -30,20 +30,20 @@ Second stable version of **tum-bash**. Security-oriented update.
 
 ```text
      153 text files.
-     152 unique files.                                          
+     152 unique files.
        2 files ignored.
 
-github.com/AlDanial/cloc v 2.04  T=0.05 s (3346.2 files/s, 296803.6 lines/s)
+github.com/AlDanial/cloc v 2.04  T=0.14 s (1117.9 files/s, 99063.6 lines/s)
 --------------------------------------------------------------------------------
 Language                      files          blank        comment           code
 --------------------------------------------------------------------------------
 Bourne Shell                     89            949           1564           4633
 Markdown                         55           1443              0           2772
 Bourne Again Shell                1            204            206           1464
-XML                               5              0              0            208
+XML                               5              0              0            196
 make                              1              6             16             16
 YAML                              1              0              0              1
 --------------------------------------------------------------------------------
-SUM:                            152           2602           1786           9094
+SUM:                            152           2602           1786           9082
 --------------------------------------------------------------------------------
 ```

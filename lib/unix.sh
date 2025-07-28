@@ -14,7 +14,7 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU General Public License for more details.
 #
-# You should have received a copy of the GNU General Public License
+# You should have received a copy of the GNU Lesser General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>
 
 #
@@ -33,7 +33,7 @@ declare -r BLUE="\033[94m"
 declare -r CYAN="\e[0;36m"
 declare -r PURPLE="\033[95m"
 declare -r GREEN="\033[92m"
-declare -rRED="\033[91m"
+declare -r RED="\033[91m"
 
 declare -r BG_BLACK="\033[40m"
 declare -r BG_RED="\033[41m"
