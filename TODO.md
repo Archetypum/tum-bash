@@ -1,16 +1,16 @@
 # TODO list:
 
-## Short-term (current stable release)
+## v0.1.1-stable release
 
 1) **FINISHED**!: ~~Make code more secure, robust && clean~~;
 
-2) **FINISHED!**l ~~Add illustrations~~;
+2) **FINISHED!**: ~~Add illustrations~~;
 
-3) **FINISHED**!: Remaster `SECURITY.md`;
+3) **FINISHED**!: ~~Remaster `SECURITY.md`~~;
 
-4) Rewrite the codebase in **pure bash**.
+4) **FINISHED!**: ~~Rewrite the codebase in **pure bash**~~.
 
-## Oldstable release
+## v0.0.1-stable release
 
 1) **FINISHED!**: ~~Finish main UNIX module~~.
 
