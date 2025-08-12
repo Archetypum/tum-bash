@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # `lib/init_system/sysvinit.sh`
 #
@@ -17,45 +17,47 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>
 
+#
+# Disable Unicode for speed:
+#
+LC_ALL=C
+LANG=C
+
 declare -r RED="\033[0;31m"
 declare -r GREEN="\033[0;32m"
 declare -r RESET="\033[0m"
 
-function _run_service()
+_run_service()
 {
-    local ACTION="$1"
-    local SERVICE="$2"
+    local action="$1"
+    local service="$2"
 
-    if service "$SERVICE" "$ACTION" >/dev/null 2>&1; then
-        echo -e "${GREEN}[*] Success!${RESET}"
-        return 0
-    else
-        echo -e "${RED}[!] Error: service $SERVICE $ACTION failed.${RESET}"
-        return 1
-    fi
+    service "$service" "$action" >/dev/null 2>&1 &&
+        { printf "${GREEN}[*] Success!${RESET}\n"; return 0; } ||
+        { printf "${RED}[!] Error: 'service $service $action' failed.${RESET}\n"; return 1; }
 }
 
-function start_service()        { _run_service "start"        "$1"; }
-function stop_service()         { _run_service "stop"         "$1"; }
-function force_reload_service() { _run_service "force-reload" "$1"; }
-function restart_service()      { _run_service "restart"      "$1"; }
-function status_service()       { _run_service "status"       "$1"; }
+start_service()        { _run_service "start"        "$1"; }
+stop_service()         { _run_service "stop"         "$1"; }
+force_reload_service() { _run_service "force-reload" "$1"; }
+restart_service()      { _run_service "restart"      "$1"; }
+status_service()       { _run_service "status"       "$1"; }
 
-function execute_service()
+execute_service()
 {
-    local COMMAND="$1"
-    local SERVICE="$2"
+    local command="$1"
+    local service="$2"
 
-    case "$COMMAND" in
+    case "$command" in
         "start" | "stop" | "restart" | "force-reload" | "status")
         	;;
 
         *)
-            echo -e "${RED}[!] Error: Unsupported command: $COMMAND${RESET}"
+            printf "${RED}[!] Error: Unsupported command: '$command'.${RESET}\n"
             return 1
             ;;
     esac
 
-    local FUNC_NAME="${COMMAND//-/_}_service"
-    "$FUNC_NAME" "$SERVICE"
+    local func_name="${command//-/_}_service"
+    "$func_name" "$service"
 }

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # `t/test_package_manager/test_apt_sortpks.sh`
 #

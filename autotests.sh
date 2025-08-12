@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # `autotests.sh`
 #
@@ -17,14 +17,20 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>
 
-function main()
+#
+# Disable Unicode for speed:
+#
+LC_ALL=C
+LANG=C
+
+main()
 {
-	echo -e "[<==] Starting autotests for UNIX...\n"
+	printf "[<==] Starting autotests for UNIX...\n"
 	sleep 1
 
 	t/test_unix.sh
 
-    echo -e "\n[<==] Starting autotests for Initialization Systems...\n"
+    printf "\n[<==] Starting autotests for Initialization Systems...\n"
     sleep 1
 
     t/test_init_system/test_dinit.sh
@@ -35,7 +41,7 @@ function main()
     t/test_init_system/test_systemd.sh
     t/test_init_system/test_sysvinit.sh
 
-    echo -e "\n[<==] Starting autotests for Package Managers...\n"
+    printf "\n[<==] Starting autotests for Package Managers...\n"
     sleep 1
 
 	t/test_package_manager/test_apk.sh
@@ -74,7 +80,7 @@ function main()
 	t/test_package_manager/test_zypper.sh
 	t/test_package_manager/test_zypper_log.sh
 
-    echo -e "\n[*] Finished autotests."
+    printf "\n[*] Finished autotests.\n"
 }
 
 main

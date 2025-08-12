@@ -1,6 +1,24 @@
 # tum-bash v0.1.1-stable
 
-Second stable version of **tum-bash**. Security-oriented update.
+Second stable version of **tum-bash**. Security-oriented update with a lot of changes to the codebase.
+
+**New**:
+
+- Added `osx`, `ios`, `watchos`, `tvos`, `visionos` to the `$MACOS_BASED` array in `tum`, `lib/unix.sh`. 
+
+- Added `is_based_on()` function to `tum`, `lib/unix.sh` to make code more **DRY**;
+
+- Added `is_based_on()` documentation and usage example to the `doc/doc_unix.md`; 
+
+- Added `tum.1` for future man documentation;
+
+- Added `.travis.yml` for future Travis CI build.
+
+**Improvements**:
+
+- Replaced external processes and programs with pure bash alternatives;
+
+- Replaced `#!/bin/bash` shebangs with `#!/usr/bin/env bash` shebang.
 
 **Security**:
 
@@ -13,6 +31,8 @@ Second stable version of **tum-bash**. Security-oriented update.
 **Bugs**:
 
 - Fixed `t/test_unix.sh` overwriting of readonly variables;
+
+- Fixed `tum`, `lib/unix.sh` potential overwriting of readonly variables.
 
 **Typos**:
 
@@ -29,21 +49,20 @@ Second stable version of **tum-bash**. Security-oriented update.
 - Updated `CHANGELOG.md` for the new stable release.
 
 ```text
-     153 text files.
-     152 unique files.
-       2 files ignored.
+     148 text files.
+     147 unique files.
+       4 files ignored.
 
-github.com/AlDanial/cloc v 2.04  T=0.14 s (1117.9 files/s, 99063.6 lines/s)
+github.com/AlDanial/cloc v 2.04  T=0.08 s (1898.6 files/s, 165459.3 lines/s)
 --------------------------------------------------------------------------------
 Language                      files          blank        comment           code
 --------------------------------------------------------------------------------
-Bourne Shell                     89            949           1564           4633
-Markdown                         55           1443              0           2772
-Bourne Again Shell                1            204            206           1464
-XML                               5              0              0            196
+Bourne Shell                     89            904           1597           4418
+Markdown                         55           1460              0           2793
+Bourne Again Shell                1            156            209           1235
 make                              1              6             16             16
 YAML                              1              0              0              1
 --------------------------------------------------------------------------------
-SUM:                            152           2602           1786           9082
+SUM:                            147           2526           1822           8463
 --------------------------------------------------------------------------------
 ```

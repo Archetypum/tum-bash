@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # `lib/init_system.dinit.sh`
 #
@@ -17,65 +17,67 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>
 
+#
+# Disable Unicode for speed:
+#
+LC_ALL=C
+LANG=C
+
 declare -r RED="\033[0;31m"
 declare -r GREEN="\033[0;32m"
 declare -r RESET="\033[0m"
 
-function _run_dinitctl()
+_run_dinitctl()
 {
-    local ACTION="$1"
-    local SERVICE="$2"
+    local action="$1"
+    local service="$2"
 
-    if dinitctl "$ACTION" "$SERVICE" >/dev/null 2>&1; then
-        echo -e "${GREEN}[*] Success!${RESET}"
-        return 0
-    else
-        echo -e "${RED}[!] Error: dinitctl $ACTION $SERVICE failed.${RESET}"
-        return 1
-    fi
+    dinitctl "$action" "$service" >/dev/null 2>&1 &&
+        { printf "${GREEN}[*] Success!${RESET}\n"; return 0; } ||
+        { printf "${RED}[!] Error: 'dinitctl $action $service' failed.${RESET}\n"; return 1; }
 }
 
-function start_dinitctl()      { _run_dinitctl "start"      "$1"; }
-function stop_dinitctl()       { _run_dinitctl "stop"       "$1"; }
-function status_dinitctl()     { _run_dinitctl "status"     "$1"; }
-function is_started_dinitctl() { _run_dinitctl "is-started" "$1"; }
-function is_failed_dinitctl()  { _run_dinitctl "is-failed"  "$1"; }
-function restart_dinitctl()    { _run_dinitctl "restart"    "$1"; }
-function wake_dinitctl()       { _run_dinitctl "wake"       "$1"; }
-function release_dinitctl()    { _run_dinitctl "release"    "$1"; }
-function unpin_dinitctl()      { _run_dinitctl "unpin"      "$1"; }
-function unload_dinitctl()     { _run_dinitctl "unload"     "$1"; }
-function reload_dinitctl()     { _run_dinitctl "reload"     "$1"; }
-function list_dinitctl()       { _run_dinitctl "list"       "$1"; }
-function shutdown_dinitctl()   { _run_dinitctl "shutdown"   "$1"; }
-function add_dep_dinitctl()    { _run_dinitctl "add-dep"    "$1"; }
-function rm_dep_dinitctl()     { _run_dinitctl "rm-dep"     "$1"; }
-function enable_dinitctl()     { _run_dinitctl "enable"     "$1"; }
-function disable_dinitctl()    { _run_dinitctl "disable"    "$1"; }
-function trigger_dinitctl()    { _run_dinitctl "trigger"    "$1"; }
-function untrigger_dinitctl()  { _run_dinitctl "untrigger"  "$1"; }
-function setenv_dinitctl()     { _run_dinitctl "setenv"     "$1"; }
-function unsetenv_dinitctl()   { _run_dinitctl "unsetenv"   "$1"; }
-function catalog_dinitctl()    { _run_dinitctl "catalog"    "$1"; }
-function signal_dinitctl()     { _run_dinitctl "signal"     "$1"; }
+start_dinitctl()      { _run_dinitctl "start"      "$1"; }
+stop_dinitctl()       { _run_dinitctl "stop"       "$1"; }
+status_dinitctl()     { _run_dinitctl "status"     "$1"; }
+is_started_dinitctl() { _run_dinitctl "is-started" "$1"; }
+is_failed_dinitctl()  { _run_dinitctl "is-failed"  "$1"; }
+restart_dinitctl()    { _run_dinitctl "restart"    "$1"; }
+wake_dinitctl()       { _run_dinitctl "wake"       "$1"; }
+release_dinitctl()    { _run_dinitctl "release"    "$1"; }
+unpin_dinitctl()      { _run_dinitctl "unpin"      "$1"; }
+unload_dinitctl()     { _run_dinitctl "unload"     "$1"; }
+reload_dinitctl()     { _run_dinitctl "reload"     "$1"; }
+list_dinitctl()       { _run_dinitctl "list"       "$1"; }
+shutdown_dinitctl()   { _run_dinitctl "shutdown"   "$1"; }
+add_dep_dinitctl()    { _run_dinitctl "add-dep"    "$1"; }
+rm_dep_dinitctl()     { _run_dinitctl "rm-dep"     "$1"; }
+enable_dinitctl()     { _run_dinitctl "enable"     "$1"; }
+disable_dinitctl()    { _run_dinitctl "disable"    "$1"; }
+trigger_dinitctl()    { _run_dinitctl "trigger"    "$1"; }
+untrigger_dinitctl()  { _run_dinitctl "untrigger"  "$1"; }
+setenv_dinitctl()     { _run_dinitctl "setenv"     "$1"; }
+unsetenv_dinitctl()   { _run_dinitctl "unsetenv"   "$1"; }
+catalog_dinitctl()    { _run_dinitctl "catalog"    "$1"; }
+signal_dinitctl()     { _run_dinitctl "signal"     "$1"; }
 
-function execute_dinitctl()
+execute_dinitctl()
 {
-    local COMMAND="$1"
-    local SERVICE="$2"
+    local command="$1"
+    local service="$2"
 
-    case "$COMMAND" in
+    case "$command" in
         "start" | "stop" | "status" | "is-started" | "is-failed" | "restart" | "wake" | "release" | \
         "unpin" | "unload" | "reload" | "list" | "shutdown" | "add-dep" | "rm-dep" | "enable" | "disable" | \
         "trigger" | "untrigger" | "setenv" | "unsetenv" | "catalog" | "signal")
         	;;
 
         *)
-            echo -e "${RED}[!] Error: Unsupported command: $COMMAND${RESET}"
+            printf "${RED}[!] Error: Unsupported command: '$command'.${RESET}\n"
             return 1
             ;;
     esac
 
-    local FUNC_NAME="${COMMAND//-/_}_dinitctl"
-    "$FUNC_NAME" "$SERVICE"
+    local func_name="${command//-/_}_dinitctl"
+    "$func_name" "$service"
 }

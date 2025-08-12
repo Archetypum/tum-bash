@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # `lib/unix.sh`
 #
@@ -18,9 +18,15 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/>
 
 #
+# Disable Unicode for speed:
+#
+LC_ALL=C
+LANG=C
+
+#
 # `tum-bash` version:
 #
-declare -r VERSION="0.0.1-stable"
+declare -r VERSION="0.1.1-stable"
 
 #
 # ANSI Color codes and text formating:
@@ -54,7 +60,7 @@ declare -r RESET="\033[0m"
 #
 # Supported Package Managers:
 #
-declare SUPPORTED_PMS=(
+declare -r SUPPORTED_PMS=(
     "apt"                          # https://wiki.debian.org/Apt
     "apt-get"                      # https://manpages.debian.org/bookworm/apt/apt-get.8.en.html
     "apt-cache"                    # https://manpages.debian.org/bookworm/apt/apt-cache.8.en.html
@@ -94,7 +100,7 @@ declare SUPPORTED_PMS=(
 #
 # Supported Initialization systems:
 #
-declare SUPPORTED_INITS=(
+declare -r SUPPORTED_INITS=(
     "sysvinit"   # https://wiki.gentoo.org/wiki/Sysvinit
     "openrc"     # https://wiki.gentoo.org/wiki/OpenRC
     "s6"         # https://skarnet.org/software/s6/
@@ -107,7 +113,7 @@ declare SUPPORTED_INITS=(
 #
 # Supported UNIX distributions:
 #
-declare DEBIAN_BASED=(
+declare -r DEBIAN_BASED=(
     # The universal operating system.
     # <https://www.debian.org/>
 
@@ -143,7 +149,7 @@ declare DEBIAN_BASED=(
     "klikit" "tupiserver" "geolivre" "dizinha" "ankur" "linuxlte" "esware" "progeny" "liis" "muriqui" "loco"
 )
 
-declare ARCH_BASED=(
+declare -r ARCH_BASED=(
     # A simple, lightweight distribution.
     # # <https://www.archlinux.org/>
 
@@ -153,14 +159,14 @@ declare ARCH_BASED=(
     "kdemar" "archie" "faunos" "firefly" "linuxgamers" "kahelos" "netrunner" "ctkarch" "bridge" "sonar" "poliarch" "antergos"
 )
 
-declare ALPINE_BASED=(
+declare -r ALPINE_BASED=(
     # Small. Simple. Secure.
     # # <https://www.alpinelinux.org/>
     
     "alpine" "postmarket"
 )
 
-declare GENTOO_BASED=(
+declare -r GENTOO_BASED=(
     # Welcome to Gentoo, a highly flexible, source-based Linux distribution.
     # <https://www.gentoo.org/>
 
@@ -170,21 +176,21 @@ declare GENTOO_BASED=(
     "gentooth" "mayix" "bicom" "bintoo" "phaeronix" "flash" "vlos" "systemrescue" "litrix" "iollix"
 )
 
-declare VOID_BASED=(
+declare -r VOID_BASED=(
     # Void is a general purpose operating system, based on the monolithic Linux kernel.
     # <https://www.voidlinux.org/>
 
     "void" "argon" "shikake" "pristine" "projecttrident"
 )
 
-declare DRAGORA_BASED=(
+declare -r DRAGORA_BASED=(
     # Stable. Secure. Reliable.
     # <https://www.dragora.org/>
 
     "dragora"
 )
 
-declare SLACKWARE_BASED=(
+declare -r SLACKWARE_BASED=(
     # The Slackware Linux Project.
     # <http://www.slackware.com/>
 
@@ -195,7 +201,7 @@ declare SLACKWARE_BASED=(
     "saxenos" "nonux" "whoppix" "freepia" "slax" "supergamer" "vector" "plamo" "sentryfirewall"
 )
 
-declare REDHAT_BASED=(
+declare -r REDHAT_BASED=(
     # Red Hat is the leading provider of enterprise open source software solutions.
     # <https://www.redhat.com/>
 
@@ -211,21 +217,21 @@ declare REDHAT_BASED=(
     "trustix" "wibni" "hancom" "xteam"
 )
 
-declare OPENSUSE_BASED=(
+declare -r OPENSUSE_BASED=(
     # The makers' choice for sysadmins, developers and desktop users.
     # <https://www.opensuse.org/>
 
     "opensuse" "suse" "geckolinux" "linuxkamarada" "united" "kmlinux" "sunjds" "urix" "sle" "karamad" "jacklab" "stresslinux"
 )
 
-declare GUIX_BASED=(
+declare -r GUIX_BASED=(
     # A complete GNU operating system harnessing all the capabilities of the Guix software. Spawned bu Guix itself.
     # <https://guix.gnu.org/>
 
     "guix"
 )
 
-declare FREEBSD_BASED=(
+declare -r FREEBSD_BASED=(
     # FreeBSD is an operating system used to power modern servers, desktops, and embedded platforms.
     # <https://www.freebsd.org/>
 
@@ -234,7 +240,7 @@ declare FREEBSD_BASED=(
     "fireflybsd" "freesbie" "desktopbsd" "frenzy" "rofreesbie" "ging" "triance" "gulicbsd" "monowall" "pcbsd" "nas4free" "bsdrp"
 )
 
-declare OPENBSD_BASED=(
+declare -r OPENBSD_BASED=(
     # Only two remote holes in the default install, in a heck of a long time!
     # <https://www.openbsd.org/>
 
@@ -242,14 +248,14 @@ declare OPENBSD_BASED=(
     "miros" "olivebsd" "psygnat" "quetzal" "sonafr" "hyperbolabsd" "aeriebsd" "anonymos" "utmfw" "gnobsd"
 )
 
-declare NETBSD_BASED=(
+declare -r NETBSD_BASED=(
     # NetBSD is a free, fast, secure, and highly portable Unix-like Open Source operating system.
     # <https://www.netbsd.org/>
 
     "netbsd" "blackbsd" "edgebsd" "seos" "os108" "jibbed" "fdgw" "g4u" "irbsd" "smolbsd"
 )
 
-declare SOLARIS_ILLUMOS_BASED=(
+declare -r SOLARIS_ILLUMOS_BASED=(
     # Oracle Solaris is the trusted business platform that you depend on. Oracle Solaris gives you consistent compatibility, is simple to use, and is designed to always be secure.
     # <https://www.oracle.com/solaris/solaris11/>
     #
@@ -260,325 +266,99 @@ declare SOLARIS_ILLUMOS_BASED=(
     "xstreamos"
 )
 
-declare MACOS_BASED=(
+declare -r MACOS_BASED=(
     # If you can dream it, Mac can do it.
     # <https://www.apple.com/macos>
 
     "macos" "darwin" "xnu"
 )
 
-function is_debian_based()
+is_based_on() 
 {
-    local base_distro
     local distro="${1,,}"
     shift
-
-    for base_distro in "$@"; do
-        if [[ "$distro" == "$base_distro" ]]; then
-            return 0
-        fi
-    done
-
-    return 1
+    [[ " $* " == *" $distro "* ]]
 }
 
-function is_arch_based()
+is_debian_based()          { is_based_on "$1" $DEBIAN_BASED;          }
+is_arch_based()            { is_based_on "$1" $ARCH_BASED;            }
+is_alpine_based()          { is_based_on "$1" $ALPINE_BASED;          }
+is_gentoo_based()          { is_based_on "$1" $GENTOO_BASED;          }
+is_void_based()            { is_based_on "$1" $VOID_BASED;            }
+is_dragora_based()         { is_based_on "$1" $DRAGORA_BASED;         }
+is_slackware_based()       { is_based_on "$1" $SLACKWARE_BASED;       }
+is_redhat_based()          { is_based_on "$1" $REDHAT_BASED;          }
+is_guix_based()            { is_based_on "$1" $GUIX_BASED;            }
+is_freebsd_based()         { is_based_on "$1" $FREEBSD_BASED;         }
+is_openbsd_based()         { is_based_on "$1" $OPENBSD_BASED;         }
+is_netbsd_based()          { is_based_on "$1" $NETBSD_BASED;          }
+is_solaris_illumos_based() { is_based_on "$1" $SOLARIS_ILLUMOS_BASED; }
+is_macos_based()           { is_based_on "$1" $MACOS_BASED;           }
+
+get_user_distro()
 {
-    local base_distro
-    local distro="${1,,}"
-    shift
-
-    for base_distro in "$@"; do
-        if [[ "$distro" == "$base_distro" ]]; then
-            return 0
-        fi
-    done
-
-    return 1
-}
-
-function is_alpine_based()
-{
-    local base_distro
-    local distro="${1,,}"
-    shift
-
-    for base_distro in "$@"; do
-        if [[ "$distro" == "$base_distro" ]]; then
-            return 0
-        fi
-    done
-
-    return 1
-}
-
-function is_gentoo_based()
-{
-    local base_distro
-    local distro="${1,,}"
-    shift
-
-    for base_distro in "$@"; do
-        if [[ "$distro" == "$base_distro" ]]; then
-            return 0
-        fi
-    done
-
-    return 1
-}
-
-function is_void_based
-{
-    local base_distro
-    local distro="${1,,}"
-    shift
-
-    for base_distro in "$@"; do
-        if [[ "$distro" == "$base_distro" ]]; then
-            return 0
-        fi
-    done
-
-    return 1
-}
-
-function is_dragora_based
-{
-    local base_distro
-    local distro="${1,,}"
-    shift
-
-    for base_distro in "$@"; do
-        if [[ "$distro" == "$base_distro" ]]; then
-            return 0
-        fi
-    done
-
-    return 1
-}
-
-function is_slackware_based
-{
-    local base_distro
-    local distro="${1,,}"
-    shift
-
-    for base_distro in "$@"; do
-        if [[ "$distro" == "$base_distro" ]]; then
-            return 0
-        fi
-    done
-
-    return 1
-}
-
-function is_redhat_based
-{
-    local base_distro
-    local distro="${1,,}"
-    shift
-
-    for base_distro in "$@"; do
-        if [[ "$distro" == "$base_distro" ]]; then
-            return 0
-        fi
-    done
-
-    return 1
-}
-
-function is_guix_based
-{
-    local base_distro
-    local distro="${1,,}"
-    shift
-
-    for base_distro in "$@"; do
-        if [[ "$distro" == "$base_distro" ]]; then
-            return 0
-        fi
-    done
-
-    return 1
-}
-
-function is_freebsd_based
-{
-    local base_distro
-    local distro="${1,,}"
-    shift
-
-    for base_distro in "$@"; do
-        if [[ "$distro" == "$base_distro" ]]; then
-            return 0
-        fi
-    done
-
-    return 1
-}
-
-function is_openbsd_based
-{
-    local base_distro
-    local distro="${1,,}"
-    shift
-
-    for base_distro in "$@"; do
-        if [[ "$distro" == "$base_distro" ]]; then
-            return 0
-        fi
-    done
-
-    return 1
-}
-
-function is_netbsd_based
-{
-    local base_distro
-    local distro="${1,,}"
-    shift
-
-    for base_distro in "$@"; do
-        if [[ "$distro" == "$base_distro" ]]; then
-            return 0
-        fi
-    done
-
-    return 1
-}
-
-function is_solaris_illumos_based
-{
-    local base_distro
-    local distro="${1,,}"
-    shift
-
-    for base_distro in "$@"; do
-        if [[ "$distro" == "$base_distro" ]]; then
-            return 0
-        fi
-    done
-
-    return 1
-}
-
-function macos_based
-{
-    local base_distro
-    local distro="${1,,}"
-    shift
-
-    for base_distro in "$@"; do
-        if [[ "$distro" == "$base_distro" ]]; then
-            return 0
-        fi
-    done
-
-    return 1
-}
-
-function get_user_distro()
-{
-    local ID
-
+    local id
+    
     if [[ -f /etc/os-release ]]; then
-        ID=$(grep "^ID=" /etc/os-release | cut -d= -f2 | tr -d '"')
-        echo "$ID"
+        while IFS="=" read -r key value; do
+            [[ "$key" == "ID" ]] && 
+                { id="${value//\"/}"; printf "$id\n"; return; }
+        done < /etc/os-release
     else
-        echo -e "${RED}[!] Error: Cannot detect distribution from '/etc/os-release'.${RESET}"
-        read -rp "[==>] Write your OS name yourself: " ID
-        echo "$ID"
+        printf "${RED}[!] Error: Cannot detect distribution from '/etc/os-release'.${RESET}\n"
+        read -rp "[==>] Write your OS name yourself: " id
+        printf "$id\n"
     fi
 }
 
-function get_init_system
+get_init_system()
 {
-    if [[ -d "/run/systemd/system" ]] || [[ "$(get_pid1_comm)" == "systemd" ]]; then
-        echo "systemd"
-        return
-    fi
+    init_comm=$(get_pid1_comm)
 
-    if [[ -d "/etc/init.d" ]] && [[ -e "/etc/init.d/openrc" ]]; then
-        echo "openrc"
-        return
-    fi
-
-    if [[ -d "/etc/init.d" ]]; then
-        echo "sysvinit"
-        return
-    fi
-
-    if [[ -d "/etc/s6" ]]; then
-        echo "s6"
-        return
-    fi
-
-    if [[ -d "/etc/runit" ]]; then
-        echo "runit"
-        return
-    fi
-
-    if [[ "$(get_pid1_comm)" == "dinit" ]]; then
-        echo "dinit"
-        return
-    fi
-
-    if [[ "$(get_pid1_comm)" == "launchd" ]]; then
-        echo "launchd"
-        return
-    fi
-
-    echo "unknown"
+    [[ -d "/run/systemd/system" ]] || [[ "$init_comm" == "systemd" ]] && { printf "systemd\n"; return; }
+    [[ -d "/etc/init.d" ]] && { [[ -e "/etc/init.d/openrc" ]] && { printf "openrc\n"; return; }; printf "sysvinit\n"; return; }
+    [[ -d "/etc/s6" ]] && { printf "s6\n"; return; }
+    [[ -d "/etc/runit" ]] && { printf "runit\n"; return; }
+    [[ "$init_comm" == "dinit" ]] && { printf "dinit\n"; return; }
+    [[ "$init_comm" == "launchd" ]] && { printf "launchd\n"; return; }
+    
+    printf "unknown\n"
 }
 
-function get_pid1_comm
+get_pid1_comm()
 {
-    local COMM
-    COMM=$(ps -p 1 -o comm= 2>/dev/null)
-    echo "${COMM}"
+    local comm=$(ps -p 1 -o comm= 2>/dev/null)
+    printf "${comm}\n"
 }
 
-function clear_screen
+clear_screen()
 {
-    if command -v clear >/dev/null 2>&1; then
-        clear
-    else
-        echo -e "${YELLOW}[!] Warning: 'clear' command not found.${RESET}" >&2
-    fi
+    command -v clear >/dev/null 2>&1 && \
+        { clear; } || printf "${YELLOW}[!] Warning: 'clear' utility not found.${RESET}\n" >&2
 }
 
-function prompt_user()
+prompt_user()
 {
     shopt -s extglob
-
-    local PROMPT="$1"
-    local DEFAULT="${2:-N}"
-    local USER_INPUT
-
-    DEFAULT="${DEFAULT,,}"
-
-    read -rp "$PROMPT (y/n) [${DEFAULT^^}]: " USER_INPUT
-    USER_INPUT="${USER_INPUT,,}"
-    USER_INPUT="${USER_INPUT##+([[:space:]])}"
-    USER_INPUT="${USER_INPUT%%+([[:space:]])}"
-
-    if [[ -z "$USER_INPUT" ]]; then
-        USER_INPUT="$DEFAULT"
-    fi
-
-    if [[ "$USER_INPUT" =~ ^(y|ye|yes)$ ]]; then
-        return 0
-    elif [[ "$USER_INPUT" =~ ^(n|no)$ ]]; then
-        return 1
-    fi
-
+    
+    local prompt="$1" default="${2:-N}" user_input
+    default="${default,,}"
+    
+    read -rp "$prompt (y/n) [${default^^}]: " user_input
+    user_input="${user_input,,}"
+    user_input="${user_input##+([[:space:]])}"
+    user_input="${user_input%%+([[:space:]])}"
+    
+    [[ -z "$user_input" ]] && user_input="$default"
+    [[ "$user_input" =~ ^(y|ye|yes)$ ]] && return 0
+    [[ "$user_input" =~ ^(n|no)$ ]] && return 1
+    
     return 1
 }
 
-function check_privileges()
+check_privileges()
 {
-    if [[ "$EUID" -ne 0 ]]; then
-        echo "${RED}[!] Error: This script requires root privileges to work.${RESET}" >&2
-        exit 1
-    fi
+    [[ "$EUID" -ne 0 ]] && \
+        { printf "${RED}[!] Error: This script requires root privileges to work.${RESET}\n" >&2; exit 1; } ||
+        { printf "${GREEN}[*] Success! Root privileges are present.${RESET}\n" >&2; return 0; }
 }

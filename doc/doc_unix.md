@@ -89,9 +89,27 @@ Includes arrays for major UNIX-like distribution families:
 
 ### Distribution Detection
 
+#### is_based_on
+
+Checks if `$1` based on `$2`. Used for `is_family_based` functions
+
+#### Example
+
+```bash
+#!/bin/bash
+
+source lib/unix.sh
+
+is_debian_based()
+{
+    is_based_on "$1" $DEBIAN_BASED;
+}
+
+```
+
 #### is_family_based
 
-Each function checks whether the given distro name belongs to a known family:
+Each function is a `is_based_on` wrapper that checks whether the given distro name belongs to a known family:
 
 - `is_debian_based`
 - `is_arch_based`

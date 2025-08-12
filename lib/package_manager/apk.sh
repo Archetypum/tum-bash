@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # `lib/package_manager/apk.sh`
 #
@@ -17,79 +17,70 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>
 
+#
+# Disable Unicode for speed:
+#
+LC_ALL=C
+LANG=C
+
 declare -r RED="\033[0;31m"
 declare -r GREEN="\033[0;32m"
 declare -r RESET="\033[0m"
+declare -r SAFE_ARG_PATTERN="^[a-zA-Z0-9@._/:+=-]+$"
 
-readonly SAFE_ARG_PATTERN="^[a-zA-Z0-9@._/:+=-]+$"
-
-function is_safe_argument()
+is_safe_argument()
 {
-    local ARG="$1"
+    local arg="$1"
 
-    if [[ "$ARG" =~ $SAFE_ARG_PATTERN ]]; then
-        return 0
-    else
-        return 1
-    fi
+    [[ "$arg" =~ $SAFE_ARG_PATTERN ]] && return 0 || return 1
 }
 
-function validate_command()
+validate_command()
 {
-    local ARG
+    local arg
 
-    if (( $# == 0 )); then
-        echo -e "${RED}[!] Error: Empty command${RESET}" >&2
-        return 1
-    fi
+    (( $# == 0 )) && { printf "${RED}[!] Error: Empty command.${RESET}\n" >&2; return 1; }
 
-    for ARG in "$@"; do
-        if ! is_safe_argument "$ARG"; then
-            echo -e "${RED}[!] Error: Unsafe or invalid argument detected: '$ARG'${RESET}" >&2
-            return 1
-        fi
+    for arg in "$@"; do
+        ! is_safe_argument "$arg" &&
+            { printf "${RED}[!] Error: Unsafe or invalid argument detected: '$arg'${RESET}" >&2; return 1; }
     done
 
     return 0
 }
 
-function execute()
+execute()
 {
-    local CMD=("$@")
+    local cmd=("$@")
 
-    if ! validate_command "${CMD[@]}"; then
-        return 1
-    fi
+    ! validate_command "${cmd[@]}" && return 1
 
-    echo -e "${GREEN}[<==] Executing '${CMD[*]}'...${RESET}"
-
-    if command "${CMD[@]}"; then
-        echo -e "${GREEN}[*] Success!${RESET}"
-        return 0
-    else
-        echo -e "${RED}[!] Error: Failed to execute: '${CMD[*]}'.${RESET}" >&2
-        return 1
-    fi
+    printf "${GREEN}[<==] Executing '${cmd[*]}'...${RESET}\n"
+    command "${cmd[@]}" && 
+        { printf "${GREEN}[*] Success!${RESET}\n"; return 0; } ||
+        { printf "${RED}[!] Error: Failed to execute: '${cmd[*]}'.${RESET}\n" >&2 return 1; }
 }
 
-function apk()            { execute apk             "$@"; }
-function apk_help()       { execute apk --help      "$@"; }
-function apk_add()        { execute apk add         "$@"; }
-function apk_del()        { execute apk del         "$@"; }
-function apk_fix()        { execute apk fix         "$@"; }
-function apk_update()     { execute apk update      "$@"; }
-function apk_upgrade()    { execute apk upgrade     "$@"; }
-function apk_cache()      { execute apk cache       "$@"; }
-function apk_info()       { execute apk info        "$@"; }
-function apk_list()       { execute apk list        "$@"; }
-function apk_dot()        { execute apk dot         "$@"; }
-function apk_policy()     { execute apk policy      "$@"; }
-function apk_search()     { execute apk search      "$@"; }
-function apk_index()      { execute apk index       "$@"; }
-function apk_fetch()      { execute apk fetch       "$@"; }
-function apk_manifest()   { execute apk manifest    "$@"; }
-function apk_verify()     { execute apk verify      "$@"; }
-function apk_audit()      { execute apk audit       "$@"; }
-function apk_stats()      { execute apk stats       "$@"; }
-function apk_version()    { execute apk version     "$@"; }
-
+##
+## `apk`:
+##
+apk()            { execute apk             "$@"; }
+apk_help()       { execute apk --help      "$@"; }
+apk_add()        { execute apk add         "$@"; }
+apk_del()        { execute apk del         "$@"; }
+apk_fix()        { execute apk fix         "$@"; }
+apk_update()     { execute apk update      "$@"; }
+apk_upgrade()    { execute apk upgrade     "$@"; }
+apk_cache()      { execute apk cache       "$@"; }
+apk_info()       { execute apk info        "$@"; }
+apk_list()       { execute apk list        "$@"; }
+apk_dot()        { execute apk dot         "$@"; }
+apk_policy()     { execute apk policy      "$@"; }
+apk_search()     { execute apk search      "$@"; }
+apk_index()      { execute apk index       "$@"; }
+apk_fetch()      { execute apk fetch       "$@"; }
+apk_manifest()   { execute apk manifest    "$@"; }
+apk_verify()     { execute apk verify      "$@"; }
+apk_audit()      { execute apk audit       "$@"; }
+apk_stats()      { execute apk stats       "$@"; }
+apk_version()    { execute apk version     "$@"; }

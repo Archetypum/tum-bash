@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # `lib/package_manager/xbps_install.sh`
 #

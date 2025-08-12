@@ -4,9 +4,11 @@
 
 1) **FINISHED**!: ~~Make code more secure, robust && clean~~;
 
-2) Add illustrations;
+2) **FINISHED!**l ~~Add illustrations~~;
 
-3) **FINISHED**!: Remaster `SECURITY.md`.
+3) **FINISHED**!: Remaster `SECURITY.md`;
+
+4) Rewrite the codebase in **pure bash**.
 
 ## Oldstable release
 

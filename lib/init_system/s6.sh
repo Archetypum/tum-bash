@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # `lib/init_system/s6.sh`
 #
@@ -17,47 +17,49 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>
 
+#
+# Disable Unicode for speed:
+#
+LC_ALL=C
+LANG=C
+
 declare -r RED="\033[0;31m"
 declare -r GREEN="\033[0;32m"
 declare -r RESET="\033[0m"
 
-function _run_s6_rc()
+_run_s6_rc()
 {
-    local ACTION="$1"
-    local SERVICE="$2"
+    local action="$1"
+    local service="$2"
 
-    if s6-rc "$ACTION" "$SERVICE" >/dev/null 2>&1; then
-        echo -e "${GREEN}[*] Success!${RESET}"
-        return 0
-    else
-        echo -e "${RED}[!] Error: s6-rc $ACTION $SERVICE failed.${RESET}"
-        return 1
-    fi
+    s6-rc "$action" "$service" >/dev/null 2>&1 &&
+        { printf "${GREEN}[*] Success!${RESET}\n"; return 0; } ||
+        { printf "${RED}[!] Error: 's6-rc $action $service' failed.${RESET}\n"; return 1; }
 }
 
-function help_s6_rc()     { _run_s6_rc "help"     "$1"; }
-function list_s6_rc()     { _run_s6_rc "list"     "$1"; }
-function listall_s6_rc()  { _run_s6_rc "listall"  "$1"; }
-function diff_s6_rc()     { _run_s6_rc "diff"     "$1"; }
-function start_s6_rc()    { _run_s6_rc "start"    "$1"; }
-function stop_s6_rc()     { _run_s6_rc "stop"     "$1"; }
-function change_s6_rc()   { _run_s6_rc "change"   "$1"; }
+help_s6_rc()     { _run_s6_rc "help"     "$1"; }
+list_s6_rc()     { _run_s6_rc "list"     "$1"; }
+listall_s6_rc()  { _run_s6_rc "listall"  "$1"; }
+diff_s6_rc()     { _run_s6_rc "diff"     "$1"; }
+start_s6_rc()    { _run_s6_rc "start"    "$1"; }
+stop_s6_rc()     { _run_s6_rc "stop"     "$1"; }
+change_s6_rc()   { _run_s6_rc "change"   "$1"; }
 
-function execute_s6_rc()
+execute_s6_rc()
 {
-    local COMMAND="$1"
-    local SERVICE="$2"
+    local command="$1"
+    local service="$2"
 
-    case "$COMMAND" in
+    case "$command" in
     	"help" | "list" | "listall" | "diff" | "start" | "stop" | "change")
     		;;
 
         *)
-            echo -e "${RED}[!] Error: Unsupported command: $COMMAND${RESET}"
+            printf "${RED}[!] Error: Unsupported command: '$command'.${RESET}\n"
             return 1
             ;;
     esac
 
-    local FUNC_NAME="${COMMAND//-/_}_s6_rc"
-    "$FUNC_NAME" "$SERVICE"
+    local func_name="${command//-/_}_s6_rc"
+    "$func_name" "$service"
 }

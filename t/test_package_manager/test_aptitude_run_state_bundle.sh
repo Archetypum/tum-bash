@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # `t/test_package_manager/test_aptitude_run_state_bundle.sh`
 #

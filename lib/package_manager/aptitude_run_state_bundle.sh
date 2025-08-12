@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # `lib/package_manager/aptitude_run_state_bundle.sh`
 #

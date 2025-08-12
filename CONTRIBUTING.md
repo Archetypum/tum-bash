@@ -1,6 +1,6 @@
 ## Contributing to tum-bash
 
-We appreciate contributing on tum-bash, please, if you want to contribute read this file to know the main rules in code writing and code style.
+We appreciate contributing on `tum-bash`, please, if you want to contribute read this file to know the main rules in code writing and code style.
 
 We appreciate contributing in:
 

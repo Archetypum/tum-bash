@@ -42,7 +42,7 @@ Please be aware that **shell injection vulnerabilities** might exist within `tum
 
 ## Usage Recommendations
 
-- **`tum-bash` requires root privileges** to operate. Use it with caution.  
+- **Some `tum-bash` functions require root privileges** to operate. Use it with caution.  
 - You are fully responsible for your actions when using `tum-bash`.  
 - Do **not** modify the code unless you are confident in what you are doing.
 

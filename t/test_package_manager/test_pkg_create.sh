@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # `t/test_package_manager/test_pkg_create.sh`
 #

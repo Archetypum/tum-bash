@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # `t/test_package_manager/test_xbps_query.sh`
 #
@@ -16,8 +16,6 @@
 #
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>
-
-#!/bin/bash
 
 declare -r GREEN="\033[0;32m"
 declare -r RESET="\033[0m"
