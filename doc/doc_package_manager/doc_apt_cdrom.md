@@ -1,5 +1,10 @@
 # `lib/package_manager/apt_cdrom.sh` — apt-cdrom Wrapper Library
 
+**Version:** 0.1.1  
+**Author:** Archetypum  
+**License:** LGPL-3.0-or-later  
+**Project:** [tum-bash](https://github.com/Archetypum/tum-bash.git)
+
 Bash wrapper for interacting with the `apt-cdrom` package management utility. Provides convenient functions to run common `apt-cdrom` commands with standardized success/error output and execution logging.
 
 `apt-cdrom` is commonly used on **Debian GNU/Linux**-based operating systems.

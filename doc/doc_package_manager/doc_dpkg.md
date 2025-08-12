@@ -1,5 +1,10 @@
 # `lib/package_manager/dpkg.sh` — dpkg Wrapper Library
 
+**Version:** 0.1.1  
+**Author:** Archetypum  
+**License:** LGPL-3.0-or-later  
+**Project:** [tum-bash](https://github.com/Archetypum/tum-bash.git)
+
 Bash wrapper for interacting with the `dpkg` package manager. Provides convenient functions to run common `dpkg` commands with standardized success/error output and execution logging.
 
 `dpkg` is commonly used on **Debian GNU/Linux**-based operating systems.

@@ -55,20 +55,20 @@ Second stable version of **tum-bash**. Security-oriented update with a lot of ch
 - Updated `CHANGELOG.md` for the new stable release.
 
 ```text
-     103 text files.
-     102 unique files.
-       4 files ignored.
+     104 text files.
+     103 unique files.
+       3 files ignored.
 
-github.com/AlDanial/cloc v 2.04  T=0.06 s (1595.8 files/s, 158033.3 lines/s)
+github.com/AlDanial/cloc v 2.04  T=0.05 s (2234.3 files/s, 224061.5 lines/s)
 --------------------------------------------------------------------------------
 Language                      files          blank        comment           code
 --------------------------------------------------------------------------------
-Markdown                         55           1459              0           2789
+Markdown                         55           1501              0           2956
 Bourne Shell                     44            604            829           2781
 Bourne Again Shell                1            156            209           1235
 make                              1              6             16             16
-YAML                              1              0              0              1
+YAML                              2              5              0             15
 --------------------------------------------------------------------------------
-SUM:                            102           2225           1054           6822
+SUM:                            103           2272           1054           7003
 --------------------------------------------------------------------------------
 ```

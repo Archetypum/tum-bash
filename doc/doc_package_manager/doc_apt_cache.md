@@ -1,5 +1,10 @@
 # `lib/package_manager/apt_cache.sh` — apk Wrapper Library
 
+**Version:** 0.1.1  
+**Author:** Archetypum  
+**License:** LGPL-3.0-or-later  
+**Project:** [tum-bash](https://github.com/Archetypum/tum-bash.git)
+
 Bash wrapper for interacting with the `apt-cache` package manager. Provides convenient functions to run common `apt-cache` commands with standardized success/error output and execution logging.
 
 `apt-cache` is commonly used on **Debian GNU/Linux**-based operating systems.

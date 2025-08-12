@@ -1,5 +1,10 @@
 # `lib/package_manager/aptitude-create-state-bundle.sh` — aptitude-create-state-bundle Wrapper Library
 
+**Version:** 0.1.1  
+**Author:** Archetypum  
+**License:** LGPL-3.0-or-later  
+**Project:** [tum-bash](https://github.com/Archetypum/tum-bash.git)
+
 Bash wrapper for interacting with the `aptitude-create-state-bundle` package management utility. Provides convenient functions to run common `aptitude-create-state-bundle` commands with standardized success/error output and execution logging.
 
 `aptitude-create-state-bundle` is commonly used on **Debian GNU/Linux**-based operating systems.

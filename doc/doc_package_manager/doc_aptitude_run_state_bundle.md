@@ -1,5 +1,10 @@
 # `lib/package_manager/aptitude-run-state-bundle.sh` — aptitude-run-state-bundle Wrapper Library
 
+**Version:** 0.1.1  
+**Author:** Archetypum  
+**License:** LGPL-3.0-or-later  
+**Project:** [tum-bash](https://github.com/Archetypum/tum-bash.git)
+
 Bash wrapper for interacting with the `aptitude-run-state-bundle` package management utility. Provides convenient functions to run common `aptitude-run-state-bundle` commands with standardized success/error output and execution logging.
 
 `aptitude-run-state-bundle` is commonly used on **Debian GNU/Linux**-based operating systems.

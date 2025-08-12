@@ -1,5 +1,10 @@
 # `lib/package_manager/aptitude.sh` — aptitude Wrapper Library
 
+**Version:** 0.1.1  
+**Author:** Archetypum  
+**License:** LGPL-3.0-or-later  
+**Project:** [tum-bash](https://github.com/Archetypum/tum-bash.git)
+
 Bash wrapper for interacting with the `aptitude` package manager. Provides convenient functions to run common `aptitude` commands with standardized success/error output and execution logging.
 
 `aptitude` is commonly used on **Debian GNU/Linux**-based operating systems.

@@ -84,6 +84,7 @@ _**So why not give it a shot?**_
 git clone https://github.com/Archetypum/tum-bash.git
 cd tum-bash/
 
+# You can use doas instead of sudo.
 sudo make dependencies
 sudo make install
 ```
@@ -91,15 +92,15 @@ sudo make install
 - Also, you can use `tum-bash` modules separately if you only need to use some specific functionality:
 
 ```sh
-mv lib/unix.sh your_desired_location/
-mv lib/package_manager/apt.sh your_desired_location/
-mv lib/init_system/systemd.sh your_desired_location/
+cp lib/unix.sh your_desired_location/
+cp lib/package_manager/apt.sh your_desired_location/
+cp lib/init_system/systemd.sh your_desired_location/
 ```
 
 - Or use the whole `tum-bash` as a single executable:
 
 ```sh
-mv tum your_desired_location/  # For convenience, Archetypum recommends '/usr/bin/tum' path (as in Makefile). 
+cp tum your_desired_location/  # For convenience, Archetypum recommends '/usr/bin/tum' path (as in Makefile). 
 ```
 
 ## Documentation
@@ -273,7 +274,7 @@ apk_del --simulate curl
 
 ## Legal
 
-**tum-bash** is free software, released under the **GNU Lesser General Public License v3**.
+`tum-bash` is free software, released under the **GNU Lesser General Public License v3**.
 
 See:
 

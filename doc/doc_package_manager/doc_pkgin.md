@@ -1,5 +1,10 @@
 # `lib/package_manager/pkgin.sh` — brew Wrapper Library
 
+**Version:** 0.1.1  
+**Author:** Archetypum  
+**License:** LGPL-3.0-or-later  
+**Project:** [tum-bash](https://github.com/Archetypum/tum-bash.git)
+
 Bash wrapper for interacting with the `pkgin` package manager. Provides convenient functions to run common `pkgin` commands with standardized success/error output and execution logging.
 
 `pkgin` is commonly used on **NetBSD**-based operating systems.

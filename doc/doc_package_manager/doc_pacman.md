@@ -1,5 +1,10 @@
 # `lib/package_manager/pacman.sh` — pacman Wrapper Library
 
+**Version:** 0.1.1  
+**Author:** Archetypum  
+**License:** LGPL-3.0-or-later  
+**Project:** [tum-bash](https://github.com/Archetypum/tum-bash.git)
+
 Bash wrapper for interacting with the `pacman` package manager. Provides convenient functions to run common `pacman` commands with standardized success/error output and execution logging.
 
 `pacman` is commonly used on **Arch GNU/Linux**-based operating systems.

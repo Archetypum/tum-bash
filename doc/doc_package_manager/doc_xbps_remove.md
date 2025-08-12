@@ -1,5 +1,10 @@
 # `lib/package_manager/xbps-remove.sh` — xbps-remove Wrapper Library
 
+**Version:** 0.1.1  
+**Author:** Archetypum  
+**License:** LGPL-3.0-or-later  
+**Project:** [tum-bash](https://github.com/Archetypum/tum-bash.git)
+
 Bash wrapper for interacting with the `xbps-remove` package manager. Provides convenient functions to run common `xbps-remove` commands with standardized success/error output and execution logging.
 
 `xbps-remove` is commonly used on **Void GNU/Linux**-based operating systems.

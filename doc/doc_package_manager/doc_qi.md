@@ -1,5 +1,10 @@
 # `lib/package_manager/qi.sh` — qi Wrapper Library
 
+**Version:** 0.1.1  
+**Author:** Archetypum  
+**License:** LGPL-3.0-or-later  
+**Project:** [tum-bash](https://github.com/Archetypum/tum-bash.git)
+
 Bash wrapper for interacting with the `qi` package manager. Provides convenient functions to run common `qi` commands with standardized success/error output and execution logging.
 
 `qi` is commonly used on **Dragora GNU/Linux**-based operating systems.

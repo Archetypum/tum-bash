@@ -1,5 +1,10 @@
 # `lib/package_manager/xbps_query.sh` — xbps-query Wrapper Library
 
+**Version:** 0.1.1  
+**Author:** Archetypum  
+**License:** LGPL-3.0-or-later  
+**Project:** [tum-bash](https://github.com/Archetypum/tum-bash.git)
+
 Bash wrapper for interacting with the `xbps-query` package management utility. Provides convenient functions to run common `xbps-query` commands with standardized success/error output and execution logging.
 
 `xbps-query` is commonly used on **Arch GNU/Linux**-based operating systems.

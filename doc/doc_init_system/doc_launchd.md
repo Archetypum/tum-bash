@@ -1,5 +1,10 @@
 # `lib/init_system/launchd.sh` — launchd Wrapper Library
 
+**Version:** 0.1.1  
+**Author:** Archetypum  
+**License:** LGPL-3.0-or-later  
+**Project:** [tum-bash](https://github.com/Archetypum/tum-bash.git)
+
 Bash wrapper for interacting with the `launchd` init system. Provides convenient functions for issuing `launchctl` commands in scripts with standardized success/error output.
 
 ## Usage

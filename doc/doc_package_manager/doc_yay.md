@@ -1,5 +1,10 @@
 # `lib/package_manager/yay.sh` — yay Wrapper Library
 
+**Version:** 0.1.1  
+**Author:** Archetypum  
+**License:** LGPL-3.0-or-later  
+**Project:** [tum-bash](https://github.com/Archetypum/tum-bash.git)
+
 Bash wrapper for interacting with the `yay` package manager. Provides convenient functions to run common `yay` commands with standardized success/error output and execution logging.
 
 `yay` is commonly used on **Arch GNU/Linux**-based operating systems.

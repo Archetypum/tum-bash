@@ -1,5 +1,10 @@
 # `lib/init_system/openrc.sh` — openrc Wrapper Library
 
+**Version:** 0.1.1  
+**Author:** Archetypum  
+**License:** LGPL-3.0-or-later  
+**Project:** [tum-bash](https://github.com/Archetypum/tum-bash.git)
+
 Bash wrapper for interacting with the `openrc` init system. Provides convenient functions for issuing `rc-service` commands in scripts with standardized success/error output.
 
 ## Usage
