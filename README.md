@@ -20,7 +20,6 @@ This is the Bash implementation of `tum`.
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Documentation](#documentation)
-- [Tests](#tests)
 - [Supported Package Management Utilities (35)](#supported-package-management-utilities-35)
 - [Supported Initialization Systems (7)](#supported-initialization-systems-7)
 - [Example Usage](#example-usage)
@@ -106,16 +105,6 @@ mv tum your_desired_location/  # For convenience, Archetypum recommends '/usr/bi
 ## Documentation
 
 You can find `tum-bash` documentation inside the `doc/` directory.
-
-## Tests
-
-You can find automatic tests inside the `t/` directory.
-
-If you want test your installation manually:
-
-```sh
-./autotests.sh
-```
 
 ## Supported Package Management Utilities (35)
 

@@ -40,6 +40,12 @@ Second stable version of **tum-bash**. Security-oriented update with a lot of ch
 
 - Renamed `lib/init_system/sysvinit` to `lib/init_system/sysvinit.sh`;
 
+**Removed**:
+
+- Removed 't/' because these tests are useless and bloated;
+
+- Removed `autotests.sh`. Same reason.
+
 **Other Changes**:
 
 - Updated `README.md` for the new stable release;
@@ -49,20 +55,20 @@ Second stable version of **tum-bash**. Security-oriented update with a lot of ch
 - Updated `CHANGELOG.md` for the new stable release.
 
 ```text
-     148 text files.
-     147 unique files.
+     103 text files.
+     102 unique files.
        4 files ignored.
 
-github.com/AlDanial/cloc v 2.04  T=0.08 s (1898.6 files/s, 165459.3 lines/s)
+github.com/AlDanial/cloc v 2.04  T=0.06 s (1595.8 files/s, 158033.3 lines/s)
 --------------------------------------------------------------------------------
 Language                      files          blank        comment           code
 --------------------------------------------------------------------------------
-Bourne Shell                     89            904           1597           4418
-Markdown                         55           1460              0           2793
+Markdown                         55           1459              0           2789
+Bourne Shell                     44            604            829           2781
 Bourne Again Shell                1            156            209           1235
 make                              1              6             16             16
 YAML                              1              0              0              1
 --------------------------------------------------------------------------------
-SUM:                            147           2526           1822           8463
+SUM:                            102           2225           1054           6822
 --------------------------------------------------------------------------------
 ```
