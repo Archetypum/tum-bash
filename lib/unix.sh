@@ -26,7 +26,7 @@ LANG=C
 #
 # `tum-bash` version:
 #
-declare -r VERSION="0.1.1-stable"
+declare -r VERSION="0.2.2-stable"
 
 #
 # ANSI Color codes and text formating:
