@@ -6,7 +6,7 @@
 
 ## Overview
 
-Tum (TheUnixManager) is a universal package management and system initialization library created by Archetypum, designed to simplify interactions with UNIX-like systems and streamline the development of system-related bash scripts.
+Tum (TheUnixManager) is a universal package management and system initialization library created by Archetypum, designed to simplify interactions with UNIX-like operating systems and streamline the development of system-related bash/shell scripts.
 
 This is the Bash implementation of `tum`.
 
@@ -64,7 +64,7 @@ It gives you:
 
 - Prototype cross-distro sysadmin tools without rewriting core logic.
 
-`tum` executable consists of **1281 lines of pure bash** (without empty lines and comments) that makes your code support 400+ GNU/Linux, BSD and macOS distros. That makes `tum` a _**very**_ small and lightweight dependency in your project.
+`tum` executable consists of **1239 lines of pure bash** (without empty lines and comments) that makes your code support 400+ GNU/Linux, BSD and macOS distros. That makes `tum` a _**very**_ small and lightweight dependency in your project.
 
 Your users can install it in just three commands and forget about `tum` existence for forever, because their cross-platform scripts are working just like intended.
 

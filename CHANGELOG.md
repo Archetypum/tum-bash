@@ -1,58 +1,20 @@
-# tum-bash v0.1.1-stable
+# tum-bash v1.2.2-stable
 
-Second stable version of **tum-bash**. Security-oriented update with a lot of changes to the codebase.
+Fourth stable version of **tum-bash**. Man documentation update, some fixes, etc.
 
 **New**:
 
-- Added `osx`, `ios`, `watchos`, `tvos`, `visionos` to the `$MACOS_BASED` array in `tum`, `lib/unix.sh`. 
+- Man page for `tum` (`tum.1`);
 
-- Added `is_based_on()` function to `tum`, `lib/unix.sh` to make code more **DRY**;
-
-- Added `is_based_on()` documentation and usage example to the `doc/doc_unix.md`; 
-
-- Added `tum.1` for future man documentation;
-
-- Added `.travis.yml` for future Travis CI build.
+- Added `Editor configs` section to the `.gitignore`.
 
 **Improvements**:
 
-- Replaced external processes and programs with pure bash alternatives;
+- Slightly updated `Makefile` for man page installation;
 
-- Replaced `#!/bin/bash` shebangs with `#!/usr/bin/env bash` shebang.
+- Slightly updated `README.md`;
 
-**Security**:
-
-- Fixed possible shell injections attacks for package managers;
-
-- Fixed possible shell injections attacks for init systems;
-
-- Added new security policies in `SECURITY.md`;
-
-**Bugs**:
-
-- Fixed `t/test_unix.sh` overwriting of readonly variables;
-
-- Fixed `tum`, `lib/unix.sh` potential overwriting of readonly variables.
-
-**Typos**:
-
-- Fixed `lib/init_system/s6.sh` being written in Rust instead of Bash;
-
-- Renamed `lib/init_system/sysvinit` to `lib/init_system/sysvinit.sh`;
-
-**Removed**:
-
-- Removed 't/' because these tests are useless and bloated;
-
-- Removed `autotests.sh`. Same reason.
-
-**Other Changes**:
-
-- Updated `README.md` for the new stable release;
-
-- Updated `TODO.md` for the new stable release;
-
-- Updated `CHANGELOG.md` for the new stable release.
+- Slightly updated `tum`, `lib/unix.sh`, making it a little more compatible with `sh`.
 
 ```text
      104 text files.

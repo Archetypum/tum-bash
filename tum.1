@@ -1,0 +1,67 @@
+.TH TUM 1 "August 2025" "tum-bash" "User Commands"
+.SH NAME
+tum \- TheUnixManager written in GNU Bash.
+.SH SYNOPSIS
+.B tum
+[\fIoptions\fR] <command> [arguments...]
+.SH DESCRIPTION
+\fBtum\fR (TheUnixManager) is a universal package management and system initialization library created by Archetypum,
+designed to simplify interactions with UNIX-like operating systems and streamline the development of system-related
+bash/shell scripts.
+
+.SH OPTIONS
+.TP
+.B -h, --help
+Show usage information.
+.TP
+.B -c, --commands
+List all available commands.
+.TP
+.B -v, --version
+Show the current version.
+
+.SH ENVIRONMENT
+.TP
+.B LC_ALL, LANG
+By default, \fBtum\fR sets \fILC_ALL=C\fR and \fILANG=C\fR to ensure
+consistent and fast text processing.
+
+.SH EXIT STATUS
+.TP
+0
+Success.
+.TP
+>0
+An error occurred (invalid command or execution failure).
+
+.SH EXAMPLES
+Run a helper command:
+.EX
+tum enable_systemctl nginx
+.EE
+
+.SH AUTHORS
+Currenty maintained by Kinderfeld <https://github.com/Kinderfeld> 
+
+.SH COPYRIGHT
+Copyright (C) 2025 Archetypum
+
+\fBtum-bash\fR is free software: you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+\fBtum-bash\fR is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License
+along with \fBtum-bash\fR.  If not, see <https://www.gnu.org/licenses/>.
+
+.SH REPORTING BUGS
+Project homepage: <https://github.com/Archetypum/tum-bash>
+
+.SH SEE ALSO
+sh(1), dash(1), bash(1)
+

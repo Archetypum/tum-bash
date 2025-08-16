@@ -1,28 +1,12 @@
 # TODO list:
 
-## v0.1.1-stable release
+## v1.2.2-stable release
 
-1) **FINISHED**!: ~~Make code more secure, robust && clean~~;
+- Add **man** documentation;
 
-2) **FINISHED!**: ~~Add illustrations~~;
+- **POSIX shell** support;
 
-3) **FINISHED**!: ~~Remaster `SECURITY.md`~~;
-
-4) **FINISHED!**: ~~Rewrite the codebase in **pure bash**~~.
-
-## v0.0.1-stable release
-
-1) **FINISHED!**: ~~Finish main UNIX module~~.
-
-2) **FINISHED!**: Add ~~**dinit**~~, ~~**launchd**~~, ~~**s6**~~, ~~**openrc**~~, ~~**runit**~~ init support.
-
-3) **FINISHED!**: Add ~~**dpkg**~~, ~~**xbps-install**~~, ~~**xbps-remove**~~, ~~**xbps-query**~~, **portage**, ~~**homebrew**~~, ~~**slackpkg**~~ pm support (**portage** is open for pull-requests).
-
-4) **FINISHED!**: ~~Finish documentation~~.
-
-5) **FINISHED!**: ~~Write tests~~.
-
-6) **FINISHED!**: ~~Debug~~.
+- Etc.
 
 ## Long-term (future stable releases)
 

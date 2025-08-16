@@ -15,12 +15,14 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>
 
-TUM_BIN := /usr/bin/tum
-TUM_SRC := tum
+TUM_BIN 	:= /usr/bin/tum
+TUM_SRC 	:= tum
+MANPAGE_SRC := tum.1
+MANPAGE_DST := /usr/share/man/man1/tum.1
 
-.PHONY: all install uninstall dependencies
+.PHONY: all install uninstall dependencies install-man uninstall-man man
 
-all: dependencies install
+all: dependencies install install-man
 
 dependencies:
 	@echo "[<==] Checking dependencies..."
@@ -36,3 +38,18 @@ uninstall:
 	@echo "[<==] Removing $(TUM_BIN)..."
 	@rm -f $(TUM_BIN)
 	@echo "[*] Uninstalled."
+
+install-man: $(MANPAGE_SRC)
+	@echo "[<==] Installing man page to $(MANPAGE_DST)..."
+	@install -m 0644 $(MANPAGE_SRC) $(MANPAGE_DST)
+	@echo "[*] Man page installed."
+
+uninstall-man:
+	@echo "[<==] Removing man page $(MANPAGE_DST)..."
+	@rm -f $(MANPAGE_DST)
+	@echo "[*] Man page uninstalled."
+
+man: install-man
+	@echo "[*] Updating man database..."
+	-@mandb >/dev/null 2>&1 || true
+

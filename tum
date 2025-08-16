@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 #
 # `tum`
+# 
+# A universal package management and system initialization library created by Archetypum,
+# designed to simplify interactions with UNIX-like operating systems and streamline the
+# development of system-related bash/shell scripts.
 #
 # Copyright (C) 2025 Archetypum
 #
@@ -20,8 +24,8 @@
 #
 # Disable Unicode for speed:
 #
-LC_ALL=C
-LANG=C
+LC_ALL="C"
+LANG="C"
 
 #
 # UNIX:
@@ -30,7 +34,7 @@ LANG=C
 ##
 ## `tum-bash` version:
 ##
-declare -r VERSION="0.2.2-stable"
+declare -r VERSION="1.2.2-stable"
 
 ##
 ## ANSI Color codes and text formating:
@@ -1566,8 +1570,8 @@ zypper_log() { execute zypper-log "$@"; }
 main()
 {
     local cmd="$1"
-    shift
-
+    
+    [[ $# -gt 0 ]] && shift
 	[[ -z "$cmd" ]] && return
 
     case "$cmd" in
@@ -1591,6 +1595,10 @@ main()
         	printf "$VERSION\n"
         	exit 0
         	;;
+        *)
+            printf "${RED}[!] Can't understand what do you want.\n${RESET}Try checking '--help'.\n"
+            exit 0
+            ;;
     esac
 
      declare -F -- "$cmd" > /dev/null && \

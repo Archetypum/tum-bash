@@ -20,13 +20,13 @@
 #
 # Disable Unicode for speed:
 #
-LC_ALL=C
-LANG=C
+LC_ALL="C"
+LANG="C"
 
 #
 # `tum-bash` version:
 #
-declare -r VERSION="0.2.2-stable"
+declare -r VERSION="1.2.2-stable"
 
 #
 # ANSI Color codes and text formating:

@@ -1,4 +1,6 @@
+#
 # Virtual environments:
+#
 env/
 venv/
 pkgenv/
@@ -6,14 +8,24 @@ pkgenv/
 .venv/
 .pkgenv/
 
+#
 # Vim && Neovim:
+#
 .vim/
 *.swp
 *.swo
 Session.vim
 
+#
 # Temporary files:
+#
 *~
 \#'
 \#'\#
 .#'
+
+#
+# Editor configs:
+#
+.idea/
+.vscode/
