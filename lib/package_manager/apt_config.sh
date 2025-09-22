@@ -17,62 +17,52 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>
 
-declare -r RED="\033[0;31m"
-declare -r GREEN="\033[0;32m"
-declare -r RESET="\033[0m"
+#
+# Disable Unicode for speed:
+#
+LC_ALL="C"
+LANG="C"
+
+readonly RED="\033[0;31m"
+readonly GREEN="\033[0;32m"
+readonly RESET="\033[0m"
 
 readonly SAFE_ARG_PATTERN="^[a-zA-Z0-9@._/:+=-]+$"
 
-function is_safe_argument()
+is_safe_argument()
 {
-    local ARG="$1"
+    arg="$1"
 
-    if [[ "$ARG" =~ $SAFE_ARG_PATTERN ]]; then
-        return 0
-    else
-        return 1
-    fi
+    [[ "$arg" =~ $SAFE_ARG_PATTERN ]] && return 0 || return 1
 }
 
-function validate_command()
+validate_command()
 {
-    local ARG
+    arg=
 
-    if (( $# == 0 )); then
-        echo -e "${RED}[!] Error: Empty command${RESET}" >&2
-        return 1
-    fi
+    (( $# == 0 )) && { printf "${RED}[!] Error: Empty command.${RESET}\n" >&2; return 1; }
 
-    for ARG in "$@"; do
-        if ! is_safe_argument "$ARG"; then
-            echo -e "${RED}[!] Error: Unsafe or invalid argument detected: '$ARG'${RESET}" >&2
-            return 1
-        fi
+    for arg in "$@"; do
+        ! is_safe_argument "$arg" &&
+            { printf "${RED}[!] Error: Unsafe or invalid argument detected: '$arg'${RESET}" >&2; return 1; }
     done
 
     return 0
 }
 
-function execute()
+execute()
 {
-    local CMD=("$@")
+    cmd=("$@")
 
-    if ! validate_command "${CMD[@]}"; then
-        return 1
-    fi
+    ! validate_command "${cmd[@]}" && return 1
 
-    echo -e "${GREEN}[<==] Executing '${CMD[*]}'...${RESET}"
-
-    if command "${CMD[@]}"; then
-        echo -e "${GREEN}[*] Success!${RESET}"
-        return 0
-    else
-        echo -e "${RED}[!] Error: Failed to execute: '${CMD[*]}'.${RESET}" >&2
-        return 1
-    fi
+    printf "${GREEN}[<==] Executing '${cmd[*]}'...${RESET}\n"
+    command "${cmd[@]}" && 
+        { printf "${GREEN}[*] Success!${RESET}\n"; return 0; } ||
+        { printf "${RED}[!] Error: Failed to execute: '${cmd[*]}'.${RESET}\n" >&2 return 1; }
 }
 
-function apt_config()       { execute apt-config       "$@"; }
-function apt_config_shell() { execute apt-config shell "$@"; }
-function apt_config_dump()  { execute apt-config dump    "$@"; }
+apt_config()       { execute apt-config       "$@"; }
+apt_config_shell() { execute apt-config shell "$@"; }
+apt_config_dump()  { execute apt-config dump    "$@"; }
 

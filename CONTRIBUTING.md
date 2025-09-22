@@ -18,7 +18,7 @@ You can see proper installation of tum-bash in README.md.
 
 OS: 
 
-GNU/Linux, BSD
+GNU/Linux, BSD, macOS
 
 ## Code writing
 

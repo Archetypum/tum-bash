@@ -1,6 +1,6 @@
-# tum-bash v1.2.2-stable
+# tum-bash v1.2.3-stable
 
-Fourth stable version of **tum-bash**. Man documentation update, some fixes, etc.
+Another stable version of **tum-bash**. Man documentation update, some fixes, etc.
 
 **New**:
 
@@ -14,23 +14,27 @@ Fourth stable version of **tum-bash**. Man documentation update, some fixes, etc
 
 - Slightly updated `README.md`;
 
-- Slightly updated `tum`, `lib/unix.sh`, making it a little more compatible with `sh`.
+- Slightly updated `tum`, `lib/*`, making it a little more compatible with POSIX `sh`;
+
+- `clear_screen()` is using `tput` instead of `clear`;
+
+- Other small improvements.
 
 ```text
-     104 text files.
+     105 text files.
      103 unique files.
        3 files ignored.
 
-github.com/AlDanial/cloc v 2.04  T=0.05 s (2234.3 files/s, 224061.5 lines/s)
+github.com/AlDanial/cloc v 2.06  T=0.06 s (1719.3 files/s, 166354.7 lines/s)
 --------------------------------------------------------------------------------
 Language                      files          blank        comment           code
 --------------------------------------------------------------------------------
-Markdown                         55           1501              0           2956
-Bourne Shell                     44            604            829           2781
-Bourne Again Shell                1            156            209           1235
-make                              1              6             16             16
+Markdown                         55           1474              0           2929
+Bourne Shell                     44            611            931           2339
+Bourne Again Shell                1            155            213           1239
+make                              1             10             16             29
 YAML                              2              5              0             15
 --------------------------------------------------------------------------------
-SUM:                            103           2272           1054           7003
+SUM:                            103           2255           1160           6551
 --------------------------------------------------------------------------------
 ```

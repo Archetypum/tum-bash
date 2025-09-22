@@ -17,87 +17,77 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>
 
-declare -r RED="\033[0;31m"
-declare -r GREEN="\033[0;32m"
-declare -r RESET="\033[0m"
+#
+# Disable Unicode for speed:
+#
+LC_ALL="C"
+LANG="C"
+
+readonly RED="\033[0;31m"
+readonly GREEN="\033[0;32m"
+readonly RESET="\033[0m"
 
 readonly SAFE_ARG_PATTERN="^[a-zA-Z0-9@._/:+=-]+$"
 
-function is_safe_argument()
+is_safe_argument()
 {
-    local ARG="$1"
+    arg="$1"
 
-    if [[ "$ARG" =~ $SAFE_ARG_PATTERN ]]; then
-        return 0
-    else
-        return 1
-    fi
+    [[ "$arg" =~ $SAFE_ARG_PATTERN ]] && return 0 || return 1
 }
 
-function validate_command()
+validate_command()
 {
-    local ARG
+    arg=
 
-    if (( $# == 0 )); then
-        echo -e "${RED}[!] Error: Empty command${RESET}" >&2
-        return 1
-    fi
+    (( $# == 0 )) && { printf "${RED}[!] Error: Empty command.${RESET}\n" >&2; return 1; }
 
-    for ARG in "$@"; do
-        if ! is_safe_argument "$ARG"; then
-            echo -e "${RED}[!] Error: Unsafe or invalid argument detected: '$ARG'${RESET}" >&2
-            return 1
-        fi
+    for arg in "$@"; do
+        ! is_safe_argument "$arg" &&
+            { printf "${RED}[!] Error: Unsafe or invalid argument detected: '$arg'${RESET}" >&2; return 1; }
     done
 
     return 0
 }
 
-function execute()
+execute()
 {
-    local CMD=("$@")
+    cmd=("$@")
 
-    if ! validate_command "${CMD[@]}"; then
-        return 1
-    fi
+    ! validate_command "${cmd[@]}" && return 1
 
-    echo -e "${GREEN}[<==] Executing '${CMD[*]}'...${RESET}"
-
-    if command "${CMD[@]}"; then
-        echo -e "${GREEN}[*] Success!${RESET}"
-        return 0
-    else
-        echo -e "${RED}[!] Error: Failed to execute: '${CMD[*]}'.${RESET}" >&2
-        return 1
-    fi
+    printf "${GREEN}[<==] Executing '${cmd[*]}'...${RESET}\n"
+    command "${cmd[@]}" && 
+        { printf "${GREEN}[*] Success!${RESET}\n"; return 0; } ||
+        { printf "${RED}[!] Error: Failed to execute: '${cmd[*]}'.${RESET}\n" >&2 return 1; }
 }
 
-function pkgin()                         { execute pkgin                     "$@"; }
-function pkgin_list()                    { execute pkgin list                "$@"; }
-function pkgin_avail()                   { execute pkgin avail               "$@"; }
-function pkgin_search()                  { execute pkgin search              "$@"; }
-function pkgin_install()                 { execute pkgin install             "$@"; }
-function pkgin_update()                  { execute pkgin update              "$@"; }
-function pkgin_upgrade()                 { execute pkgin upgrade             "$@"; }
-function pkgin_full_upgrade()            { execute pkgin full-upgrade        "$@"; }
-function pkgin_remove()                  { execute pkgin remove              "$@"; }
-function pkgin_keep()                    { execute pkgin keep                "$@"; }
-function pkgin_unkeep()                  { execute pkgin unkeep              "$@"; }
-function pkgin_export()                  { execute pkgin export              "$@"; }
-function pkgin_import()                  { execute pkgin import              "$@"; }
-function pkgin_show_keep()               { execute pkgin show-keep           "$@"; }
-function pkgin_show_no_keep()            { execute pkgin show-no-keep        "$@"; }
-function pkgin_autoremove()              { execute pkgin autoremove          "$@"; }
-function pkgin_clean()                   { execute pkgin clean               "$@"; }
-function pkgin_show_deps()               { execute pkgin show-deps           "$@"; }
-function pkgin_show_full_deps()          { execute pkgin show-full-deps      "$@"; }
-function pkgin_show_rev_deps()           { execute pkgin show-rev-deps       "$@"; }
-function pkgin_provides()                { execute pkgin provides            "$@"; }
-function pkgin_requires()                { execute pkgin requires            "$@"; }
-function pkgin_show_category()           { execute pkgin show-category       "$@"; }
-function pkgin_show_pkg_category()       { execute pkgin show-pkg-category   "$@"; }
-function pkgin_show_all_categories()     { execute pkgin show-all-categories "$@"; }
-function pkgin_pkg_content()             { execute pkgin pkg-content         "$@"; }
-function pkgin_pkg_descr()               { execute pkgin pkg-descr           "$@"; }
-function pkgin_pkg_build_defs()          { execute pkgin pkg-build-defs      "$@"; }
-function pkgin_stats()                   { execute pkgin stats               "$@"; }
+pkgin()                         { execute pkgin                     "$@"; }
+pkgin_list()                    { execute pkgin list                "$@"; }
+pkgin_avail()                   { execute pkgin avail               "$@"; }
+pkgin_search()                  { execute pkgin search              "$@"; }
+pkgin_install()                 { execute pkgin install             "$@"; }
+pkgin_update()                  { execute pkgin update              "$@"; }
+pkgin_upgrade()                 { execute pkgin upgrade             "$@"; }
+pkgin_full_upgrade()            { execute pkgin full-upgrade        "$@"; }
+pkgin_remove()                  { execute pkgin remove              "$@"; }
+pkgin_keep()                    { execute pkgin keep                "$@"; }
+pkgin_unkeep()                  { execute pkgin unkeep              "$@"; }
+pkgin_export()                  { execute pkgin export              "$@"; }
+pkgin_import()                  { execute pkgin import              "$@"; }
+pkgin_show_keep()               { execute pkgin show-keep           "$@"; }
+pkgin_show_no_keep()            { execute pkgin show-no-keep        "$@"; }
+pkgin_autoremove()              { execute pkgin autoremove          "$@"; }
+pkgin_clean()                   { execute pkgin clean               "$@"; }
+pkgin_show_deps()               { execute pkgin show-deps           "$@"; }
+pkgin_show_full_deps()          { execute pkgin show-full-deps      "$@"; }
+pkgin_show_rev_deps()           { execute pkgin show-rev-deps       "$@"; }
+pkgin_provides()                { execute pkgin provides            "$@"; }
+pkgin_requires()                { execute pkgin requires            "$@"; }
+pkgin_show_category()           { execute pkgin show-category       "$@"; }
+pkgin_show_pkg_category()       { execute pkgin show-pkg-category   "$@"; }
+pkgin_show_all_categories()     { execute pkgin show-all-categories "$@"; }
+pkgin_pkg_content()             { execute pkgin pkg-content         "$@"; }
+pkgin_pkg_descr()               { execute pkgin pkg-descr           "$@"; }
+pkgin_pkg_build_defs()          { execute pkgin pkg-build-defs      "$@"; }
+pkgin_stats()                   { execute pkgin stats               "$@"; }

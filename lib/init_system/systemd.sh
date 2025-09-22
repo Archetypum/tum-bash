@@ -20,17 +20,17 @@
 #
 # Disable Unicode for speed:
 #
-LC_ALL=C
-LANG=C
+LC_ALL="C"
+LANG="C"
 
-declare -r RED="\033[0;31m"
-declare -r GREEN="\033[0;32m"
-declare -r RESET="\033[0m"
+readonly RED="\033[0;31m"
+readonly GREEN="\033[0;32m"
+readonly RESET="\033[0m"
 
 _run_systemctl()
 {
-    local action="$1"
-    local service="$2"
+    action="$1"
+    service="$2"
 
     systemctl "$action" "$service" >/dev/null 2>&1 &&
         { printf "${GREEN}[*] Success!${RESET}\n"; return 0; } ||
@@ -112,8 +112,8 @@ unset_environment_systemctl()      { _run_systemctl "unset-environment"         
 
 execute_systemctl()
 {
-    local command="$1"
-    local service="$2"
+    command="$1"
+    service="$2"
 
     case "$command" in
         "add-requires" | "add-wants" | "bind" | "cancel" | "cat" | "condreload" | "condrestart" | "condstop" | \
@@ -134,6 +134,6 @@ execute_systemctl()
         	;;
     esac
 
-    local func_name="${command//-/_}_systemctl"
+    func_name="${command//-/_}_systemctl"
     "$func_name" "$service"
 }

@@ -17,68 +17,58 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>
 
-declare -r RED="\033[0;31m"
-declare -r GREEN="\033[0;32m"
-declare -r RESET="\033[0m"
+#
+# Disable Unicode for speed:
+#
+LC_ALL="C"
+LANG="C"
+
+readonly RED="\033[0;31m"
+readonly GREEN="\033[0;32m"
+readonly RESET="\033[0m"
 
 readonly SAFE_ARG_PATTERN="^[a-zA-Z0-9@._/:+=-]+$"
 
-function is_safe_argument()
+is_safe_argument()
 {
-    local ARG="$1"
+    arg="$1"
 
-    if [[ "$ARG" =~ $SAFE_ARG_PATTERN ]]; then
-        return 0
-    else
-        return 1
-    fi
+    [[ "$arg" =~ $SAFE_ARG_PATTERN ]] && return 0 || return 1
 }
 
-function validate_command()
+validate_command()
 {
-    local ARG
+    arg=
 
-    if (( $# == 0 )); then
-        echo -e "${RED}[!] Error: Empty command${RESET}" >&2
-        return 1
-    fi
+    (( $# == 0 )) && { printf "${RED}[!] Error: Empty command.${RESET}\n" >&2; return 1; }
 
-    for ARG in "$@"; do
-        if ! is_safe_argument "$ARG"; then
-            echo -e "${RED}[!] Error: Unsafe or invalid argument detected: '$ARG'${RESET}" >&2
-            return 1
-        fi
+    for arg in "$@"; do
+        ! is_safe_argument "$arg" &&
+            { printf "${RED}[!] Error: Unsafe or invalid argument detected: '$arg'${RESET}" >&2; return 1; }
     done
 
     return 0
 }
 
-function execute()
+execute()
 {
-    local CMD=("$@")
+    cmd=("$@")
 
-    if ! validate_command "${CMD[@]}"; then
-        return 1
-    fi
+    ! validate_command "${cmd[@]}" && return 1
 
-    echo -e "${GREEN}[<==] Executing '${CMD[*]}'...${RESET}"
-
-    if command "${CMD[@]}"; then
-        echo -e "${GREEN}[*] Success!${RESET}"
-        return 0
-    else
-        echo -e "${RED}[!] Error: Failed to execute: '${CMD[*]}'.${RESET}" >&2
-        return 1
-    fi
+    printf "${GREEN}[<==] Executing '${cmd[*]}'...${RESET}\n"
+    command "${cmd[@]}" && 
+        { printf "${GREEN}[*] Success!${RESET}\n"; return 0; } ||
+        { printf "${RED}[!] Error: Failed to execute: '${cmd[*]}'.${RESET}\n" >&2 return 1; }
 }
 
-function pacman()            { execute pacman             "$@"; }
-function pacman_help()       { execute pacman --help      "$@"; }
-function pacman_version()    { execute pacman --version   "$@"; }
-function pacman_database()   { execute pacman --database  "$@"; }
-function pacman_files()      { execute pacman --files     "$@"; }
-function pacman_query()      { execute pacman --query     "$@"; }
-function pacman_remove()     { execute pacman --remove    "$@"; }
-function pacman_sync()       { execute pacman --sync      "$@"; }
-function pacman_deptest()    { execute pacman --deptest   "$@"; }
-function pacman_upgrade()    { execute pacman --upgrade   "$@"; }
+pacman()            { execute pacman             "$@"; }
+pacman_help()       { execute pacman --help      "$@"; }
+pacman_version()    { execute pacman --version   "$@"; }
+pacman_database()   { execute pacman --database  "$@"; }
+pacman_files()      { execute pacman --files     "$@"; }
+pacman_query()      { execute pacman --query     "$@"; }
+pacman_remove()     { execute pacman --remove    "$@"; }
+pacman_sync()       { execute pacman --sync      "$@"; }
+pacman_deptest()    { execute pacman --deptest   "$@"; }
+pacman_upgrade()    { execute pacman --upgrade   "$@"; }

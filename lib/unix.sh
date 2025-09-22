@@ -26,41 +26,41 @@ LANG="C"
 #
 # `tum-bash` version:
 #
-declare -r VERSION="1.2.2-stable"
+readonly VERSION="1.2.3-stable"
 
 #
 # ANSI Color codes and text formating:
 #
-declare -r BLACK="\033[90m"
-declare -r WHITE="\033[97m"
-declare -r YELLOW="\033[93m"
-declare -r ORANGE="\033[38;5;214m"
-declare -r BLUE="\033[94m"
-declare -r CYAN="\e[0;36m"
-declare -r PURPLE="\033[95m"
-declare -r GREEN="\033[92m"
-declare -r RED="\033[91m"
+readonly BLACK="\033[90m"
+readonly WHITE="\033[97m"
+readonly YELLOW="\033[93m"
+readonly ORANGE="\033[38;5;214m"
+readonly BLUE="\033[94m"
+readonly CYAN="\e[0;36m"
+readonly PURPLE="\033[95m"
+readonly GREEN="\033[92m"
+readonly RED="\033[91m"
 
-declare -r BG_BLACK="\033[40m"
-declare -r BG_RED="\033[41m"
-declare -r BG_GREEN="\033[42m"
-declare -r BG_ORANGE="\033[43m"
-declare -r BG_BLUE="\033[44m"
-declare -r BG_MAGENTA="\033[105m"
-declare -r BG_CYAN="\033[46m"
-declare -r BG_WHITE="\033[47m"
+readonly BG_BLACK="\033[40m"
+readonly BG_RED="\033[41m"
+readonly BG_GREEN="\033[42m"
+readonly BG_ORANGE="\033[43m"
+readonly BG_BLUE="\033[44m"
+readonly BG_MAGENTA="\033[105m"
+readonly BG_CYAN="\033[46m"
+readonly BG_WHITE="\033[47m"
 
-declare -r BOLD="\033[1m"
-declare -r UNDERLINE="\033[4m"
-declare -r REVERSED="\033[7m"
-declare -r ITALIC="\033[3m"
-declare -r CROSSED_OUT="\033[9m"
-declare -r RESET="\033[0m"
+readonly BOLD="\033[1m"
+readonly UNDERLINE="\033[4m"
+readonly REVERSED="\033[7m"
+readonly ITALIC="\033[3m"
+readonly CROSSED_OUT="\033[9m"
+readonly RESET="\033[0m"
 
 #
 # Supported Package Managers:
 #
-declare -r SUPPORTED_PMS=(
+readonly SUPPORTED_PMS=(
     "apt"                          # https://wiki.debian.org/Apt
     "apt-get"                      # https://manpages.debian.org/bookworm/apt/apt-get.8.en.html
     "apt-cache"                    # https://manpages.debian.org/bookworm/apt/apt-cache.8.en.html
@@ -100,7 +100,7 @@ declare -r SUPPORTED_PMS=(
 #
 # Supported Initialization systems:
 #
-declare -r SUPPORTED_INITS=(
+readonly SUPPORTED_INITS=(
     "sysvinit"   # https://wiki.gentoo.org/wiki/Sysvinit
     "openrc"     # https://wiki.gentoo.org/wiki/OpenRC
     "s6"         # https://skarnet.org/software/s6/
@@ -113,7 +113,7 @@ declare -r SUPPORTED_INITS=(
 #
 # Supported UNIX distributions:
 #
-declare -r DEBIAN_BASED=(
+readonly DEBIAN_BASED=(
     # The universal operating system.
     # <https://www.debian.org/>
 
@@ -149,7 +149,7 @@ declare -r DEBIAN_BASED=(
     "klikit" "tupiserver" "geolivre" "dizinha" "ankur" "linuxlte" "esware" "progeny" "liis" "muriqui" "loco"
 )
 
-declare -r ARCH_BASED=(
+readonly ARCH_BASED=(
     # A simple, lightweight distribution.
     # # <https://www.archlinux.org/>
 
@@ -159,14 +159,14 @@ declare -r ARCH_BASED=(
     "kdemar" "archie" "faunos" "firefly" "linuxgamers" "kahelos" "netrunner" "ctkarch" "bridge" "sonar" "poliarch" "antergos"
 )
 
-declare -r ALPINE_BASED=(
+readonly ALPINE_BASED=(
     # Small. Simple. Secure.
     # # <https://www.alpinelinux.org/>
     
     "alpine" "postmarket"
 )
 
-declare -r GENTOO_BASED=(
+readonly GENTOO_BASED=(
     # Welcome to Gentoo, a highly flexible, source-based Linux distribution.
     # <https://www.gentoo.org/>
 
@@ -176,21 +176,21 @@ declare -r GENTOO_BASED=(
     "gentooth" "mayix" "bicom" "bintoo" "phaeronix" "flash" "vlos" "systemrescue" "litrix" "iollix"
 )
 
-declare -r VOID_BASED=(
+readonly VOID_BASED=(
     # Void is a general purpose operating system, based on the monolithic Linux kernel.
     # <https://www.voidlinux.org/>
 
     "void" "argon" "shikake" "pristine" "projecttrident"
 )
 
-declare -r DRAGORA_BASED=(
+readonly DRAGORA_BASED=(
     # Stable. Secure. Reliable.
     # <https://www.dragora.org/>
 
     "dragora"
 )
 
-declare -r SLACKWARE_BASED=(
+readonly SLACKWARE_BASED=(
     # The Slackware Linux Project.
     # <http://www.slackware.com/>
 
@@ -201,7 +201,7 @@ declare -r SLACKWARE_BASED=(
     "saxenos" "nonux" "whoppix" "freepia" "slax" "supergamer" "vector" "plamo" "sentryfirewall"
 )
 
-declare -r REDHAT_BASED=(
+readonly REDHAT_BASED=(
     # Red Hat is the leading provider of enterprise open source software solutions.
     # <https://www.redhat.com/>
 
@@ -217,21 +217,21 @@ declare -r REDHAT_BASED=(
     "trustix" "wibni" "hancom" "xteam"
 )
 
-declare -r OPENSUSE_BASED=(
+readonly OPENSUSE_BASED=(
     # The makers' choice for sysadmins, developers and desktop users.
     # <https://www.opensuse.org/>
 
     "opensuse" "suse" "geckolinux" "linuxkamarada" "united" "kmlinux" "sunjds" "urix" "sle" "karamad" "jacklab" "stresslinux"
 )
 
-declare -r GUIX_BASED=(
+readonly GUIX_BASED=(
     # A complete GNU operating system harnessing all the capabilities of the Guix software. Spawned bu Guix itself.
     # <https://guix.gnu.org/>
 
     "guix"
 )
 
-declare -r FREEBSD_BASED=(
+readonly FREEBSD_BASED=(
     # FreeBSD is an operating system used to power modern servers, desktops, and embedded platforms.
     # <https://www.freebsd.org/>
 
@@ -240,7 +240,7 @@ declare -r FREEBSD_BASED=(
     "fireflybsd" "freesbie" "desktopbsd" "frenzy" "rofreesbie" "ging" "triance" "gulicbsd" "monowall" "pcbsd" "nas4free" "bsdrp"
 )
 
-declare -r OPENBSD_BASED=(
+readonly OPENBSD_BASED=(
     # Only two remote holes in the default install, in a heck of a long time!
     # <https://www.openbsd.org/>
 
@@ -248,14 +248,14 @@ declare -r OPENBSD_BASED=(
     "miros" "olivebsd" "psygnat" "quetzal" "sonafr" "hyperbolabsd" "aeriebsd" "anonymos" "utmfw" "gnobsd"
 )
 
-declare -r NETBSD_BASED=(
+readonly NETBSD_BASED=(
     # NetBSD is a free, fast, secure, and highly portable Unix-like Open Source operating system.
     # <https://www.netbsd.org/>
 
     "netbsd" "blackbsd" "edgebsd" "seos" "os108" "jibbed" "fdgw" "g4u" "irbsd" "smolbsd"
 )
 
-declare -r SOLARIS_ILLUMOS_BASED=(
+readonly SOLARIS_ILLUMOS_BASED=(
     # Oracle Solaris is the trusted business platform that you depend on. Oracle Solaris gives you consistent compatibility, is simple to use, and is designed to always be secure.
     # <https://www.oracle.com/solaris/solaris11/>
     #
@@ -266,7 +266,7 @@ declare -r SOLARIS_ILLUMOS_BASED=(
     "xstreamos"
 )
 
-declare -r MACOS_BASED=(
+readonly MACOS_BASED=(
     # If you can dream it, Mac can do it.
     # <https://www.apple.com/macos>
 
@@ -275,7 +275,7 @@ declare -r MACOS_BASED=(
 
 is_based_on() 
 {
-    local distro="${1,,}"
+    distro="${1,,}"
     shift
     [[ " $* " == *" $distro "* ]]
 }
@@ -297,7 +297,7 @@ is_macos_based()           { is_based_on "$1" $MACOS_BASED;           }
 
 get_user_distro()
 {
-    local id
+    id=
     
     if [[ -f /etc/os-release ]]; then
         while IFS="=" read -r key value; do
@@ -327,14 +327,13 @@ get_init_system()
 
 get_pid1_comm()
 {
-    local comm=$(ps -p 1 -o comm= 2>/dev/null)
+    comm=$(ps -p 1 -o comm= 2>/dev/null)
     printf "${comm}\n"
 }
 
 clear_screen()
 {
-    command -v clear >/dev/null 2>&1 && \
-        { clear; } || printf "${YELLOW}[!] Warning: 'clear' utility not found.${RESET}\n" >&2
+    tput clear
 }
 
 prompt_user()

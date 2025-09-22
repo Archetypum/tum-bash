@@ -17,89 +17,79 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>
 
-declare -r RED="\033[0;31m"
-declare -r GREEN="\033[0;32m"
-declare -r RESET="\033[0m"
+#
+# Disable Unicode for speed:
+#
+LC_ALL="C"
+LANG="C"
+
+readonly RED="\033[0;31m"
+readonly GREEN="\033[0;32m"
+readonly RESET="\033[0m"
 
 readonly SAFE_ARG_PATTERN="^[a-zA-Z0-9@._/:+=-]+$"
 
-function is_safe_argument()
+is_safe_argument()
 {
-    local ARG="$1"
+    arg="$1"
 
-    if [[ "$ARG" =~ $SAFE_ARG_PATTERN ]]; then
-        return 0
-    else
-        return 1
-    fi
+    [[ "$arg" =~ $SAFE_ARG_PATTERN ]] && return 0 || return 1
 }
 
-function validate_command()
+validate_command()
 {
-    local ARG
+    arg=
 
-    if (( $# == 0 )); then
-        echo -e "${RED}[!] Error: Empty command${RESET}" >&2
-        return 1
-    fi
+    (( $# == 0 )) && { printf "${RED}[!] Error: Empty command.${RESET}\n" >&2; return 1; }
 
-    for ARG in "$@"; do
-        if ! is_safe_argument "$ARG"; then
-            echo -e "${RED}[!] Error: Unsafe or invalid argument detected: '$ARG'${RESET}" >&2
-            return 1
-        fi
+    for arg in "$@"; do
+        ! is_safe_argument "$arg" &&
+            { printf "${RED}[!] Error: Unsafe or invalid argument detected: '$arg'${RESET}" >&2; return 1; }
     done
 
     return 0
 }
 
-function execute()
+execute()
 {
-    local CMD=("$@")
+    cmd=("$@")
 
-    if ! validate_command "${CMD[@]}"; then
-        return 1
-    fi
+    ! validate_command "${cmd[@]}" && return 1
 
-    echo -e "${GREEN}[<==] Executing '${CMD[*]}'...${RESET}"
-
-    if command "${CMD[@]}"; then
-        echo -e "${GREEN}[*] Success!${RESET}"
-        return 0
-    else
-        echo -e "${RED}[!] Error: Failed to execute: '${CMD[*]}'.${RESET}" >&2
-        return 1
-    fi
+    printf "${GREEN}[<==] Executing '${cmd[*]}'...${RESET}\n"
+    command "${cmd[@]}" && 
+        { printf "${GREEN}[*] Success!${RESET}\n"; return 0; } ||
+        { printf "${RED}[!] Error: Failed to execute: '${cmd[*]}'.${RESET}\n" >&2 return 1; }
 }
 
-function aptitude()                 { execute aptitude                 "$@"; }
-function aptitude_add_user_tag()    { execute aptitude add-user-tag    "$@"; }
-function aptitude_clean()           { execute aptitude clean           "$@"; }
-function aptitude_forget_new()      { execute aptitude forget-new      "$@"; }
-function aptitude_keep()            { execute aptitude keep            "$@"; }
-function aptitude_reinstall()       { execute aptitude reinstall       "$@"; }
-function aptitude_search()          { execute aptitude search          "$@"; }
-function aptitude_update()          { execute aptitude update          "$@"; }
-function aptitude_why_not()         { execute aptitude why-not         "$@"; }
-function aptitude_autoclean()       { execute aptitude autoclean       "$@"; }
-function aptitude_dist_upgrade()    { execute aptitude dist-upgrade    "$@"; }
-function aptitude_full_upgrade()    { execute aptitude full-upgrade    "$@"; }
-function aptitude_keep_all()        { execute aptitude keep-all        "$@"; }
-function aptitude_remove()          { execute aptitude remove          "$@"; }
-function aptitude_show()            { execute aptitude show            "$@"; }
-function aptitude_upgrade()         { execute aptitude upgrade         "$@"; }
-function aptitude_build_dep()       { execute aptitude build-dep       "$@"; }
-function aptitude_download()        { execute aptitude download        "$@"; }
-function aptitude_hold()            { execute aptitude hold            "$@"; }
-function aptitude_markauto()        { execute aptitude markauto        "$@"; }
-function aptitude_remove_user_tag() { execute aptitude remove-user-tag "$@"; }
-function aptitude_unhold()          { execute aptitude unhold          "$@"; }
-function aptitude_versions()        { execute aptitude versions        "$@"; }
-function aptitude_changelog()       { execute aptitude changelog       "$@"; }
-function aptitude_forbid_version()  { execute aptitude forbid_version  "$@"; }
-function aptitude_install()         { execute aptitude install         "$@"; }
-function aptitude_purge()           { execute aptitude purge           "$@"; }
-function aptitude_safe_upgrade()    { execute aptitude safe-upgrade    "$@"; }
-function aptitude_unmarkauto()      { execute aptitude unmarkauto      "$@"; }
-function aptitude_why()             { execute aptitude why             "$@"; }
+aptitude()                 { execute aptitude                 "$@"; }
+aptitude_add_user_tag()    { execute aptitude add-user-tag    "$@"; }
+aptitude_clean()           { execute aptitude clean           "$@"; }
+aptitude_forget_new()      { execute aptitude forget-new      "$@"; }
+aptitude_keep()            { execute aptitude keep            "$@"; }
+aptitude_reinstall()       { execute aptitude reinstall       "$@"; }
+aptitude_search()          { execute aptitude search          "$@"; }
+aptitude_update()          { execute aptitude update          "$@"; }
+aptitude_why_not()         { execute aptitude why-not         "$@"; }
+aptitude_autoclean()       { execute aptitude autoclean       "$@"; }
+aptitude_dist_upgrade()    { execute aptitude dist-upgrade    "$@"; }
+aptitude_full_upgrade()    { execute aptitude full-upgrade    "$@"; }
+aptitude_keep_all()        { execute aptitude keep-all        "$@"; }
+aptitude_remove()          { execute aptitude remove          "$@"; }
+aptitude_show()            { execute aptitude show            "$@"; }
+aptitude_upgrade()         { execute aptitude upgrade         "$@"; }
+aptitude_build_dep()       { execute aptitude build-dep       "$@"; }
+aptitude_download()        { execute aptitude download        "$@"; }
+aptitude_hold()            { execute aptitude hold            "$@"; }
+aptitude_markauto()        { execute aptitude markauto        "$@"; }
+aptitude_remove_user_tag() { execute aptitude remove-user-tag "$@"; }
+aptitude_unhold()          { execute aptitude unhold          "$@"; }
+aptitude_versions()        { execute aptitude versions        "$@"; }
+aptitude_changelog()       { execute aptitude changelog       "$@"; }
+aptitude_forbid_version()  { execute aptitude forbid_version  "$@"; }
+aptitude_install()         { execute aptitude install         "$@"; }
+aptitude_purge()           { execute aptitude purge           "$@"; }
+aptitude_safe_upgrade()    { execute aptitude safe-upgrade    "$@"; }
+aptitude_unmarkauto()      { execute aptitude unmarkauto      "$@"; }
+aptitude_why()             { execute aptitude why             "$@"; }
 

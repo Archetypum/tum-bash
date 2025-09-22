@@ -20,17 +20,17 @@
 #
 # Disable Unicode for speed:
 #
-LC_ALL=C
-LANG=C
+LC_ALL="C"
+LANG="C"
 
-declare -r RED="\033[0;31m"
-declare -r GREEN="\033[0;32m"
-declare -r RESET="\033[0m"
+readonly RED="\033[0;31m"
+readonly GREEN="\033[0;32m"
+readonly RESET="\033[0m"
 
 _run_sv()
 {
-    local action="$1"
-    local service="$2"
+    action="$1"
+    service="$2"
 
     sv "$action" "$service" >/dev/null 2>&1 &&
         { printf "${GREEN}[*] Success!${RESET}\n"; return 0; } ||
@@ -65,8 +65,8 @@ check_sv()            { _run_sv "check"            "$1"; }
 
 execute_sv()
 {
-    local command="$1"
-    local service="$2"
+    command="$1"
+    service="$2"
 
     case "$command" in
         "status" | "up" | "down" | "once" | "pause" | "cont" | "hup" | "alarm" | "interrupt" | \
@@ -80,6 +80,6 @@ execute_sv()
             ;;
     esac
 
-    local func_name="${command//-/_}_sv"
+    func_name="${command//-/_}_sv"
     "$func_name" "$service"
 }

@@ -17,100 +17,90 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>
 
-declare -r RED="\033[0;31m"
-declare -r GREEN="\033[0;32m"
-declare -r RESET="\033[0m"
+#
+# Disable Unicode for speed:
+#
+LC_ALL="C"
+LANG="C"
+
+readonly RED="\033[0;31m"
+readonly GREEN="\033[0;32m"
+readonly RESET="\033[0m"
 
 readonly SAFE_ARG_PATTERN="^[a-zA-Z0-9@._/:+=-]+$"
 
-function is_safe_argument()
+is_safe_argument()
 {
-    local ARG="$1"
+    arg="$1"
 
-    if [[ "$ARG" =~ $SAFE_ARG_PATTERN ]]; then
-        return 0
-    else
-        return 1
-    fi
+    [[ "$arg" =~ $SAFE_ARG_PATTERN ]] && return 0 || return 1
 }
 
-function validate_command()
+validate_command()
 {
-    local ARG
+    arg=
 
-    if (( $# == 0 )); then
-        echo -e "${RED}[!] Error: Empty command${RESET}" >&2
-        return 1
-    fi
+    (( $# == 0 )) && { printf "${RED}[!] Error: Empty command.${RESET}\n" >&2; return 1; }
 
-    for ARG in "$@"; do
-        if ! is_safe_argument "$ARG"; then
-            echo -e "${RED}[!] Error: Unsafe or invalid argument detected: '$ARG'${RESET}" >&2
-            return 1
-        fi
+    for arg in "$@"; do
+        ! is_safe_argument "$arg" &&
+            { printf "${RED}[!] Error: Unsafe or invalid argument detected: '$arg'${RESET}" >&2; return 1; }
     done
 
     return 0
 }
 
-function execute()
+execute()
 {
-    local CMD=("$@")
+    cmd=("$@")
 
-    if ! validate_command "${CMD[@]}"; then
-        return 1
-    fi
+    ! validate_command "${cmd[@]}" && return 1
 
-    echo -e "${GREEN}[<==] Executing '${CMD[*]}'...${RESET}"
-
-    if command "${CMD[@]}"; then
-        echo -e "${GREEN}[*] Success!${RESET}"
-        return 0
-    else
-        echo -e "${RED}[!] Error: Failed to execute: '${CMD[*]}'.${RESET}" >&2
-        return 1
-    fi
+    printf "${GREEN}[<==] Executing '${cmd[*]}'...${RESET}\n"
+    command "${cmd[@]}" && 
+        { printf "${GREEN}[*] Success!${RESET}\n"; return 0; } ||
+        { printf "${RED}[!] Error: Failed to execute: '${cmd[*]}'.${RESET}\n" >&2 return 1; }
 }
 
-function dnf()                    { execute dnf                    "$@"; }
-function dnf_advisory()           { execute dnf advisory           "$@"; }
-function dnf_autoremove()         { execute dnf autoremove         "$@"; }
-function dnf_check()              { execute dnf check              "$@"; }
-function dnf_check_upgrade()      { execute dnf check-upgrade      "$@"; }
-function dnf_clean()              { execute dnf clean              "$@"; }
-function dnf_distro_sync()        { execute dnf distro-sync        "$@"; }
-function dnf_downgrade()          { execute dnf downgrade          "$@"; }
-function dnf_download()           { execute dnf download           "$@"; }
-function dnf_environment()        { execute dnf environment        "$@"; }
-function dnf_group()              { execute dnf group              "$@"; }
-function dnf_history()            { execute dnf history            "$@"; }
-function dnf_info()               { execute dnf info               "$@"; }
-function dnf_install()            { execute dnf install            "$@"; }
-function dnf_leaves()             { execute dnf leaves             "$@"; }
-function dnf_list()               { execute dnf list               "$@"; }
-function dnf_makecache()          { execute dnf makecache          "$@"; }
-function dnf_mark()               { execute dnf mark               "$@"; }
-function dnf_module()             { execute dnf module             "$@"; }
-function dnf_offline()            { execute dnf offline            "$@"; }
-function dnf_provides()           { execute dnf provides           "$@"; }
-function dnf_reinstall()          { execute dnf reinstall          "$@"; }
-function dnf_remove()             { execute dnf remove             "$@"; }
-function dnf_replay()             { execute dnf replay             "$@"; }
-function dnf_repo()               { execute dnf repo               "$@"; }
-function dnf_repoquery()          { execute dnf repoquery          "$@"; }
-function dnf_search()             { execute dnf search             "$@"; }
-function dnf_swap()               { execute dnf swap               "$@"; }
-function dnf_system_upgrade()     { execute dnf system-upgrade     "$@"; }
-function dnf_upgrade()            { execute dnf upgrade            "$@"; }
-function dnf_versionlock()        { execute dnf versionlock        "$@"; }
-function dnf_debuginfo_install()  { execute dnf debuginfo-install  "$@"; }
-function dnf_offline_distrosync() { execute dnf offline-distrosync "$@"; }
-function dnf_offline_upgrade()    { execute dnf offline-upgrade    "$@"; }
-function dnf_config_manager()     { execute dnf config-manager     "$@"; }
-function dnf_builddep()           { execute dnf builddep           "$@"; }
-function dnf_changelog()          { execute dnf changelog          "$@"; }
-function dnf_copr()               { execute dnf copr               "$@"; }
-function dnf_needs_restarting()   { execute dnf needs-restarting   "$@"; }
-function dnf_repoclosure()        { execute dnf repoclosure        "$@"; }
-function dnf_reposync()           { execute dnf reposync           "$@"; }
+dnf()                    { execute dnf                    "$@"; }
+dnf_advisory()           { execute dnf advisory           "$@"; }
+dnf_autoremove()         { execute dnf autoremove         "$@"; }
+dnf_check()              { execute dnf check              "$@"; }
+dnf_check_upgrade()      { execute dnf check-upgrade      "$@"; }
+dnf_clean()              { execute dnf clean              "$@"; }
+dnf_distro_sync()        { execute dnf distro-sync        "$@"; }
+dnf_downgrade()          { execute dnf downgrade          "$@"; }
+dnf_download()           { execute dnf download           "$@"; }
+dnf_environment()        { execute dnf environment        "$@"; }
+dnf_group()              { execute dnf group              "$@"; }
+dnf_history()            { execute dnf history            "$@"; }
+dnf_info()               { execute dnf info               "$@"; }
+dnf_install()            { execute dnf install            "$@"; }
+dnf_leaves()             { execute dnf leaves             "$@"; }
+dnf_list()               { execute dnf list               "$@"; }
+dnf_makecache()          { execute dnf makecache          "$@"; }
+dnf_mark()               { execute dnf mark               "$@"; }
+dnf_module()             { execute dnf module             "$@"; }
+dnf_offline()            { execute dnf offline            "$@"; }
+dnf_provides()           { execute dnf provides           "$@"; }
+dnf_reinstall()          { execute dnf reinstall          "$@"; }
+dnf_remove()             { execute dnf remove             "$@"; }
+dnf_replay()             { execute dnf replay             "$@"; }
+dnf_repo()               { execute dnf repo               "$@"; }
+dnf_repoquery()          { execute dnf repoquery          "$@"; }
+dnf_search()             { execute dnf search             "$@"; }
+dnf_swap()               { execute dnf swap               "$@"; }
+dnf_system_upgrade()     { execute dnf system-upgrade     "$@"; }
+dnf_upgrade()            { execute dnf upgrade            "$@"; }
+dnf_versionlock()        { execute dnf versionlock        "$@"; }
+dnf_debuginfo_install()  { execute dnf debuginfo-install  "$@"; }
+dnf_offline_distrosync() { execute dnf offline-distrosync "$@"; }
+dnf_offline_upgrade()    { execute dnf offline-upgrade    "$@"; }
+dnf_config_manager()     { execute dnf config-manager     "$@"; }
+dnf_builddep()           { execute dnf builddep           "$@"; }
+dnf_changelog()          { execute dnf changelog          "$@"; }
+dnf_copr()               { execute dnf copr               "$@"; }
+dnf_needs_restarting()   { execute dnf needs-restarting   "$@"; }
+dnf_repoclosure()        { execute dnf repoclosure        "$@"; }
+dnf_reposync()           { execute dnf reposync           "$@"; }
 

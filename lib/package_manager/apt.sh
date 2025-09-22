@@ -17,86 +17,76 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>
 
-declare -r RED="\033[0;31m"
-declare -r GREEN="\033[0;32m"
-declare -r RESET="\033[0m"
+#
+# Disable Unicode for speed:
+#
+LC_ALL="C"
+LANG="C"
+
+readonly RED="\033[0;31m"
+readonly GREEN="\033[0;32m"
+readonly RESET="\033[0m"
 
 readonly SAFE_ARG_PATTERN="^[a-zA-Z0-9@._/:+=-]+$"
 
-function is_safe_argument()
+is_safe_argument()
 {
-    local ARG="$1"
+    arg="$1"
 
-    if [[ "$ARG" =~ $SAFE_ARG_PATTERN ]]; then
-        return 0
-    else
-        return 1
-    fi
+    [[ "$arg" =~ $SAFE_ARG_PATTERN ]] && return 0 || return 1
 }
 
-function validate_command()
+validate_command()
 {
-    local ARG
+    arg=
 
-    if (( $# == 0 )); then
-        echo -e "${RED}[!] Error: Empty command${RESET}" >&2
-        return 1
-    fi
+    (( $# == 0 )) && { printf "${RED}[!] Error: Empty command.${RESET}\n" >&2; return 1; }
 
-    for ARG in "$@"; do
-        if ! is_safe_argument "$ARG"; then
-            echo -e "${RED}[!] Error: Unsafe or invalid argument detected: '$ARG'${RESET}" >&2
-            return 1
-        fi
+    for arg in "$@"; do
+        ! is_safe_argument "$arg" &&
+            { printf "${RED}[!] Error: Unsafe or invalid argument detected: '$arg'${RESET}" >&2; return 1; }
     done
 
     return 0
 }
 
-function execute()
+execute()
 {
-    local CMD=("$@")
+    cmd=("$@")
 
-    if ! validate_command "${CMD[@]}"; then
-        return 1
-    fi
+    ! validate_command "${cmd[@]}" && return 1
 
-    echo -e "${GREEN}[<==] Executing '${CMD[*]}'...${RESET}"
-
-    if command "${CMD[@]}"; then
-        echo -e "${GREEN}[*] Success!${RESET}"
-        return 0
-    else
-        echo -e "${RED}[!] Error: Failed to execute: '${CMD[*]}'.${RESET}" >&2
-        return 1
-    fi
+    printf "${GREEN}[<==] Executing '${cmd[*]}'...${RESET}\n"
+    command "${cmd[@]}" && 
+        { printf "${GREEN}[*] Success!${RESET}\n"; return 0; } ||
+        { printf "${RED}[!] Error: Failed to execute: '${cmd[*]}'.${RESET}\n" >&2 return 1; }
 }
 
-function apt()                 { execute apt              "$@"; }
-function apt_autoclean()       { execute apt autoclean    "$@"; }
-function apt_autoremove()      { execute apt autoremove   "$@"; }
-function apt_changelog()       { execute apt changelog    "$@"; }
-function apt_depends()         { execute apt depends      "$@"; }
-function apt_download()        { execute apt download     "$@"; }
-function apt_full_upgrade()    { execute apt full-upgrade "$@"; }
-function apt_install()         { execute apt install      "$@"; }
-function apt_moo()             { execute apt moo          "$@"; }
-function apt_purge()           { execute apt purge        "$@"; }
-function apt_reinstall()       { execute apt reinstall    "$@"; }
-function apt_search()          { execute apt search       "$@"; }
-function apt_showsrc()         { execute apt showsrc      "$@"; }
-function apt_update()          { execute apt update       "$@"; }
-function apt_autopurge()       { execute apt autopurge    "$@"; }
-function apt_build_dep()       { execute apt build-dep    "$@"; }
-function apt_clean()           { execute apt clean        "$@"; }
-function apt_dist_upgrade()    { execute apt dist-upgrade "$@"; }
-function apt_edit_sources()    { execute apt edit-sources "$@"; }
-function apt_help()            { execute apt help         "$@"; }
-function apt_list()            { execute apt list         "$@"; }
-function apt_policy()          { execute apt policy       "$@"; }
-function apt_rdepends()        { execute apt rdepends     "$@"; }
-function apt_remove()          { execute apt remove       "$@"; }
-function apt_show()            { execute apt show         "$@"; }
-function apt_source()          { execute apt source       "$@"; }
-function apt_upgrade()         { execute apt upgrade      "$@"; }
+apt()                 { execute apt              "$@"; }
+apt_autoclean()       { execute apt autoclean    "$@"; }
+apt_autoremove()      { execute apt autoremove   "$@"; }
+apt_changelog()       { execute apt changelog    "$@"; }
+apt_depends()         { execute apt depends      "$@"; }
+apt_download()        { execute apt download     "$@"; }
+apt_full_upgrade()    { execute apt full-upgrade "$@"; }
+apt_install()         { execute apt install      "$@"; }
+apt_moo()             { execute apt moo          "$@"; }
+apt_purge()           { execute apt purge        "$@"; }
+apt_reinstall()       { execute apt reinstall    "$@"; }
+apt_search()          { execute apt search       "$@"; }
+apt_showsrc()         { execute apt showsrc      "$@"; }
+apt_update()          { execute apt update       "$@"; }
+apt_autopurge()       { execute apt autopurge    "$@"; }
+apt_build_dep()       { execute apt build-dep    "$@"; }
+apt_clean()           { execute apt clean        "$@"; }
+apt_dist_upgrade()    { execute apt dist-upgrade "$@"; }
+apt_edit_sources()    { execute apt edit-sources "$@"; }
+apt_help()            { execute apt help         "$@"; }
+apt_list()            { execute apt list         "$@"; }
+apt_policy()          { execute apt policy       "$@"; }
+apt_rdepends()        { execute apt rdepends     "$@"; }
+apt_remove()          { execute apt remove       "$@"; }
+apt_show()            { execute apt show         "$@"; } 
+apt_source()          { execute apt source       "$@"; }
+apt_upgrade()         { execute apt upgrade      "$@"; }
 

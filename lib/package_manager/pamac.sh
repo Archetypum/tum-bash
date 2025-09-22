@@ -17,74 +17,64 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>
 
-declare -r RED="\033[0;31m"
-declare -r GREEN="\033[0;32m"
-declare -r RESET="\033[0m"
+#
+# Disable Unicode for speed:
+#
+LC_ALL="C"
+LANG="C"
+
+readonly RED="\033[0;31m"
+readonly GREEN="\033[0;32m"
+readonly RESET="\033[0m"
 
 readonly SAFE_ARG_PATTERN="^[a-zA-Z0-9@._/:+=-]+$"
 
-function is_safe_argument()
+is_safe_argument()
 {
-    local ARG="$1"
+    arg="$1"
 
-    if [[ "$ARG" =~ $SAFE_ARG_PATTERN ]]; then
-        return 0
-    else
-        return 1
-    fi
+    [[ "$arg" =~ $SAFE_ARG_PATTERN ]] && return 0 || return 1
 }
 
-function validate_command()
+validate_command()
 {
-    local ARG
+    arg=
 
-    if (( $# == 0 )); then
-        echo -e "${RED}[!] Error: Empty command${RESET}" >&2
-        return 1
-    fi
+    (( $# == 0 )) && { printf "${RED}[!] Error: Empty command.${RESET}\n" >&2; return 1; }
 
-    for ARG in "$@"; do
-        if ! is_safe_argument "$ARG"; then
-            echo -e "${RED}[!] Error: Unsafe or invalid argument detected: '$ARG'${RESET}" >&2
-            return 1
-        fi
+    for arg in "$@"; do
+        ! is_safe_argument "$arg" &&
+            { printf "${RED}[!] Error: Unsafe or invalid argument detected: '$arg'${RESET}" >&2; return 1; }
     done
 
     return 0
 }
 
-function execute()
+execute()
 {
-    local CMD=("$@")
+    cmd=("$@")
 
-    if ! validate_command "${CMD[@]}"; then
-        return 1
-    fi
+    ! validate_command "${cmd[@]}" && return 1
 
-    echo -e "${GREEN}[<==] Executing '${CMD[*]}'...${RESET}"
-
-    if command "${CMD[@]}"; then
-        echo -e "${GREEN}[*] Success!${RESET}"
-        return 0
-    else
-        echo -e "${RED}[!] Error: Failed to execute: '${CMD[*]}'.${RESET}" >&2
-        return 1
-    fi
+    printf "${GREEN}[<==] Executing '${cmd[*]}'...${RESET}\n"
+    command "${cmd[@]}" && 
+        { printf "${GREEN}[*] Success!${RESET}\n"; return 0; } ||
+        { printf "${RED}[!] Error: Failed to execute: '${cmd[*]}'.${RESET}\n" >&2 return 1; }
 }
 
-function pamac()              { execute pamac                  "$@"; }
-function pamac_version()      { execute pamac --version        "$@"; }
-function pamac_help()         { execute pamac --help           "$@"; }
-function pamac_search()       { execute pamac search           "$@"; }
-function pamac_list()         { execute pamac list             "$@"; }
-function pamac_info()         { execute pamac info             "$@"; }
-function pamac_install()      { execute pamac install          "$@"; }
-function pamac_reinstall()    { execute pamac reinstall        "$@"; }
-function pamac_remove()       { execute pamac remove           "$@"; }
-function pamac_checkupdates() { execute pamac checkupdates     "$@"; }
-function pamac_upgrade()      { execute pamac upgrade          "$@"; }
-function pamac_update()       { execute pamac update           "$@"; }
-function pamac_clone()        { execute pamac clone            "$@"; }
-function pamac_build()        { execute pamac build            "$@"; }
-function pamac_clean()        { execute pamac clean            "$@"; }
+pamac()              { execute pamac                  "$@"; }
+pamac_version()      { execute pamac --version        "$@"; }
+pamac_help()         { execute pamac --help           "$@"; }
+pamac_search()       { execute pamac search           "$@"; }
+pamac_list()         { execute pamac list             "$@"; }
+pamac_info()         { execute pamac info             "$@"; }
+pamac_install()      { execute pamac install          "$@"; }
+pamac_reinstall()    { execute pamac reinstall        "$@"; }
+pamac_remove()       { execute pamac remove           "$@"; }
+pamac_checkupdates() { execute pamac checkupdates     "$@"; }
+pamac_upgrade()      { execute pamac upgrade          "$@"; }
+pamac_update()       { execute pamac update           "$@"; }
+pamac_clone()        { execute pamac clone            "$@"; }
+pamac_build()        { execute pamac build            "$@"; }
+pamac_clean()        { execute pamac clean            "$@"; }
 

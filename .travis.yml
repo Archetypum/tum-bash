@@ -9,7 +9,7 @@ os:
 
 before_install:
   if ! command -v bash &> /dev/null; then
-    echo "[!] Error: Bash is not found." && exit 1
+    echo "[!] Error: GNU Bash is not found." && exit 1
   fi
 
   echo "[*] Using $(bash --version | head -n 1)."

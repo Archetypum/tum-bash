@@ -20,24 +20,25 @@
 #
 # Disable Unicode for speed:
 #
-LC_ALL=C
-LANG=C
+LC_ALL="C"
+LANG="C"
 
-declare -r RED="\033[0;31m"
-declare -r GREEN="\033[0;32m"
-declare -r RESET="\033[0m"
-declare -r SAFE_ARG_PATTERN="^[a-zA-Z0-9@._/:+=-]+$"
+readonly RED="\033[0;31m"
+readonly GREEN="\033[0;32m"
+readonly RESET="\033[0m"
+
+readonly SAFE_ARG_PATTERN="^[a-zA-Z0-9@._/:+=-]+$"
 
 is_safe_argument()
 {
-    local arg="$1"
+    arg="$1"
 
     [[ "$arg" =~ $SAFE_ARG_PATTERN ]] && return 0 || return 1
 }
 
 validate_command()
 {
-    local arg
+    arg=
 
     (( $# == 0 )) && { printf "${RED}[!] Error: Empty command.${RESET}\n" >&2; return 1; }
 
@@ -51,7 +52,7 @@ validate_command()
 
 execute()
 {
-    local cmd=("$@")
+    cmd=("$@")
 
     ! validate_command "${cmd[@]}" && return 1
 

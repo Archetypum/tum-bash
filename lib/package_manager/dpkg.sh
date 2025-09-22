@@ -17,91 +17,81 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>
 
-declare -r RED="\033[0;31m"
-declare -r GREEN="\033[0;32m"
-declare -r RESET="\033[0m"
+#
+# Disable Unicode for speed:
+#
+LC_ALL="C"
+LANG="C"
+
+readonly RED="\033[0;31m"
+readonly GREEN="\033[0;32m"
+readonly RESET="\033[0m"
 
 readonly SAFE_ARG_PATTERN="^[a-zA-Z0-9@._/:+=-]+$"
 
-function is_safe_argument()
+is_safe_argument()
 {
-    local ARG="$1"
+    arg="$1"
 
-    if [[ "$ARG" =~ $SAFE_ARG_PATTERN ]]; then
-        return 0
-    else
-        return 1
-    fi
+    [[ "$arg" =~ $SAFE_ARG_PATTERN ]] && return 0 || return 1
 }
 
-function validate_command()
+validate_command()
 {
-    local ARG
+    arg=
 
-    if (( $# == 0 )); then
-        echo -e "${RED}[!] Error: Empty command${RESET}" >&2
-        return 1
-    fi
+    (( $# == 0 )) && { printf "${RED}[!] Error: Empty command.${RESET}\n" >&2; return 1; }
 
-    for ARG in "$@"; do
-        if ! is_safe_argument "$ARG"; then
-            echo -e "${RED}[!] Error: Unsafe or invalid argument detected: '$ARG'${RESET}" >&2
-            return 1
-        fi
+    for arg in "$@"; do
+        ! is_safe_argument "$arg" &&
+            { printf "${RED}[!] Error: Unsafe or invalid argument detected: '$arg'${RESET}" >&2; return 1; }
     done
 
     return 0
 }
 
-function execute()
+execute()
 {
-    local CMD=("$@")
+    cmd=("$@")
 
-    if ! validate_command "${CMD[@]}"; then
-        return 1
-    fi
+    ! validate_command "${cmd[@]}" && return 1
 
-    echo -e "${GREEN}[<==] Executing '${CMD[*]}'...${RESET}"
-
-    if command "${CMD[@]}"; then
-        echo -e "${GREEN}[*] Success!${RESET}"
-        return 0
-    else
-        echo -e "${RED}[!] Error: Failed to execute: '${CMD[*]}'.${RESET}" >&2
-        return 1
-    fi
+    printf "${GREEN}[<==] Executing '${cmd[*]}'...${RESET}\n"
+    command "${cmd[@]}" && 
+        { printf "${GREEN}[*] Success!${RESET}\n"; return 0; } ||
+        { printf "${RED}[!] Error: Failed to execute: '${cmd[*]}'.${RESET}\n" >&2 return 1; }
 }
 
-function dpkg()                             { execute dpkg                               "$@"; }
-function dpkg_abort_after()                 { execute dpkg --abort-after                 "$@"; }
-function dpkg_add_architecture()            { execute dpkg --add-architecture            "$@"; }
-function dpkg_audit()                       { execute dpkg --audit                       "$@"; }
-function dpkg_auto_deconfigure()            { execute dpkg --auto-deconfigure            "$@"; }
-function dpkg_clear_avail()                 { execute dpkg --clear-avail                 "$@"; }
-function dpkg_clear_selection()             { execute dpkg --clear-selections            "$@"; }
-function dpkg_compare_versions()            { execute dpkg --compare-versions            "$@"; }
-function dpkg_configure()                   { execute dpkg --configure                   "$@"; }
-function dpkg_field()                       { execute dpkg --field                       "$@"; }
-function dpkg_forget_old_unavail()          { execute dpkg --forget-old-unavail          "$@"; }
-function dpkg_get_selections()              { execute dpkg --get-selections              "$@"; }
-function dpkg_help()                        { execute dpkg --help                        "$@"; }
-function dpkg_install()                     { execute dpkg --install                     "$@"; }
-function dpkg_list()                        { execute dpkg --list                        "$@"; }
-function dpkg_listfiles()                   { execute dpkg --listfiles                   "$@"; }
-function dpkg_merge_avail()                 { execute dpkg --merge-avail                 "$@"; }
-function dpkg_predep_package()              { execute dpkg --predep-package              "$@"; }
-function dpkg_print_architecture()          { execute dpkg --print-architecture          "$@"; }
-function dpkg_print_avail()                 { execute dpkg --print-avail                 "$@"; }
-function dpkg_print_foreign_architectures() { execute dpkg --print-foreign-architectures "$@"; }
-function dpkg_purge()                       { execute dpkg --purge                       "$@"; }
-function dpkg_record_avail()                { execute dpkg --record-avail                "$@"; }
-function dpkg_remove()                      { execute dpkg --remove                      "$@"; }
-function dpkg_remove_architecture()         { execute dpkg --remove-architecture         "$@"; }
-function dpkg_search()                      { execute dpkg --search                      "$@"; }
-function dpkg_set_selections()              { execute dpkg --set-selections              "$@"; }
-function dpkg_status()                      { execute dpkg --status                      "$@"; }
-function dpkg_unpack()                      { execute dpkg --unpack                      "$@"; }
-function dpkg_update_avail()                { execute dpkg --update-avail                "$@"; }
-function dpkg_verify()                      { execute dpkg --verify                      "$@"; }
-function dpkg_version()                     { execute dpkg --version                     "$@"; }
+dpkg()                             { execute dpkg                               "$@"; }
+dpkg_abort_after()                 { execute dpkg --abort-after                 "$@"; }
+dpkg_add_architecture()            { execute dpkg --add-architecture            "$@"; }
+dpkg_audit()                       { execute dpkg --audit                       "$@"; }
+dpkg_auto_deconfigure()            { execute dpkg --auto-deconfigure            "$@"; }
+dpkg_clear_avail()                 { execute dpkg --clear-avail                 "$@"; }
+dpkg_clear_selection()             { execute dpkg --clear-selections            "$@"; }
+dpkg_compare_versions()            { execute dpkg --compare-versions            "$@"; }
+dpkg_configure()                   { execute dpkg --configure                   "$@"; }
+dpkg_field()                       { execute dpkg --field                       "$@"; }
+dpkg_forget_old_unavail()          { execute dpkg --forget-old-unavail          "$@"; }
+dpkg_get_selections()              { execute dpkg --get-selections              "$@"; }
+dpkg_help()                        { execute dpkg --help                        "$@"; }
+dpkg_install()                     { execute dpkg --install                     "$@"; }
+dpkg_list()                        { execute dpkg --list                        "$@"; }
+dpkg_listfiles()                   { execute dpkg --listfiles                   "$@"; }
+dpkg_merge_avail()                 { execute dpkg --merge-avail                 "$@"; }
+dpkg_predep_package()              { execute dpkg --predep-package              "$@"; }
+dpkg_print_architecture()          { execute dpkg --print-architecture          "$@"; }
+dpkg_print_avail()                 { execute dpkg --print-avail                 "$@"; }
+dpkg_print_foreign_architectures() { execute dpkg --print-foreign-architectures "$@"; }
+dpkg_purge()                       { execute dpkg --purge                       "$@"; }
+dpkg_record_avail()                { execute dpkg --record-avail                "$@"; }
+dpkg_remove()                      { execute dpkg --remove                      "$@"; }
+dpkg_remove_architecture()         { execute dpkg --remove-architecture         "$@"; }
+dpkg_search()                      { execute dpkg --search                      "$@"; }
+dpkg_set_selections()              { execute dpkg --set-selections              "$@"; }
+dpkg_status()                      { execute dpkg --status                      "$@"; }
+dpkg_unpack()                      { execute dpkg --unpack                      "$@"; }
+dpkg_update_avail()                { execute dpkg --update-avail                "$@"; }
+dpkg_verify()                      { execute dpkg --verify                      "$@"; }
+dpkg_version()                     { execute dpkg --version                     "$@"; }
 

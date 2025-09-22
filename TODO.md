@@ -1,10 +1,10 @@
 # TODO list:
 
-## v1.2.2-stable release
+## v1.2.3-stable release
 
 - Add **man** documentation;
 
-- **POSIX shell** support;
+- More **POSIX shell** support;
 
 - Etc.
 

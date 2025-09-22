@@ -17,75 +17,65 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>
 
-declare -r RED="\033[0;31m"
-declare -r GREEN="\033[0;32m"
-declare -r RESET="\033[0m"
+#
+# Disable Unicode for speed:
+#
+LC_ALL="C"
+LANG="C"
+
+readonly RED="\033[0;31m"
+readonly GREEN="\033[0;32m"
+readonly RESET="\033[0m"
 
 readonly SAFE_ARG_PATTERN="^[a-zA-Z0-9@._/:+=-]+$"
 
-function is_safe_argument()
+is_safe_argument()
 {
-    local ARG="$1"
+    arg="$1"
 
-    if [[ "$ARG" =~ $SAFE_ARG_PATTERN ]]; then
-        return 0
-    else
-        return 1
-    fi
+    [[ "$arg" =~ $SAFE_ARG_PATTERN ]] && return 0 || return 1
 }
 
-function validate_command()
+validate_command()
 {
-    local ARG
+    arg=
 
-    if (( $# == 0 )); then
-        echo -e "${RED}[!] Error: Empty command${RESET}" >&2
-        return 1
-    fi
+    (( $# == 0 )) && { printf "${RED}[!] Error: Empty command.${RESET}\n" >&2; return 1; }
 
-    for ARG in "$@"; do
-        if ! is_safe_argument "$ARG"; then
-            echo -e "${RED}[!] Error: Unsafe or invalid argument detected: '$ARG'${RESET}" >&2
-            return 1
-        fi
+    for arg in "$@"; do
+        ! is_safe_argument "$arg" &&
+            { printf "${RED}[!] Error: Unsafe or invalid argument detected: '$arg'${RESET}" >&2; return 1; }
     done
 
     return 0
 }
 
-function execute()
+execute()
 {
-    local CMD=("$@")
+    cmd=("$@")
 
-    if ! validate_command "${CMD[@]}"; then
-        return 1
-    fi
+    ! validate_command "${cmd[@]}" && return 1
 
-    echo -e "${GREEN}[<==] Executing '${CMD[*]}'...${RESET}"
-
-    if command "${CMD[@]}"; then
-        echo -e "${GREEN}[*] Success!${RESET}"
-        return 0
-    else
-        echo -e "${RED}[!] Error: Failed to execute: '${CMD[*]}'.${RESET}" >&2
-        return 1
-    fi
+    printf "${GREEN}[<==] Executing '${cmd[*]}'...${RESET}\n"
+    command "${cmd[@]}" && 
+        { printf "${GREEN}[*] Success!${RESET}\n"; return 0; } ||
+        { printf "${RED}[!] Error: Failed to execute: '${cmd[*]}'.${RESET}\n" >&2 return 1; }
 }
 
-function apt_get()                 { execute apt-get                 "$@"; }
-function apt_get_autoclean()       { execute apt-get autoclean       "$@"; }
-function apt_get_build_dep()       { execute apt-get build-dep       "$@"; }
-function apt_get_check()           { execute apt-get check           "$@"; }
-function apt_get_dist_upgrade()    { execute apt-get dist-upgrade    "$@"; }
-function apt_get_dselect_upgrade() { execute apt-get dselect-upgrade "$@"; }
-function apt_get_install()         { execute apt-get install         "$@"; }
-function apt_get_remove()          { execute apt-get remove          "$@"; }
-function apt_get_update()          { execute apt-get update          "$@"; }
-function apt_get_autoremove()      { execute apt-get autoremove      "$@"; }
-function apt_get_changelog()       { execute apt-get changelog       "$@"; }
-function apt_get_clean()           { execute apt-get clean           "$@"; }
-function apt_get_download()        { execute apt-get download        "$@"; }
-function apt_get_indextargets()    { execute apt-get indextargets    "$@"; }
-function apt_get_purge()           { execute apt-get purge           "$@"; }
-function apt_get_source()          { execute apt-get source          "$@"; }
-function apt_get_upgrade()         { execute apt-get upgrade         "$@"; }
+apt_get()                 { execute apt-get                 "$@"; }
+apt_get_autoclean()       { execute apt-get autoclean       "$@"; }
+apt_get_build_dep()       { execute apt-get build-dep       "$@"; }
+apt_get_check()           { execute apt-get check           "$@"; }
+apt_get_dist_upgrade()    { execute apt-get dist-upgrade    "$@"; }
+apt_get_dselect_upgrade() { execute apt-get dselect-upgrade "$@"; }
+apt_get_install()         { execute apt-get install         "$@"; }
+apt_get_remove()          { execute apt-get remove          "$@"; }
+apt_get_update()          { execute apt-get update          "$@"; }
+apt_get_autoremove()      { execute apt-get autoremove      "$@"; }
+apt_get_changelog()       { execute apt-get changelog       "$@"; }
+apt_get_clean()           { execute apt-get clean           "$@"; }
+apt_get_download()        { execute apt-get download        "$@"; }
+apt_get_indextargets()    { execute apt-get indextargets    "$@"; }
+apt_get_purge()           { execute apt-get purge           "$@"; }
+apt_get_source()          { execute apt-get source          "$@"; }
+apt_get_upgrade()         { execute apt-get upgrade         "$@"; }

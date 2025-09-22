@@ -20,17 +20,17 @@
 #
 # Disable Unicode for speed:
 #
-LC_ALL=C
-LANG=C
+LC_ALL="C"
+LANG="C"
 
-declare -r RED="\033[0;31m"
-declare -r GREEN="\033[0;32m"
-declare -r RESET="\033[0m"
+readonly RED="\033[0;31m"
+readonly GREEN="\033[0;32m"
+readonly RESET="\033[0m"
 
 _run_s6_rc()
 {
-    local action="$1"
-    local service="$2"
+    action="$1"
+    service="$2"
 
     s6-rc "$action" "$service" >/dev/null 2>&1 &&
         { printf "${GREEN}[*] Success!${RESET}\n"; return 0; } ||
@@ -47,8 +47,8 @@ change_s6_rc()   { _run_s6_rc "change"   "$1"; }
 
 execute_s6_rc()
 {
-    local command="$1"
-    local service="$2"
+    command="$1"
+    service="$2"
 
     case "$command" in
     	"help" | "list" | "listall" | "diff" | "start" | "stop" | "change")
@@ -60,6 +60,6 @@ execute_s6_rc()
             ;;
     esac
 
-    local func_name="${command//-/_}_s6_rc"
+    func_name="${command//-/_}_s6_rc"
     "$func_name" "$service"
 }

@@ -6,7 +6,7 @@
 
 ## Overview
 
-Tum (TheUnixManager) is a universal package management and system initialization library created by Archetypum, designed to simplify interactions with UNIX-like operating systems and streamline the development of system-related bash/shell scripts.
+`tum` (TheUnixManager) is a universal package management and system initialization library created by Archetypum, designed to simplify interactions with UNIX-like operating systems and streamline the development of system-related bash/shell scripts.
 
 This is the Bash implementation of `tum`.
 
@@ -34,7 +34,7 @@ Because interacting with countless package managers and init systems across UNIX
 
 With `tum`, you:
 
-1) Don't need to be a UNIX maniac who knows every package manager and init system syntax by heart;
+1) Don't need to be a UNIX maniac who knows every package manager and init system syntax and arguments by heart;
 
 2) Don't waste time building utilities from scratch — core functions are prebuilt and ready;
 
@@ -74,7 +74,7 @@ _**So why not give it a shot?**_
 
 ## Requirements
 
-`tum` requires only one dependency - **GNU Bash**. You can install it on practically any UNIX-like operating system if you somehow don't have it installed already.
+`tum` requires only one dependency - **GNU Bash** version >`3.2+`. You can install it on practically any UNIX-like operating system if you somehow don't have it installed already.
 
 ## Installation
 
@@ -95,12 +95,6 @@ sudo make install
 cp lib/unix.sh your_desired_location/
 cp lib/package_manager/apt.sh your_desired_location/
 cp lib/init_system/systemd.sh your_desired_location/
-```
-
-- Or use the whole `tum-bash` as a single executable:
-
-```sh
-cp tum your_desired_location/  # For convenience, Archetypum recommends '/usr/bin/tum' path (as in Makefile). 
 ```
 
 ## Documentation
@@ -181,26 +175,23 @@ You can find `tum-bash` documentation inside the `doc/` directory.
 
 - **launchd**
 
-## Example Usage
+## Usage Examples
 
-### UNIX:
+### Information gathering:
 
 ```bash
-#!/bin/bash
+#!/usr/bin/env bash
 
-source unix.sh
+source /usr/bin/tum
 
-DISTRO=$(get_user_distro)
-echo -e "${GREEN}Detected distribution: ${DISTRO}${RESET}"
+distro=$(get_user_distro)
+init=$(get_init_system) 
+init_comm=$(get_pid1_comm)
+check_privileges           # example: [*] Success! Root privileges are present.
 
-if macos_based "$DISTRO" "$MACOS_BASED"; then
-    echo -e "${GREEN}This is a macOS-based system.${RESET}"
-else
-    echo -e "${GREEN}This is NOT a macOS-based system.${RESET}"
-fi
-
-INIT_SYSTEM=$(get_init_system)
-echo -e "${GREEN}Detected init system: ${INIT_SYSTEM}${RESET}"
+echo $distro    # example: artix
+echo $init      # example: s6 
+echo $init_comm # example: s6-svscan
 ```
 
 ### Service Management:

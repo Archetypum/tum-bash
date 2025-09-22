@@ -20,17 +20,17 @@
 #
 # Disable Unicode for speed:
 #
-LC_ALL=C
-LANG=C
+LC_ALL="C"
+LANG="C"
 
-declare -r RED="\033[0;31m"
-declare -r GREEN="\033[0;32m"
-declare -r RESET="\033[0m"
+readonly RED="\033[0;31m"
+readonly GREEN="\033[0;32m"
+readonly RESET="\033[0m"
 
 _run_launchctl()
 {
-    local action="$1"
-    local service="$2"
+    action="$1"
+    service="$2"
 
     launchctl "$action" "$service" >/dev/null 2>&1 &&
         { printf "${GREEN}[*] Success!${RESET}\n"; return 0; } ||
@@ -80,8 +80,8 @@ help_launchctl()           { _run_launchctl "help"           "$1"; }
 
 execute_launchctl()
 {
-    local command="$1"
-    local service="$2"
+    command="$1"
+    service="$2"
 
     case "$command" in
         "bootstrap" | "bootout" | "enable" | "disable" | "uncache" | "kickstart" | "attach" | "debug" | \
@@ -89,7 +89,7 @@ execute_launchctl()
         "resolveport" | "examine" | "reboot" | "error" | "variant" | "version" | "load" | "unload" | "submit" | \
         "remove" | "start" | "stop" | "list" | "setenv" | "unsetenv" | "getenv" | "export" | "limit" | "bsexec" | \
         "asuser" | "managerpid" | "manageruid" | "managername" | "help")
-        	;;
+            ;;
 
         *)
             printf "${RED}[!] Error: Unsupported command: '$command'.${RESET}"
@@ -97,6 +97,6 @@ execute_launchctl()
             ;;
     esac
 
-    local func_name="${command//-/_}_launchctl"
+    func_name="${command//-/_}_launchctl"
     "$func_name" "$service"
 }
