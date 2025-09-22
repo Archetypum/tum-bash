@@ -270,7 +270,7 @@ readonly MACOS_BASED=(
     # If you can dream it, Mac can do it.
     # <https://www.apple.com/macos>
 
-    "macos" "darwin" "xnu"
+    "macos" "darwin" "xnu" "osx" "ios" "watchos" "tvos" "visionos"
 )
 
 is_based_on() 
@@ -340,7 +340,7 @@ prompt_user()
 {
     shopt -s extglob
     
-    local prompt="$1" default="${2:-N}" user_input
+    prompt="$1" default="${2:-N}" user_input
     default="${default,,}"
     
     read -rp "$prompt (y/n) [${default^^}]: " user_input
