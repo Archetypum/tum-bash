@@ -26,36 +26,15 @@ LANG="C"
 #
 # `tum-bash` version:
 #
-readonly VERSION="1.2.3-stable"
+readonly VERSION="1.2.4-stable"
 
 #
-# ANSI Color codes and text formating:
+# ANSI Color Codes:
 #
-readonly BLACK="\033[90m"
-readonly WHITE="\033[97m"
 readonly YELLOW="\033[93m"
 readonly ORANGE="\033[38;5;214m"
-readonly BLUE="\033[94m"
-readonly CYAN="\e[0;36m"
-readonly PURPLE="\033[95m"
 readonly GREEN="\033[92m"
 readonly RED="\033[91m"
-
-readonly BG_BLACK="\033[40m"
-readonly BG_RED="\033[41m"
-readonly BG_GREEN="\033[42m"
-readonly BG_ORANGE="\033[43m"
-readonly BG_BLUE="\033[44m"
-readonly BG_MAGENTA="\033[105m"
-readonly BG_CYAN="\033[46m"
-readonly BG_WHITE="\033[47m"
-
-readonly BOLD="\033[1m"
-readonly UNDERLINE="\033[4m"
-readonly REVERSED="\033[7m"
-readonly ITALIC="\033[3m"
-readonly CROSSED_OUT="\033[9m"
-readonly RESET="\033[0m"
 
 #
 # Supported Package Managers:
@@ -273,67 +252,153 @@ readonly MACOS_BASED=(
     "macos" "darwin" "xnu" "osx" "ios" "watchos" "tvos" "visionos"
 )
 
-is_based_on() 
+is_based_on()
 {
-    distro="${1,,}"
+    distro="$1"
     shift
-    [[ " $* " == *" $distro "* ]]
+    distro=$(printf "%s" "$distro" | tr "A-Z" "a-z")
+    for base in "$@"; do [ "$distro" = "$base" ] && return; done
+    return 1
 }
 
-is_debian_based()          { is_based_on "$1" $DEBIAN_BASED;          }
-is_arch_based()            { is_based_on "$1" $ARCH_BASED;            }
-is_alpine_based()          { is_based_on "$1" $ALPINE_BASED;          }
-is_gentoo_based()          { is_based_on "$1" $GENTOO_BASED;          }
-is_void_based()            { is_based_on "$1" $VOID_BASED;            }
-is_dragora_based()         { is_based_on "$1" $DRAGORA_BASED;         }
-is_slackware_based()       { is_based_on "$1" $SLACKWARE_BASED;       }
-is_redhat_based()          { is_based_on "$1" $REDHAT_BASED;          }
-is_guix_based()            { is_based_on "$1" $GUIX_BASED;            }
-is_freebsd_based()         { is_based_on "$1" $FREEBSD_BASED;         }
-is_openbsd_based()         { is_based_on "$1" $OPENBSD_BASED;         }
-is_netbsd_based()          { is_based_on "$1" $NETBSD_BASED;          }
-is_solaris_illumos_based() { is_based_on "$1" $SOLARIS_ILLUMOS_BASED; }
-is_macos_based()           { is_based_on "$1" $MACOS_BASED;           }
+is_debian_based()          { is_based_on "$1" "${DEBIAN_BASED[@]}";          }
+is_arch_based()            { is_based_on "$1" "${ARCH_BASED[@]}";            }
+is_alpine_based()          { is_based_on "$1" "${ALPINE_BASED[@]}";          }
+is_gentoo_based()          { is_based_on "$1" "${GENTOO_BASED[@]}";          }
+is_void_based()            { is_based_on "$1" "${VOID_BASED[@]}";            }
+is_dragora_based()         { is_based_on "$1" "${DRAGORA_BASED[@]}";         }
+is_slackware_based()       { is_based_on "$1" "${SLACKWARE_BASED[@]}";       }
+is_redhat_based()          { is_based_on "$1" "${REDHAT_BASED[@]}";          }
+is_guix_based()            { is_based_on "$1" "${GUIX_BASED[@]}";            }
+is_freebsd_based()         { is_based_on "$1" "${FREEBSD_BASED[@]}";         }
+is_openbsd_based()         { is_based_on "$1" "${OPENBSD_BASED[@]}";         }
+is_netbsd_based()          { is_based_on "$1" "${NETBSD_BASED[@]}";          }
+is_solaris_illumos_based() { is_based_on "$1" "${SOLARIS_ILLUMOS_BASED[@]}"; }
+is_macos_based()           { is_based_on "$1" "${MACOS_BASED[@]}";           }
 
 get_user_distro()
 {
-    id=
-    
-    if [[ -f /etc/os-release ]]; then
-        while IFS="=" read -r key value; do
-            [[ "$key" == "ID" ]] && 
-                { id="${value//\"/}"; printf "$id\n"; return; }
-        done < /etc/os-release
-    else
-        printf "${RED}[!] Error: Cannot detect distribution from '/etc/os-release'.${RESET}\n"
-        read -rp "[==>] Write your OS name yourself: " id
-        printf "$id\n"
-    fi
+    has()
+    {
+        command -v "$1" >/dev/null 2>&1
+    }
+
+    strip_name()
+    {
+        name="$1"
+        name="${name#\"}"
+        name="${name%\"}"
+        name="${name#\'}"
+        name="${name%\'}"
+        printf "$name"
+    }
+
+    distro=
+    os=$(uname -s)
+
+    case "$os" in
+        "Linux")
+            if has lsb_release; then
+                raw=$(lsb_release -sd)
+                distro=$(strip_name "$raw")
+            elif [ -d /system/app ] && [ -d /system/priv-app ]; then
+                distro="Android"
+            elif [ -f /etc/os-release ]; then
+                while IFS="=" read -r key val; do
+                    if [ "$key" = "PRETTY_NAME" ]; then
+                        distro=$(strip_name "$val")
+                        break
+                    fi
+                done < /etc/os-release
+            fi
+            ;;
+
+        "Darwin")
+            product_name=$(defaults read /System/Library/CoreServices/SystemVersion ProductName 2>/dev/null)
+            case "$product_name" in
+                *iPhone*|*iPad*|*iOS*)
+                    distro="iOS"
+                    ;;
+                *)
+                    distro="macOS"
+                    ;;
+            esac
+            ;;
+
+        "Haiku")
+            distro=$(uname -sv)
+            ;;
+
+        "Minix" | "DragonFly" | "OpenBSD" | "FreeBSD")
+            distro="$os"
+            ;;
+    esac
+
+    [ -z "$distro" ] && {
+        printf "[!] Error: cannot detect your distribution.\n";
+        printf "[==>] Enter your OS: ";
+        read -r distro;
+    }
+
+    printf "$distro"
 }
 
 get_init_system()
 {
     init_comm=$(get_pid1_comm)
 
-    [[ -d "/run/systemd/system" ]] || [[ "$init_comm" == "systemd" ]] && { printf "systemd\n"; return; }
-    [[ -d "/etc/init.d" ]] && { [[ -e "/etc/init.d/openrc" ]] && { printf "openrc\n"; return; }; printf "sysvinit\n"; return; }
-    [[ -d "/etc/s6" ]] && { printf "s6\n"; return; }
-    [[ -d "/etc/runit" ]] && { printf "runit\n"; return; }
-    [[ "$init_comm" == "dinit" ]] && { printf "dinit\n"; return; }
-    [[ "$init_comm" == "launchd" ]] && { printf "launchd\n"; return; }
+    [[ "$init_comm" == "systemd" ]] && {
+        printf "systemd";
+        return;
+    }
+
+    [[ -d "/etc/init.d" ]] && { 
+        [[ -e "/etc/init.d/openrc" ]] && {
+            printf "openrc";
+            return;
+        }; 
+            printf "sysvinit";
+            return;
+        };
     
-    printf "unknown\n"
+    [[ "$init_comm" == "s6-svscan" ]] && { 
+        printf "s6";
+        return;
+    }
+
+    [[ "$init_comm" == "runit" ]] && { 
+        printf "runit";
+        return;
+    }
+
+    [[ "$init_comm" == "dinit" ]] && {
+        printf "dinit"; 
+        return;
+    }
+
+    [[ "$init_comm" == "shepherd" ]] && {
+        printf "shepherd";
+        return;
+    }
+
+    [[ "$init_comm" == "launchd" ]] && {
+        printf "launchd";
+        return;
+    }
+    
+    printf "unknown"
+    return
 }
 
 get_pid1_comm()
 {
     comm=$(ps -p 1 -o comm= 2>/dev/null)
-    printf "${comm}\n"
+    printf "$comm"
 }
 
 clear_screen()
 {
-    tput clear
+    clear
 }
 
 prompt_user()
@@ -357,7 +422,12 @@ prompt_user()
 
 check_privileges()
 {
-    [[ "$EUID" -ne 0 ]] && \
-        { printf "${RED}[!] Error: This script requires root privileges to work.${RESET}\n" >&2; exit 1; } ||
-        { printf "${GREEN}[*] Success! Root privileges are present.${RESET}\n" >&2; return 0; }
+    [ "$EUID" -ne 0 ] && { 
+        printf "${RED}[!] Root privileges not present.${RESET}\n"; 
+        return 1;
+    } || {
+        printf "${GREEN}[*] Root privileges are present.${RESET}\n";
+        return 0;
+    }
 }
+

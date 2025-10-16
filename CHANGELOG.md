@@ -16,7 +16,9 @@ Another stable version of **tum-bash**. Man documentation update, some fixes, et
 
 - Slightly updated `tum`, `lib/*`, making it a little more compatible with POSIX `sh`;
 
-- `clear_screen()` is using `tput` instead of `clear`;
+- Made code more readable;
+
+- Removed useless ANSI color codes and formatting;
 
 - Other small improvements.
 

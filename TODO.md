@@ -1,6 +1,6 @@
 # TODO list:
 
-## v1.2.3-stable release
+## v1.2.4-stable release
 
 - Add **man** documentation;
 
