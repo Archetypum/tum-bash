@@ -35,16 +35,16 @@ Another stable version of **tum-bash**. Man documentation update, some fixes, et
      103 unique files.
        3 files ignored.
 
-github.com/AlDanial/cloc v 2.06  T=0.06 s (1642.8 files/s, 161584.4 lines/s)
+github.com/AlDanial/cloc v 2.06  T=0.06 s (1619.8 files/s, 159293.7 lines/s)
 --------------------------------------------------------------------------------
 Language                      files          blank        comment           code
 --------------------------------------------------------------------------------
 Markdown                         55           1479              0           2934
 Bourne Shell                     44            623            931           2397
-Bourne Again Shell                1            168            213           1311
+Bourne Again Shell                1            168            213           1309
 make                              1             10             16             29
 YAML                              2              5              0             15
 --------------------------------------------------------------------------------
-SUM:                            103           2285           1160           6686
+SUM:                            103           2285           1160           6684
 --------------------------------------------------------------------------------
 ```

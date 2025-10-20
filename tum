@@ -264,10 +264,8 @@ readonly MACOS_BASED=(
 
 is_based_on()
 {
-    distro="$1"
-    shift
-    distro=$(printf "%s" "$distro" | tr "A-Z" "a-z")
-    for base in "$@"; do [ "$distro" = "$base" ] && return; done
+    distro=$(printf "$1" | tr "A-Z" "a-z"); shift
+    for base; do [ "$distro" = "$base" ] && return 0; done
     return 1
 }
 
@@ -339,7 +337,7 @@ get_user_distro()
             esac
             ;;
 
-        "Haiku" | "Minix" | "DragonFly" | "OpenBSD" | "FreeBSD")
+        "Haiku" | "Minix" | "DragonFly" | "OpenBSD" | "FreeBSD" | "NetBSD")
             distro="$os"
             ;;
     esac

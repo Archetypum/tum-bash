@@ -64,7 +64,7 @@ It gives you:
 
 - Prototype cross-distro sysadmin tools without rewriting core logic.
 
-`tum` executable consists of **1311 lines of pure bash** (without empty lines and comments) that makes your code support 400+ GNU/Linux, BSD and macOS distros. That makes `tum` a _**very**_ small and lightweight dependency in your project.
+`tum` executable consists of **1309 lines of pure bash** (without empty lines and comments) that makes your code support 400+ GNU/Linux, BSD and macOS distros. That makes `tum` a _**very**_ small and lightweight dependency in your project.
 
 Your users can install it in just three commands and forget about `tum` existence for forever, because their cross-platform scripts are working just like intended.
 
