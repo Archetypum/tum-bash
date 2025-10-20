@@ -1,4 +1,4 @@
-# tum-bash v1.2.3-stable
+# tum-bash v1.2.4-stable
 
 Another stable version of **tum-bash**. Man documentation update, some fixes, etc.
 
@@ -6,7 +6,15 @@ Another stable version of **tum-bash**. Man documentation update, some fixes, et
 
 - Man page for `tum` (`tum.1`);
 
-- Added `Editor configs` section to the `.gitignore`.
+- Added `Editor configs` section to the `.gitignore`;
+
+- Added `GNU Shepherd` detection to the `get_init_system`;
+
+- Added more options on getting user's operating system in `get_user_distro`.
+
+**Fixes**:
+
+- Fixed all `is_*_based` funciotns.
 
 **Improvements**:
 
@@ -27,16 +35,16 @@ Another stable version of **tum-bash**. Man documentation update, some fixes, et
      103 unique files.
        3 files ignored.
 
-github.com/AlDanial/cloc v 2.06  T=0.06 s (1719.3 files/s, 166354.7 lines/s)
+github.com/AlDanial/cloc v 2.06  T=0.06 s (1642.8 files/s, 161584.4 lines/s)
 --------------------------------------------------------------------------------
 Language                      files          blank        comment           code
 --------------------------------------------------------------------------------
-Markdown                         55           1474              0           2929
-Bourne Shell                     44            611            931           2339
-Bourne Again Shell                1            155            213           1239
+Markdown                         55           1479              0           2934
+Bourne Shell                     44            623            931           2397
+Bourne Again Shell                1            168            213           1311
 make                              1             10             16             29
 YAML                              2              5              0             15
 --------------------------------------------------------------------------------
-SUM:                            103           2255           1160           6551
+SUM:                            103           2285           1160           6686
 --------------------------------------------------------------------------------
 ```

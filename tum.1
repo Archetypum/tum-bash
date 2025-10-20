@@ -1,6 +1,8 @@
 .TH TUM 1 "August 2025" "tum-bash" "User Commands"
+
 .SH NAME
-tum \- TheUnixManager written in GNU Bash.
+\fBtum\fR \- TheUnixManager written in GNU Bash.
+
 .SH SYNOPSIS
 .B tum
 [\fIoptions\fR] <command> [arguments...]
@@ -8,6 +10,8 @@ tum \- TheUnixManager written in GNU Bash.
 \fBtum\fR (TheUnixManager) is a universal package management and system initialization library created by Archetypum,
 designed to simplify interactions with UNIX-like operating systems and streamline the development of system-related
 bash/shell scripts.
+
+This is the Bash implementation of \fBtum\fR.
 
 .SH OPTIONS
 .TP
@@ -20,11 +24,20 @@ List all available commands.
 .B -v, --version
 Show the current version.
 
-.SH ENVIRONMENT
+.SH GATHERING SYSTEM INFORMATION
 .TP
-.B LC_ALL, LANG
-By default, \fBtum\fR sets \fILC_ALL=C\fR and \fILANG=C\fR to ensure
-consistent and fast text processing.
+.B tum get_user_distro
+Detects and returns the current UNIX-like distribution name.
+Detects most GNU, Linux, BSD, Apple, Android, Haiku, Minix distributions.
+.TP
+.B tum get_init_system
+Attempts to identify the init system by checking known file paths and the name of PID 1.
+.TP
+.B tum get_pid1_comm
+Returns the COMM field for PID 1 using \fBps\fR utility.
+.TP
+.B tum check_privileges
+Checks if user is root.
 
 .SH EXIT STATUS
 .TP
@@ -34,14 +47,16 @@ Success.
 >0
 An error occurred (invalid command or execution failure).
 
-.SH EXAMPLES
-Run a helper command:
-.EX
-tum enable_systemctl nginx
-.EE
+.SH ENVIRONMENT
+.TP
+.B LC_ALL, LANG
+By default, \fBtum\fR sets \fILC_ALL=C\fR and \fILANG=C\fR to ensure
+consistent and fast text processing.
 
 .SH AUTHORS
-Currenty maintained by Kinderfeld <https://github.com/Kinderfeld> 
+Created by \fBArchetypum\fR
+
+Currenty maintained by \fBKinderfeld\fR <\fIhttps://github.com/Kinderfeld\fR>
 
 .SH COPYRIGHT
 Copyright (C) 2025 Archetypum
@@ -57,11 +72,11 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU Lesser General Public License for more details.
 
 You should have received a copy of the GNU Lesser General Public License
-along with \fBtum-bash\fR.  If not, see <https://www.gnu.org/licenses/>.
+along with \fBtum-bash\fR.  If not, see <\fIhttps://www.gnu.org/licenses/\fR>.
 
 .SH REPORTING BUGS
-Project homepage: <https://github.com/Archetypum/tum-bash>
+Project homepage: <\fIhttps://github.com/Archetypum/tum-bash\fR>
 
 .SH SEE ALSO
-sh(1), dash(1), bash(1)
 
+\fBsh\fR(1), \fBash\fR(1), \fBdash\fR(1), \fBcsh\fR(1), \fBcsh\fR(1), \fBbash\fR(1), \fBzsh\fR(1), \fBfish\fR(1)

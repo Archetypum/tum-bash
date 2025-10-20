@@ -168,7 +168,7 @@ echo "Detected distro: $DISTRO"
 Attempts to identify the init system by checking known file paths and the name of PID 1.
 
 Returns one of:  
-`systemd`, `openrc`, `sysvinit`, `s6`, `runit`, `dinit`, `launchd`, or `unknown`.
+`systemd`, `openrc`, `sysvinit`, `s6`, `runit`, `dinit`, `launchd`, `shepherd` or `unknown`.
 
 #### Example
 

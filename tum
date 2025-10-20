@@ -311,22 +311,26 @@ get_user_distro()
             if has lsb_release; then
                 raw=$(lsb_release -sd)
                 distro=$(strip_name "$raw")
-            elif [ -d /system/app ] && [ -d /system/priv-app ]; then
-                distro="Android"
-            elif [ -f /etc/os-release ]; then
-                while IFS="=" read -r key val; do
-                    if [ "$key" = "PRETTY_NAME" ]; then
-                        distro=$(strip_name "$val")
-                        break
-                    fi
-                done < /etc/os-release
             fi
+
+            [ -d /system/app ] && [ -d /system/priv-app ] && {
+                distro="Android";
+            }
+
+            [ -f /etc/os-release ] && {
+                while IFS="=" read -r key val; do
+                    [ "$key" = "PRETTY_NAME" ] && {
+                        distro=$(strip_name "$val");
+                        break;
+                    }
+                done < /etc/os-release
+            }
             ;;
 
         "Darwin")
             product_name=$(defaults read /System/Library/CoreServices/SystemVersion ProductName 2>/dev/null)
             case "$product_name" in
-                *iPhone*|*iPad*|*iOS*)
+                *iPhone* | *iPad* | *iOS*)
                     distro="iOS"
                     ;;
                 *)
@@ -335,11 +339,7 @@ get_user_distro()
             esac
             ;;
 
-        "Haiku")
-            distro=$(uname -sv)
-            ;;
-
-        "Minix" | "DragonFly" | "OpenBSD" | "FreeBSD")
+        "Haiku" | "Minix" | "DragonFly" | "OpenBSD" | "FreeBSD")
             distro="$os"
             ;;
     esac
@@ -357,41 +357,42 @@ get_init_system()
 {
     init_comm=$(get_pid1_comm)
 
-    [[ "$init_comm" == "systemd" ]] && {
+    [ "$init_comm" = "systemd" ] && {
         printf "systemd";
         return;
     }
 
-    [[ -d "/etc/init.d" ]] && { 
-        [[ -e "/etc/init.d/openrc" ]] && {
+    [ -d "/etc/init.d" ] && { 
+        [ -e "/etc/init.d/openrc" ] && {
             printf "openrc";
             return;
-        }; 
+        } || { 
             printf "sysvinit";
             return;
         };
-    
-    [[ "$init_comm" == "s6-svscan" ]] && { 
+    }
+
+    [ "$init_comm" = "s6-svscan" ] && { 
         printf "s6";
         return;
     }
 
-    [[ "$init_comm" == "runit" ]] && { 
+    [ "$init_comm" = "runit" ] && { 
         printf "runit";
         return;
     }
 
-    [[ "$init_comm" == "dinit" ]] && {
+    [ "$init_comm" = "dinit" ] && {
         printf "dinit"; 
         return;
     }
     
-    [[ "$init_comm" == "shepherd" ]] && {
+    [ "$init_comm" = "shepherd" ] && {
         printf "shepherd";
         return;
     }
 
-    [[ "$init_comm" == "launchd" ]] && {
+    [ "$init_comm" = "launchd" ] && {
         printf "launchd";
         return;
     }
@@ -1655,23 +1656,24 @@ main()
 	[[ -z "$cmd" ]] && return
 
     case "$cmd" in
-        "-h" | "--help")
+        "h" | "-h" | "--help")
         	printf "==== Archetypum TheUnixManager ====\n"
             printf "[*] Usage: tum <command> [arguments]\n\n"
             printf "[...] Options:\n"
-            printf "  -h, --help       Show this help message.\n"
-            printf "  -c, --commands   List all available commands.\n"
-            printf "  -v, --version    Show tum version.\n"
+            printf "  h, -h, --help       Show this help message.\n"
+            printf "  c, -c, --commands   List all available commands.\n"
+            printf "  v, -v, --version    Show tum version.\n\n"
+            printf "Check 'man tum' for more info.\n"
             exit 0
             ;;
 
-        "-c" | "--commands")
+        "c" | "-c" | "--commands")
             printf "[...] Available commands:\n"
             declare -F | awk '{print "  - " $3}' | grep -v '^main$' | sort
             exit 0
             ;;
 
-        "-v" | "--version")
+        "v" | "-v" | "--version")
             printf "$VERSION\n"
         	exit 0
         	;;

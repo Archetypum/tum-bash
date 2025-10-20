@@ -64,7 +64,7 @@ It gives you:
 
 - Prototype cross-distro sysadmin tools without rewriting core logic.
 
-`tum` executable consists of **1310 lines of pure bash** (without empty lines and comments) that makes your code support 400+ GNU/Linux, BSD and macOS distros. That makes `tum` a _**very**_ small and lightweight dependency in your project.
+`tum` executable consists of **1311 lines of pure bash** (without empty lines and comments) that makes your code support 400+ GNU/Linux, BSD and macOS distros. That makes `tum` a _**very**_ small and lightweight dependency in your project.
 
 Your users can install it in just three commands and forget about `tum` existence for forever, because their cross-platform scripts are working just like intended.
 
@@ -74,7 +74,7 @@ _**So why not give it a shot?**_
 
 ## Requirements
 
-`tum` requires only one dependency - **GNU Bash** version >`3.2+`. You can install it on practically any UNIX-like operating system if you somehow don't have it installed already.
+`tum` requires only one dependency - **GNU Bash** version >`3.1+`. You can install it on practically any UNIX-like operating system if you somehow don't have it installed already.
 
 ## Installation
 
@@ -99,7 +99,7 @@ cp lib/init_system/systemd.sh your_desired_location/
 
 ## Documentation
 
-You can find `tum-bash` documentation inside the `doc/` directory.
+You can find `tum-bash` documentation inside the `doc/` directory (Mostly obsolete, man pages coming soon).
 
 ## Supported Package Management Utilities (35)
 
