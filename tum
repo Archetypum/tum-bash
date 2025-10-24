@@ -90,13 +90,13 @@ readonly SUPPORTED_PMS=(
 ## Supported Initialization Systems:
 ##
 readonly SUPPORTED_INITS=(
-    "sysvinit"   # https://wiki.gentoo.org/wiki/Sysvinit
-    "openrc"     # https://wiki.gentoo.org/wiki/OpenRC
-    "s6"         # https://skarnet.org/software/s6/
-    "runit"      # https://smarden.org/runit/
-    "systemd"    # https://systemd.io/
-    "dinit"      # https://davmac.org/projects/dinit/
-    "launchd"    # https://support.apple.com/guide/terminal/script-management-with-launchd-apdc6c1077b-5d5d-4d35-9c19-60f2397b2369/mac
+    "sysvinit"                     # https://wiki.gentoo.org/wiki/Sysvinit
+    "openrc"                       # https://wiki.gentoo.org/wiki/OpenRC
+    "s6"                           # https://skarnet.org/software/s6/
+    "runit"                        # https://smarden.org/runit/
+    "systemd"                      # https://systemd.io/
+    "dinit"                        # https://davmac.org/projects/dinit/
+    "launchd"                      # https://support.apple.com/guide/terminal/script-management-with-launchd-apdc6c1077b-5d5d-4d35-9c19-60f2397b2369/mac
 )
 
 get_user_distro()
@@ -111,9 +111,7 @@ get_user_distro()
         printf "$name"
     }
 
-    distro=
     os=$(uname -s)
-
     case "$os" in
         "Linux")
             if has lsb_release; then
@@ -154,8 +152,7 @@ get_user_distro()
 
     [ -z "$distro" ] && {
         printf "[!] Error: cannot detect your distribution.\n";
-        printf "[==>] Enter your OS: ";
-        read -r distro;
+        printf "[==>] Enter your OS: "; read -r distro;
     }
 
     printf "$distro"
@@ -217,27 +214,14 @@ get_pid1_comm()
 
 get_package_manager()
 {
-    if has apt; then printf "apt"; return 0; fi
-    if has apt-get; then printf "apt-get"; return 0; fi
-    if has aptitude; then printf "aptitude"; return 0; fi
-    if has apk; then printf "apk"; return 0; fi
-    if has dnf; then printf "dnf"; return 0; fi
-    if has dpkg; then printf "dpkg"; return 0; fi
-    if has guix; then printf "guix"; return 0; fi
-    if has homebrew; then printf "homebrew"; return 0; fi
-    if has pkg; then printf "pkg"; return 0; fi
-    if has pkgin; then printf "pkgin"; return 0; fi
-    if has pkg_add; then printf "pkg_add"; return 0; fi
-    if has pacman; then printf "pacman"; return 0; fi
-    if has yay; then printf "yay"; return 0; fi
-    if has pamac; then printf "pamac"; return 0; fi
-    if has trizen; then printf "trizen"; return 0; fi
-    if has portage; then printf "portage"; return 0; fi
-    if has qi; then printf "qi"; return 0; fi
-    if has slackpkg; then printf "slackpkg"; return 0; fi
-    if has xbps-install; then printf "xbps-install"; return 0; fi
-    if has yum; then printf "yum"; return 0; fi
-    if has zypper; then printf "zypper"; return 0; fi
+    managers="apt apt-get aptitude apk dnf dpkg guix homebrew pkg pkgin pkg_add pacman yay pamac trizen portage qi slackpkg xbps-install yum zypper"
+    
+    for manager in $managers; do
+        if has "$manager"; then
+            printf "$manager"
+            return 0
+        fi
+    done
 
     printf "unknown"
     return 1
@@ -255,21 +239,25 @@ has()
 
 prompt_user()
 {
-    shopt -s extglob
-    
-    prompt="$1" default="${2:-N}" user_input
-    default="${default,,}"
-    
-    read -rp "$prompt (y/n) [${default^^}]: " user_input
-    user_input="${user_input,,}"
-    user_input="${user_input##+([[:space:]])}"
-    user_input="${user_input%%+([[:space:]])}"
-    
-    [[ -z "$user_input" ]] && user_input="$default"
-    [[ "$user_input" =~ ^(y|ye|yes)$ ]] && return 0
-    [[ "$user_input" =~ ^(n|no)$ ]] && return 1
-    
-    return 1
+    prompt="$1"
+    default="${2:-N}"
+    default="$(printf "$default" | tr '[:upper:]' '[:lower:]')"
+
+    printf "$prompt (y/n) [$default]: "; read user_input
+    user_input="$(printf "$user_input" | tr '[:upper:]' '[:lower:]' | xargs)"
+
+    [ -z "$user_input" ] && user_input="$default"
+    case "$user_input" in
+        "y" | "ye" | "yes")
+            return 0
+            ;;
+        "n" | "no")
+            return 1
+            ;;
+        *)
+            return 1
+            ;;
+    esac
 }
 
 check_privileges()
@@ -731,13 +719,13 @@ validate_command()
     arg=
 
     (( $# == 0 )) && {
-        printf "${RED}[!] Error: Empty command.${RESET}\n" >&2;
+        printf "${RED}[!] Error: Empty command.${RESET}\n";
         return 1;
     }
 
     for arg in "$@"; do
         ! is_safe_argument "$arg" && { 
-            printf "${RED}[!] Error: Unsafe or invalid argument detected: '$arg'${RESET}" >&2;
+            printf "${RED}[!] Error: Unsafe or invalid argument detected: '$arg'${RESET}";
             return 1;
         }
     done
@@ -753,10 +741,10 @@ execute()
 
     printf "${GREEN}[<==] Executing '${cmd[*]}'...${RESET}\n"
     command "${cmd[@]}" && { 
-        printf "${GREEN}[*] Success!${RESET}\n"; 
+        printf "${GREEN}[*] Success!${RESET}\n";
         return 0; 
     } || {
-        printf "${RED}[!] Error: Failed to execute: '${cmd[*]}'.${RESET}\n" >&2;
+        printf "${RED}[!] Error: Failed to execute: '${cmd[*]}'.${RESET}\n";
         return 1;
     }
 }
@@ -1484,7 +1472,7 @@ zypper_what_provides()               { execute zypper what-provides          "$@
 ##
 ## `zypper-log`:
 ##
-zypper_log() { execute zypper-log "$@"; }
+zypper_log()                         { execute zypper-log "$@"; }
 
 #
 # Main:
@@ -1493,8 +1481,8 @@ main()
 {
     cmd="$1"
     
-    [[ $# -gt 0 ]] && shift
-	[[ -z "$cmd" ]] && return
+    [ $# -gt 0 ] && shift
+	[ -z "$cmd" ] && return
 
     case "$cmd" in
         "h" | "-h" | "--help")

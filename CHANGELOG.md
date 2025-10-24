@@ -1,32 +1,22 @@
-# tum-bash v1.2.4-stable
+# tum-bash v2.2.4-stable
 
-Another stable version of **tum-bash**. Man documentation update, some fixes, etc.
+New release. More stuff. Less stuff.
+`doc/` and `lib/` planned to be removed because they are mostly obsolete and just
+making the repository more bloated.
 
 **New**:
 
-- Man page for `tum` (`tum.1`);
+- Updated man page for `tum`;
 
-- Added `Editor configs` section to the `.gitignore`;
-
-- Added `GNU Shepherd` detection to the `get_init_system`;
-
-- Added more options on getting user's operating system in `get_user_distro`.
+- Added `get_package_manager`.
 
 **Fixes**:
 
-- Fixed all `is_*_based` funciotns.
+- function `prompt_user` is working now (holy FUCKING shit bro).
 
 **Improvements**:
 
-- Slightly updated `Makefile` for man page installation;
-
-- Slightly updated `README.md`;
-
-- Slightly updated `tum`, `lib/*`, making it a little more compatible with POSIX `sh`;
-
-- Made code more readable;
-
-- Removed useless ANSI color codes and formatting;
+- Slightly updated the code to make it more POSIX sh compliant;
 
 - Other small improvements.
 
@@ -35,16 +25,16 @@ Another stable version of **tum-bash**. Man documentation update, some fixes, et
      103 unique files.
        3 files ignored.
 
-github.com/AlDanial/cloc v 2.06  T=0.06 s (1619.8 files/s, 159293.7 lines/s)
+github.com/AlDanial/cloc v 2.06  T=0.03 s (3114.7 files/s, 300887.0 lines/s)
 --------------------------------------------------------------------------------
 Language                      files          blank        comment           code
 --------------------------------------------------------------------------------
-Markdown                         55           1479              0           2934
+Markdown                         55           1472              0           2931
 Bourne Shell                     44            623            931           2397
-Bourne Again Shell                1            168            213           1309
+Bourne Again Shell                1            136            177           1208
 make                              1             10             16             29
 YAML                              2              5              0             15
 --------------------------------------------------------------------------------
-SUM:                            103           2285           1160           6684
+SUM:                            103           2246           1124           6580
 --------------------------------------------------------------------------------
 ```

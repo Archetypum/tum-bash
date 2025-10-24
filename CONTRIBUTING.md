@@ -14,15 +14,15 @@ We appreciate contributing in:
 
 Installation:
 
-You can see proper installation of tum-bash in README.md.
+You can see proper installation of `tum-bash` in README.md.
 
 OS: 
 
-GNU/Linux, BSD, macOS
+GNU/Linux, BSD, macOS, Haiku, Minix
 
 ## Code writing
 
-Please consider next rules of writing if you want to help tum-bash:
+Please consider next rules of writing if you want to help `tum-bash`:
 
 - TODO: understand our rules of writing Bash.
 
@@ -63,17 +63,17 @@ You can send the issue on GitHub tum-bash in "Issues" -> "New Issue" -> "Submit 
 
 Provide us next information about your issue:
 
-- Your OS
+- Your OS;
 
-- Your init system
+- Your init system/distro/package manager;
 
-- The method you were trying to call
+- The method you were trying to call;
 
-- Line of code where issue is detected
+- Line of code where issue is detected;
 
-- Expected behavior
+- Expected behavior;
 
-- The thing you encountered
+- The thing you encountered;
 
 ## License
 

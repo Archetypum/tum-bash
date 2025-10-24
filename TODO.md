@@ -1,12 +1,14 @@
 # TODO list:
 
-## v1.2.4-stable release
+## v2.2.4-stable release
 
-- Add **man** documentation;
+- More and more **man** documentation;
 
-- More **POSIX shell** support;
+- More and more **POSIX shell** support;
 
-- Etc.
+- More interesting functions;
+
+- Remove all crap.
 
 ## Long-term (future stable releases)
 
@@ -14,6 +16,6 @@
 
 2) Consider adding **GNU Shepherd**, **smf (service management facility)**, **upstart** init support someday.
 
-3) Consider adding **Haiku**, **Minix**, **Solaris**, **illumos** os support someday.
+3) Consider adding **Solaris**, os support someday.
 
 4) Debug again...
