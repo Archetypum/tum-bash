@@ -37,15 +37,15 @@ making the repository more bloated.
       58 unique files.
        3 files ignored.
 
-github.com/AlDanial/cloc v 2.06  T=0.02 s (2662.6 files/s, 263185.5 lines/s)
+github.com/AlDanial/cloc v 2.06  T=0.02 s (2608.4 files/s, 254588.6 lines/s)
 --------------------------------------------------------------------------------
 Language                      files          blank        comment           code
 --------------------------------------------------------------------------------
-Markdown                         55           1458              0           2885
-Bourne Again Shell                1            126             21           1187
+Markdown                         55           1434              0           2844
+Bourne Again Shell                1            119             21           1187
 make                              1             10             16             29
 YAML                              1              0              0              1
 --------------------------------------------------------------------------------
-SUM:                             58           1594             37           4102
+SUM:                             58           1563             37           4061
 --------------------------------------------------------------------------------
 ```

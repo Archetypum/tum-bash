@@ -90,10 +90,10 @@ get_distro()
     printf "$distro\n"
 }
 
-get_init_system()
+get_init()
 {
     init_comm=$(get_pid1_comm)
-
+    
     [ "$init_comm" = "systemd" ] && {
         printf "systemd\n";
         return;
@@ -245,8 +245,7 @@ execute_dinitctl()
         "start" | "stop" | "status" | "is-started" | "is-failed" | "restart" | "wake" | "release" | \
         "unpin" | "unload" | "reload" | "list" | "shutdown" | "add-dep" | "rm-dep" | "enable" | "disable" | \
         "trigger" | "untrigger" | "setenv" | "unsetenv" | "catalog" | "signal")
-        	;;
-
+            ;;
         *)
             printf "[!] Error: Unsupported command: '$command'.\n"
             return 1
@@ -324,7 +323,6 @@ execute_launchctl()
         "remove" | "start" | "stop" | "list" | "setenv" | "unsetenv" | "getenv" | "export" | "limit" | "bsexec" | \
         "asuser" | "managerpid" | "manageruid" | "managername" | "help")
         	;;
-
         *)
             printf "[!] Error: Unsupported command: '$command'."
             return 1
@@ -365,7 +363,6 @@ execute_rc_service()
     case "$command" in
         "start" | "stop" | "restart" | "reload" | "force-reload" | "try-restart" | "status")
         	;;
-
         *)
             printf "[!] Error: Unsupported command: '$command'.\n"
             return 1
@@ -426,7 +423,6 @@ execute_sv()
         "quit" | "1" | "2" | "term" | "kill" | "exit" | "start" | "stop" | "reload" | "restart" | \
         "shutdown" | "force-stop" | "force-restart" | "force-shutdown" | "try-restart" | "check")
         	;;
-
         *)
             printf "[!] Error: Unsupported command: '$command'.\n"
             return 1
@@ -467,7 +463,6 @@ execute_s6_rc()
     case "$command" in
     	"help" | "list" | "listall" | "diff" | "start" | "stop" | "change")
     		;;
-
         *)
             printf "[!] Error: Unsupported command: '$command'.\n"
             return 1
@@ -582,7 +577,6 @@ execute_systemctl()
         "set-environment" | "property" | "show" | "show-environment" | "start" | "status" | "stop" | "suspend" | \
         "suspend-then-hibernate" | "switch-root" | "try-reload-or-restart" | "try-restart" | "unmask" | "unset-environment")
         	;;
-
     	*)
         	printf "[!] Error: Unsupported command: '$command'.\n"
         	return 1
@@ -621,7 +615,6 @@ execute_service()
     case "$command" in
         "start" | "stop" | "restart" | "force-reload" | "status")
         	;;
-
         *)
             printf "[!] Error: Unsupported command: '$command'.\n"
             return 1

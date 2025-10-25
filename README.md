@@ -78,8 +78,6 @@ _**So why not give it a shot?**_
 
 ## Installation
 
-- Via Makefile:
-
 ```sh
 git clone https://github.com/Archetypum/tum-bash.git
 cd tum-bash/
@@ -135,7 +133,7 @@ You can find `tum-bash` documentation inside the `doc/` directory (Mostly obsole
 
 - **pkg**
 
-### NetBSD-based:
+### MINIX/NetBSD-based:
 
 - **pkgin**
 
@@ -177,81 +175,16 @@ You can find `tum-bash` documentation inside the `doc/` directory (Mostly obsole
 source /usr/bin/tum
 
 distro=$(get_distro)
-init=$(get_init_system) 
+init=$(get_init) 
 init_comm=$(get_pid1_comm)
 pm=$(get_package_manager)
-check_privileges           # example: [*] Success! Root privileges are present.
+check_privileges           # example: [*] Not running as root..
 
-echo $distro    # example: artix
-echo $init      # example: s6 
-echo $init_comm # example: s6-svscan
-echo $pm        # example: pacman
+echo $distro               # example: artix
+echo $init                 # example: s6 
+echo $init_comm            # example: s6-svscan
+echo $pm                   # example: pacman
 ```
-
-### Service Management:
-
-```bash
-#!/bin/bash
-
-source sysvinit.sh
-
-SERVICE_NAME="ssh"
-
-echo -e "${GREEN}Starting service '$SERVICE_NAME'...${RESET}"
-start_service "$SERVICE_NAME"
-
-echo -e "${GREEN}Checking status of service '$SERVICE_NAME'...${RESET}"
-status_service "$SERVICE_NAME"
-
-echo -e "${GREEN}Restarting service '$SERVICE_NAME' using execute_service function...${RESET}"
-execute_service restart "$SERVICE_NAME"
-
-echo -e "${GREEN}Stopping service '$SERVICE_NAME'...${RESET}"
-stop_service "$SERVICE_NAME"
-
-echo -e "${GREEN}Trying unknown command with execute_service...${RESET}"
-execute_service foobar "$SERVICE_NAME"
-```
-
-### Package Management
-
-```bash
-#!/bin/bash
-
-source apk.sh
-
-echo "=== Display apk version ==="
-apk_version
-
-echo -e "\n=== Show apk help ==="
-apk_help
-
-echo -e "\n=== Update package index ==="
-apk_update
-
-echo -e "\n=== Search for package 'bash' ==="
-apk_search bash
-
-echo -e "\n=== Show info about package 'bash' ==="
-apk_info bash
-
-echo -e "\n=== List installed packages ==="
-apk_list
-
-echo -e "\n=== Add package 'curl' (dry-run) ==="
-apk_add --simulate curl
-
-echo -e "\n=== Remove package 'curl' (dry-run) ==="
-apk_del --simulate curl
-```
-
-## Other Implementations by Archetypum
-
-- [_tum-python_](https://github.com/Archetypum/tum-python)
-
-- [_tum-perl_](https://github.com/Archetypum/tum-perl)
-
-- [_tum-c_](https://github.com/Archetypum/tum-c)
 
 ## Legal
 
@@ -259,7 +192,7 @@ apk_del --simulate curl
 
 See:
 
-- [_LICENSE-LGPLv3.md_](https://github.com/Archetypum/tum-bash/blob/master/LICENSE-LGPLv3.md)
+- [_LICENSE-LGPLv3.md_](./LICENSE-LGPLv3.md)
 
 - _https://www.gnu.org/licenses/lgpl-3.0.html_
 
