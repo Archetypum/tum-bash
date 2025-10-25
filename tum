@@ -24,8 +24,8 @@
 #
 # Disable Unicode for speed:
 #
-LC_ALL="C"
-LANG="C"
+readonly LC_ALL="C"
+readonly LANG="C"
 
 #
 # UNIX:
@@ -49,55 +49,16 @@ readonly RESET="\033[0m"
 ##
 ## Supported Package Managers:
 ##
-readonly SUPPORTED_PMS=(
-    "apt"                          # https://wiki.debian.org/Apt
-    "apt-get"                      # https://manpages.debian.org/bookworm/apt/apt-get.8.en.html
-    "apt-cache"                    # https://manpages.debian.org/bookworm/apt/apt-cache.8.en.html
-    "apt-cdrom"                    # https://manpages.debian.org/bookworm/apt/apt-cdrom.8.en.html
-    "apt-config"                   # https://manpages.debian.org/bookworm/apt/apt-config.8.en.html
-    "apt-extracttemplates"         # https://manpages.debian.org/bookworm/apt-utils/apt-extracttemplates.1.en.html
-    "apt-listchanges"              # https://manpages.debian.org/bookworm/apt-listchanges/apt-listchanges.1.en.html
-    "apt-mark"                     # https://manpages.debian.org/bookworm/apt/apt-mark.8.en.html
-    "apt-sortpkgs"                 # https://manpages.debian.org/bookworm/apt-utils/apt-sortpkgs.1.en.html
-    "aptitude"                     # https://wiki.debian.org/Aptitude
-    "aptitude-create-state-bundle" # https://manpages.debian.org/bookworm/aptitude-common/aptitude-create-state-bundle.1.en.html
-    "aptitude-run-state-bundle"    # https://manpages.debian.org/bookworm/aptitude-common/aptitude-run-state-bundle.1.en.html
-    "apk"                          # https://wiki.alpinelinux.org/wiki/Alpine_Package_Keeper
-    "dnf"                          # https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/9/html-single/managing_software_with_the_dnf_tool/index
-    "dpkg"                         # https://wiki.debian.org/dpkg
-    "guix"                         # https://guix.gnu.org/manual/en/html_node/Package-Management.html
-    "homebrew"                     # https://brew.sh/
-    "pkg"                          # https://man.freebsd.org/cgi/man.cgi?pkg
-    "pkgin"                        # https://pkgin.net/
-    "pkg_add"                      # https://man.openbsd.org/pkg_add
-    "pkg_delete"                   # https://man.netbsd.org/pkg_delete.1
-    "pkg_create"                   # https://man.netbsd.org/pkg_create.1
-    "pkg_info"                     # https://man.netbsd.org/pkg_info.1
-    "pacman"                       # https://wiki.archlinux.org/title/Pacman
-    "yay"                          # https://aur.archlinux.org/packages/yay
-    "pamac"                        # https://aur.archlinux.org/packages/pamac-aur
-    "trizen"                       # https://packages.artixlinux.org/packages/galaxy/any/trizen/
-    "portage"                      # https://wiki.gentoo.org/wiki/Portage
-    "qi"                           # https://dragora.org/handbook/dragora-handbook.html#Introduction-to-Qi
-    "slackpkg"                     # https://slackpkg.org/documentation.html
-    "xbps"                         # https://docs.voidlinux.org/xbps/index.html
-    "yum"                          # https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/6/html/deployment_guide/ch-yum
-    "zypper"                       # https://documentation.suse.com/smart/systems-management/html/concept-zypper/index.html
-    "zypper-log"                   # https://manpages.opensuse.org/Tumbleweed/zypper-log/zypper-log.8.en.html
-)
+readonly SUPPORTED_PMS="
+apt apt-get apt-cache apt-cdrom apt-config apt-extracttemplates apt-listchanges apt-mark apt-sortpkgs 
+aptitude aptitude-create-state-bundle aptitude-run-state-bundle apk dnf dpkg guix homebrew pkg pkgin
+pkg_add pkg_delete pkg_create pkg_info pacman yay pamac trizen portage qi slackpkg xbps-install xbps-remove
+xbps-query yum zypper zypper-log"
 
 ##
 ## Supported Initialization Systems:
 ##
-readonly SUPPORTED_INITS=(
-    "sysvinit"                     # https://wiki.gentoo.org/wiki/Sysvinit
-    "openrc"                       # https://wiki.gentoo.org/wiki/OpenRC
-    "s6"                           # https://skarnet.org/software/s6/
-    "runit"                        # https://smarden.org/runit/
-    "systemd"                      # https://systemd.io/
-    "dinit"                        # https://davmac.org/projects/dinit/
-    "launchd"                      # https://support.apple.com/guide/terminal/script-management-with-launchd-apdc6c1077b-5d5d-4d35-9c19-60f2397b2369/mac
-)
+readonly SUPPORTED_INITS="sysvinit openrc s6 runit systemd dinit launchd"
 
 get_user_distro()
 {
@@ -283,9 +244,13 @@ _run_dinitctl()
     action="$1"
     service="$2"
 
-    dinitctl "$action" "$service" >/dev/null 2>&1 &&
-        { printf "${GREEN}[*] Success!${RESET}\n"; return 0; } ||
-        { printf "${RED}[!] Error: 'dinitctl $action $service' failed.${RESET}\n"; return 1; }
+    dinitctl "$action" "$service" >/dev/null 2>&1 && {
+        printf "${GREEN}[*] Success!${RESET}\n";
+        return 0;
+    } || {
+        printf "${RED}[!] Error: 'dinitctl $action $service' failed.${RESET}\n";
+        return 1;
+    }
 }
 
 start_dinitctl()      { _run_dinitctl "start"      "$1"; }
@@ -341,9 +306,13 @@ _run_launchctl()
     action="$1"
     service="$2"
 
-    launchctl "$action" "$service" >/dev/null 2>&1 &&
-        { printf "${GREEN}[*] Success!${RESET}\n"; return 0; } ||
-        { printf "${RED}[!] Error: 'launchctl $action $service' failed.${RESET}\n"; return 1; }
+    launchctl "$action" "$service" >/dev/null 2>&1 && {
+        printf "${GREEN}[*] Success!${RESET}\n";
+        return 0;
+    } || {
+        printf "${RED}[!] Error: 'launchctl $action $service' failed.${RESET}\n"; 
+        return 1;
+    }
 }
 
 bootstrap_launchctl()      { _run_launchctl "bootstrap"      "$1"; }
@@ -418,9 +387,13 @@ _run_rc_service()
     action="$1"
     service="$2"
 
-    rc-service "$service" "$action" >/dev/null 2>&1 &&
-        { printf "${GREEN}[*] Success!${RESET}\n"; return 0; } ||
-        { printf "${RED}[!] Error: 'rc-service $service $action' failed.${RESET}\n"; return 1; }
+    rc-service "$service" "$action" >/dev/null 2>&1 && {
+        printf "${GREEN}[*] Success!${RESET}\n";
+        return 0;
+    } || {
+        printf "${RED}[!] Error: 'rc-service $service $action' failed.${RESET}\n";
+        return 1;
+    }
 }
 
 start_rc_service()        { _run_rc_service "start"        "$1"; }
@@ -458,9 +431,13 @@ _run_sv()
     action="$1"
     service="$2"
 
-    sv "$action" "$service" >/dev/null 2>&1 &&
-        { printf "${GREEN}[*] Success!${RESET}\n"; return 0; } ||
-        { printf "${RED}[!] Error: 'sv $action $service' failed.${RESET}\n"; return 1; }
+    sv "$action" "$service" >/dev/null 2>&1 && {
+        printf "${GREEN}[*] Success!${RESET}\n";
+        return 0;
+    } || {
+        printf "${RED}[!] Error: 'sv $action $service' failed.${RESET}\n";
+        return 1;
+    }
 }
 
 status_sv()           { _run_sv "status"           "$1"; }
@@ -518,9 +495,13 @@ _run_s6_rc()
     action="$1"
     service="$2"
 
-    s6-rc "$action" "$service" >/dev/null 2>&1 &&
-        { printf "${GREEN}[*] Success!${RESET}\n"; return 0; } ||
-        { printf "${RED}[!] Error: 's6-rc $action $service' failed.${RESET}\n"; return 1; }
+    s6-rc "$action" "$service" >/dev/null 2>&1 && {
+        printf "${GREEN}[*] Success!${RESET}\n";
+        return 0;
+    } || {
+        printf "${RED}[!] Error: 's6-rc $action $service' failed.${RESET}\n";
+        return 1;
+    }
 }
 
 help_s6_rc()     { _run_s6_rc "help"     "$1"; }
@@ -558,9 +539,13 @@ _run_systemctl()
     action="$1"
     service="$2"
 
-    systemctl "$action" "$service" >/dev/null 2>&1 &&
-        { printf "${GREEN}[*] Success!${RESET}\n"; return 0; } ||
-        { printf "${RED}[!] Error: 'systemctl $action $service' failed.${RESET}\n"; return 1; }
+    systemctl "$action" "$service" >/dev/null 2>&1 && {
+        printf "${GREEN}[*] Success!${RESET}\n";
+        return 0;
+    } || { 
+        printf "${RED}[!] Error: 'systemctl $action $service' failed.${RESET}\n";
+        return 1;
+    }
 }
 
 add_requires_systemctl()           { _run_systemctl "add-requires"                 "$1"; }
@@ -672,9 +657,13 @@ _run_service()
     action="$1"
     service="$2"
 
-    service "$service" "$action" >/dev/null 2>&1 &&
-        { printf "${GREEN}[*] Success!${RESET}\n"; return 0; } ||
-        { printf "${RED}[!] Error: 'service $service $action' failed.${RESET}\n"; return 1; }
+    service "$service" "$action" >/dev/null 2>&1 && {
+        printf "${GREEN}[*] Success!${RESET}\n";
+        return 0;
+    } || { 
+        printf "${RED}[!] Error: 'service $service $action' failed.${RESET}\n";
+        return 1; 
+    }
 }
 
 start_service()        { _run_service "start"        "$1"; }
@@ -1506,6 +1495,7 @@ main()
             printf "$VERSION\n"
         	exit 0
         	;;
+
         *)
             declare -F -- "$cmd" > /dev/null && {
                 "$cmd" "$@"
@@ -1518,4 +1508,3 @@ main()
 }
 
 [[ "${BASH_SOURCE[0]}" == "${0}" ]] && main "$@"
-
