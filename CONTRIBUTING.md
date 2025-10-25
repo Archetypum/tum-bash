@@ -14,11 +14,11 @@ We appreciate contributing in:
 
 Installation:
 
-You can see proper installation of `tum-bash` in README.md.
+You can see proper installation of `tum-bash` in [README.md](./README.md).
 
 OS: 
 
-GNU/Linux, BSD, macOS, Haiku, Minix
+GNU/Linux, BSD, macOS, Haiku, Minix, Android, Darwin
 
 ## Code writing
 

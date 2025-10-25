@@ -16,6 +16,6 @@
 
 2) Consider adding **GNU Shepherd**, **smf (service management facility)**, **upstart** init support someday.
 
-3) Consider adding **Solaris**, os support someday.
+3) Consider adding **Solaris**, **illumos**, **OpenIndiana** support someday.
 
 4) Debug again...

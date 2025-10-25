@@ -9,7 +9,7 @@ If you discover a security vulnerability in `tum-bash`, please report it by open
 
 When reporting, please include:
 
-- Your operating system and version (e.g., GNU/Linux distribution, macOS or BSD);
+- Your operating system and version (e.g., GNU/Linux distribution, macOS, MINIX, Haiku or BSD);
 - The exact line(s) of code where the vulnerability occurs; 
 - If the issue happens during runtime, include any error messages and steps to reproduce the behavior.
 

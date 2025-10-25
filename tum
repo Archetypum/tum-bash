@@ -2,7 +2,7 @@
 #
 # `tum`
 # 
-# A universal package management and system initialization library created by Archetypum,
+# A universal utility for UNIX-like operating systems created by Archetypum,
 # designed to simplify interactions with UNIX-like operating systems and streamline the
 # development of system-related bash/shell scripts.
 #
@@ -21,46 +21,17 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>
 
-#
-# Disable Unicode for speed:
-#
 readonly LC_ALL="C"
 readonly LANG="C"
-
-#
-# UNIX:
-#
-
-##
-## `tum-bash` version:
-##
 readonly VERSION="2.2.4-stable"
-
-##
-## ANSI Color Codes:
-##
-readonly YELLOW="\033[93m"
-readonly ORANGE="\033[38;5;214m"
-readonly BLUE="\033[94m"
-readonly GREEN="\033[92m"
-readonly RED="\033[91m"
-readonly RESET="\033[0m"
-
-##
-## Supported Package Managers:
-##
 readonly SUPPORTED_PMS="
 apt apt-get apt-cache apt-cdrom apt-config apt-extracttemplates apt-listchanges apt-mark apt-sortpkgs 
 aptitude aptitude-create-state-bundle aptitude-run-state-bundle apk dnf dpkg guix homebrew pkg pkgin
 pkg_add pkg_delete pkg_create pkg_info pacman yay pamac trizen portage qi slackpkg xbps-install xbps-remove
 xbps-query yum zypper zypper-log"
-
-##
-## Supported Initialization Systems:
-##
 readonly SUPPORTED_INITS="sysvinit openrc s6 runit systemd dinit launchd"
 
-get_user_distro()
+get_distro()
 {
     strip_name()
     {
@@ -106,7 +77,7 @@ get_user_distro()
             esac
             ;;
 
-        "Haiku" | "Minix" | "DragonFly" | "OpenBSD" | "FreeBSD" | "NetBSD")
+        "Haiku" | "Minix" | "FreeBSD" | "OpenBSD" | "NetBSD" | "DragonFly")
             distro="$os"
             ;;
     esac
@@ -116,7 +87,7 @@ get_user_distro()
         printf "[==>] Enter your OS: "; read -r distro;
     }
 
-    printf "$distro"
+    printf "$distro\n"
 }
 
 get_init_system()
@@ -124,53 +95,53 @@ get_init_system()
     init_comm=$(get_pid1_comm)
 
     [ "$init_comm" = "systemd" ] && {
-        printf "systemd";
+        printf "systemd\n";
         return;
     }
 
     [ -d "/etc/init.d" ] && { 
         [ -e "/etc/init.d/openrc" ] && {
-            printf "openrc";
+            printf "openrc\n";
             return;
         } || { 
-            printf "sysvinit";
+            printf "sysvinit\n";
             return;
         };
     }
 
     [ "$init_comm" = "s6-svscan" ] && { 
-        printf "s6";
+        printf "s6\n";
         return;
     }
 
     [ "$init_comm" = "runit" ] && { 
-        printf "runit";
+        printf "runit\n";
         return;
     }
 
     [ "$init_comm" = "dinit" ] && {
-        printf "dinit"; 
+        printf "dinit\n"; 
         return;
     }
     
     [ "$init_comm" = "shepherd" ] && {
-        printf "shepherd";
+        printf "shepherd\n";
         return;
     }
 
     [ "$init_comm" = "launchd" ] && {
-        printf "launchd";
+        printf "launchd\n";
         return;
     }
     
-    printf "unknown"
+    printf "unknown\n"
     return
 }
 
 get_pid1_comm()
 {
     comm=$(ps -p 1 -o comm= 2>/dev/null)
-    printf "$comm"
+    printf "$comm\n"
 }
 
 get_package_manager()
@@ -179,23 +150,13 @@ get_package_manager()
     
     for manager in $managers; do
         if has "$manager"; then
-            printf "$manager"
+            printf "$manager\n"
             return 0
         fi
     done
 
-    printf "unknown"
+    printf "unknown\n"
     return 1
-}
-
-clear_screen()
-{
-    clear
-}
-
-has()
-{
-    type -P "$1" >/dev/null 2>&1
 }
 
 prompt_user()
@@ -224,31 +185,29 @@ prompt_user()
 check_privileges()
 {
     [ "$EUID" -ne 0 ] && { 
-        printf "${RED}[!] Root privileges not present.${RESET}\n"; 
+        printf "[*] Not running as root.\n"; 
         return 1;
     } || {
-        printf "${GREEN}[*] Root privileges are present.${RESET}\n";
+        printf "[*] Running as root.\n";
         return 0;
     }
 }
 
-#
-# Initialization Systems:
-#
+has()
+{
+    type -P "$1" >/dev/null 2>&1
+}
 
-##
-## `dinit`:
-##
 _run_dinitctl()
 {
     action="$1"
     service="$2"
 
     dinitctl "$action" "$service" >/dev/null 2>&1 && {
-        printf "${GREEN}[*] Success!${RESET}\n";
+        printf "[*] Success!\n";
         return 0;
     } || {
-        printf "${RED}[!] Error: 'dinitctl $action $service' failed.${RESET}\n";
+        printf "[!] Error: 'dinitctl $action $service' failed.\n";
         return 1;
     }
 }
@@ -289,7 +248,7 @@ execute_dinitctl()
         	;;
 
         *)
-            printf "${RED}[!] Error: Unsupported command: '$command'.${RESET}\n"
+            printf "[!] Error: Unsupported command: '$command'.\n"
             return 1
             ;;
     esac
@@ -298,19 +257,16 @@ execute_dinitctl()
     "$func_name" "$service"
 }
 
-##
-## `launchd`:
-##
 _run_launchctl()
 {
     action="$1"
     service="$2"
 
     launchctl "$action" "$service" >/dev/null 2>&1 && {
-        printf "${GREEN}[*] Success!${RESET}\n";
+        printf "[*] Success!\n";
         return 0;
     } || {
-        printf "${RED}[!] Error: 'launchctl $action $service' failed.${RESET}\n"; 
+        printf "[!] Error: 'launchctl $action $service' failed.\n"; 
         return 1;
     }
 }
@@ -370,7 +326,7 @@ execute_launchctl()
         	;;
 
         *)
-            printf "${RED}[!] Error: Unsupported command: '$command'.${RESET}"
+            printf "[!] Error: Unsupported command: '$command'."
             return 1
             ;;
     esac
@@ -379,19 +335,16 @@ execute_launchctl()
     "$func_name" "$service"
 }
 
-##
-## `openrc`:
-##
 _run_rc_service()
 {
     action="$1"
     service="$2"
 
     rc-service "$service" "$action" >/dev/null 2>&1 && {
-        printf "${GREEN}[*] Success!${RESET}\n";
+        printf "[*] Success!\n";
         return 0;
     } || {
-        printf "${RED}[!] Error: 'rc-service $service $action' failed.${RESET}\n";
+        printf "[!] Error: 'rc-service $service $action' failed.\n";
         return 1;
     }
 }
@@ -414,7 +367,7 @@ execute_rc_service()
         	;;
 
         *)
-            printf "${RED}[!] Error: Unsupported command: '$command'.${RESET}\n"
+            printf "[!] Error: Unsupported command: '$command'.\n"
             return 1
             ;;
     esac
@@ -423,19 +376,16 @@ execute_rc_service()
     "$func_name" "$service"
 }
 
-##
-## `runit`:
-##
 _run_sv()
 {
     action="$1"
     service="$2"
 
     sv "$action" "$service" >/dev/null 2>&1 && {
-        printf "${GREEN}[*] Success!${RESET}\n";
+        printf "[*] Success!\n";
         return 0;
     } || {
-        printf "${RED}[!] Error: 'sv $action $service' failed.${RESET}\n";
+        printf "[!] Error: 'sv $action $service' failed.\n";
         return 1;
     }
 }
@@ -478,7 +428,7 @@ execute_sv()
         	;;
 
         *)
-            printf "${RED}[!] Error: Unsupported command: '$command'.${RESET}\n"
+            printf "[!] Error: Unsupported command: '$command'.\n"
             return 1
             ;;
     esac
@@ -487,19 +437,16 @@ execute_sv()
     "$func_name" "$service"
 }
 
-##
-## `s6`:
-##
 _run_s6_rc()
 {
     action="$1"
     service="$2"
 
     s6-rc "$action" "$service" >/dev/null 2>&1 && {
-        printf "${GREEN}[*] Success!${RESET}\n";
+        printf "[*] Success!\n";
         return 0;
     } || {
-        printf "${RED}[!] Error: 's6-rc $action $service' failed.${RESET}\n";
+        printf "[!] Error: 's6-rc $action $service' failed.\n";
         return 1;
     }
 }
@@ -522,7 +469,7 @@ execute_s6_rc()
     		;;
 
         *)
-            printf "${RED}[!] Error: Unsupported command: '$command'.${RESET}\n"
+            printf "[!] Error: Unsupported command: '$command'.\n"
             return 1
             ;;
     esac
@@ -531,19 +478,16 @@ execute_s6_rc()
     "$func_name" "$service"
 }
 
-##
-## `systemd`:
-##
 _run_systemctl()
 {
     action="$1"
     service="$2"
 
     systemctl "$action" "$service" >/dev/null 2>&1 && {
-        printf "${GREEN}[*] Success!${RESET}\n";
+        printf "[*] Success!\n";
         return 0;
     } || { 
-        printf "${RED}[!] Error: 'systemctl $action $service' failed.${RESET}\n";
+        printf "[!] Error: 'systemctl $action $service' failed.\n";
         return 1;
     }
 }
@@ -640,7 +584,7 @@ execute_systemctl()
         	;;
 
     	*)
-        	printf "${RED}[!] Error: Unsupported command: '$command'.${RESET}\n"
+        	printf "[!] Error: Unsupported command: '$command'.\n"
         	return 1
         	;;
     esac
@@ -649,19 +593,16 @@ execute_systemctl()
     "$func_name" "$service"
 }
 
-##
-## `sysvinit`:
-##
 _run_service()
 {
     action="$1"
     service="$2"
 
     service "$service" "$action" >/dev/null 2>&1 && {
-        printf "${GREEN}[*] Success!${RESET}\n";
+        printf "[*] Success!\n";
         return 0;
     } || { 
-        printf "${RED}[!] Error: 'service $service $action' failed.${RESET}\n";
+        printf "[!] Error: 'service $service $action' failed.\n";
         return 1; 
     }
 }
@@ -682,7 +623,7 @@ execute_service()
         	;;
 
         *)
-            printf "${RED}[!] Error: Unsupported command: '$command'.${RESET}\n"
+            printf "[!] Error: Unsupported command: '$command'.\n"
             return 1
             ;;
     esac
@@ -691,9 +632,6 @@ execute_service()
     "$func_name" "$service"
 }
 
-#
-# Package Managers:
-#
 readonly SAFE_ARG_PATTERN="^[a-zA-Z0-9@._/:+=-]+$"
 
 is_safe_argument()
@@ -708,13 +646,13 @@ validate_command()
     arg=
 
     (( $# == 0 )) && {
-        printf "${RED}[!] Error: Empty command.${RESET}\n";
+        printf "[!] Error: Empty command.\n";
         return 1;
     }
 
     for arg in "$@"; do
         ! is_safe_argument "$arg" && { 
-            printf "${RED}[!] Error: Unsafe or invalid argument detected: '$arg'${RESET}";
+            printf "[!] Error: Unsafe or invalid argument detected: '$arg'";
             return 1;
         }
     done
@@ -728,19 +666,16 @@ execute()
 
     ! validate_command "${cmd[@]}" && return 1
 
-    printf "${GREEN}[<==] Executing '${cmd[*]}'...${RESET}\n"
+    printf "[<==] Executing '${cmd[*]}'...\n"
     command "${cmd[@]}" && { 
-        printf "${GREEN}[*] Success!${RESET}\n";
+        printf "[*] Success!\n";
         return 0; 
     } || {
-        printf "${RED}[!] Error: Failed to execute: '${cmd[*]}'.${RESET}\n";
+        printf "[!] Error: Failed to execute: '${cmd[*]}'.\n";
         return 1;
     }
 }
 
-##
-## `apk`:
-##
 apk()            { execute apk             "$@"; }
 apk_help()       { execute apk --help      "$@"; }
 apk_add()        { execute apk add         "$@"; }
@@ -762,9 +697,6 @@ apk_audit()      { execute apk audit       "$@"; }
 apk_stats()      { execute apk stats       "$@"; }
 apk_version()    { execute apk version     "$@"; }
 
-##
-## `apt`:
-##
 apt()                 { execute apt              "$@"; }
 apt_autoclean()       { execute apt autoclean    "$@"; }
 apt_autoremove()      { execute apt autoremove   "$@"; }
@@ -793,9 +725,6 @@ apt_show()            { execute apt show         "$@"; }
 apt_source()          { execute apt source       "$@"; }
 apt_upgrade()         { execute apt upgrade      "$@"; }
 
-##
-## `apt-cache`:
-##
 apt_cache()           { execute apt-cache           "$@"; }
 apt_cache_add()       { execute apt-cache add       "$@"; }
 apt_cache_depends()   { execute apt-cache depends   "$@"; }
@@ -815,28 +744,16 @@ apt_cache_stats()     { execute apt-cache stats     "$@"; }
 apt_cache_unmet()     { execute apt-cache unmet     "$@"; }
 apt_cache_xvcg()      { execute apt-cache xvcg      "$@"; }
 
-##
-## `apt-cdrom`:
-##
 apt_cdrom()       { execute apt-cdrom       "$@"; }
 apt_cdrom_add()   { execute apt-cdrom add   "$@"; }
 apt_cdrom_ident() { execute apt-cdrom ident "$@"; }
 
-##
-## `apt-config`:
-##
 apt_config()       { execute apt-config       "$@"; }
 apt_config_shell() { execute apt-config shell "$@"; }
 apt_config_dump()  { execute apt-dump dump    "$@"; }
 
-##
-## `apt-extracttemplates`:
-##
 apt_extracttemplates() { execute apt-extracttemplates "$@"; }
 
-##
-## `apt-get`:
-##
 apt_get()                 { execute apt-get                 "$@"; }
 apt_get_autoclean()       { execute apt-get autoclean       "$@"; }
 apt_get_build_dep()       { execute apt-get build-dep       "$@"; }
@@ -855,14 +772,8 @@ apt_get_purge()           { execute apt-get purge           "$@"; }
 apt_get_source()          { execute apt-get source          "$@"; }
 apt_get_upgrade()         { execute apt-get upgrade         "$@"; }
 
-##
-## `apt-listchanges`:
-##
 apt_listchanges() { execute apt-listchanges "$@"; }
 
-##
-## `apt-mark`:
-##
 apt_mark()                 { execute apt-mark                 "$@"; }
 apt_mark_auto()            { execute apt-mark auto            "$@"; }
 apt_mark_manual()          { execute apt-mark manual          "$@"; }
@@ -873,14 +784,8 @@ apt_mark_hold()            { execute apt-mark hold            "$@"; }
 apt_mark_unhold()          { execute apt-mark unhold          "$@"; }
 apt_mark_showhold()        { execute apt-mark showhold        "$@"; }
 
-##
-## `apt-sortpkgs`:
-##
 apt_sortpkgs() { execute apt-sortpkgs "$@"; }
 
-##
-## `aptitude`:
-##
 aptitude()                 { execute aptitude                 "$@"; }
 aptitude_add_user_tag()    { execute aptitude add-user-tag    "$@"; }
 aptitude_clean()           { execute aptitude clean           "$@"; }
@@ -912,23 +817,14 @@ aptitude_safe_upgrade()    { execute aptitude safe-upgrade    "$@"; }
 aptitude_unmarkauto()      { execute aptitude unmarkauto      "$@"; }
 aptitude_why()             { execute aptitude why             "$@"; }
 
-##
-## `aptitude-create-state-bundle`:
-##
 aptitude_create_state_bundle()              { execute aptitude-create-state-bundle                   "$@"; }
 aptitude_create_state_bundle_help()         { execute aptitude-create_state-bundle --help            "$@"; }
 aptitude_create_state_bundle_print_inputs() { execute aptitude-create_state_bundle --print-inputs    "$@"; }
 aptitude_create_state_bundle_force_bzip2()  { execute aptitude-create_state-bundle --force-bzip2     "$@"; }
 aptitude_create_state_bundle_force_gzip()   { execute aptitude-create_state-bundle --force-gzip      "$@"; }
 
-##
-## `aptitude-run-state-bundle`:
-##
 aptitude_run_state_bundle() { execute aptitude-run-state-bundle "$@"; }
 
-##
-## `dnf`:
-##
 dnf()                    { execute dnf                    "$@"; }
 dnf_advisory()           { execute dnf advisory           "$@"; }
 dnf_autoremove()         { execute dnf autoremove         "$@"; }
@@ -971,9 +867,6 @@ dnf_needs_restarting()   { execute dnf needs-restarting   "$@"; }
 dnf_repoclosure()        { execute dnf repoclosure        "$@"; }
 dnf_reposync()           { execute dnf reposync           "$@"; }
 
-##
-## `dpkg`:
-##
 dpkg()                             { execute dpkg                               "$@"; }
 dpkg_abort_after()                 { execute dpkg --abort-after                 "$@"; }
 dpkg_add_architecture()            { execute dpkg --add-architecture            "$@"; }
@@ -1007,9 +900,6 @@ dpkg_update_avail()                { execute dpkg --update-avail                
 dpkg_verify()                      { execute dpkg --verify                      "$@"; }
 dpkg_version()                     { execute dpkg --version                     "$@"; }
 
-##
-## `guix`:
-##
 guix()                  { execute guix              "$@"; }
 guix_archive()          { execute guix archive      "$@"; }
 guix_build()            { execute guix build        "$@"; }
@@ -1049,9 +939,6 @@ guix_time_machine()     { execute guix time-machine "$@"; }
 guix_upgrade()          { execute guix upgrade      "$@"; }
 guix_weather()          { execute guix weather      "$@"; }
 
-##
-## `homebrew`:
-##
 brew()                          { execute brew                  "$@"; }
 brew_alias()                    { execute brew alias            "$@"; }
 brew_analytics()                { execute brew analytics        "$@"; }
@@ -1114,9 +1001,6 @@ brew_prefix()                   { execute brew --prefix         "$@"; }
 brew_repository()               { execute brew --repository     "$@"; }
 brew_version()                  { execute brew --version        "$@"; }
 
-##
-## `pacman`:
-##
 pacman()            { execute pacman             "$@"; }
 pacman_help()       { execute pacman --help      "$@"; }
 pacman_version()    { execute pacman --version   "$@"; }
@@ -1128,9 +1012,6 @@ pacman_sync()       { execute pacman --sync      "$@"; }
 pacman_deptest()    { execute pacman --deptest   "$@"; }
 pacman_upgrade()    { execute pacman --upgrade   "$@"; }
 
-##
-## `pamac`:
-##
 pamac()              { execute pamac                  "$@"; }
 pamac_version()      { execute pamac --version        "$@"; }
 pamac_help()         { execute pamac --help           "$@"; }
@@ -1147,9 +1028,6 @@ pamac_clone()        { execute pamac clone            "$@"; }
 pamac_build()        { execute pamac build            "$@"; }
 pamac_clean()        { execute pamac clean            "$@"; }
 
-##
-## `pkg` (FreeBSD):
-##
 pkg()                     { execute pkg                  "$@"; }
 freebsd_pkg_add()         { execute pkg add              "$@"; }
 pkg_alias()               { execute pkg alias            "$@"; }
@@ -1216,29 +1094,14 @@ pkg_upgrade()             { execute pkg upgrade          "$@"; }
 pkg_version()             { execute pkg version          "$@"; }
 pkg_which()               { execute pkg which            "$@"; }
 
-##
-## `pkg_add`:
-##
 pkg_add() { execute pkg_add "$@"; }
 
-##
-## `pkg_create`:
-##
 pkg_create() { execute pkg_create "$@"; }
 
-##
-## `pkg_delete`:
-##
 pkg_delete() { execute pkg_delete "$@"; }
 
-##
-## `pkg_info`:
-##
 pkg_info() { execute pkg_info "$@"; }
 
-##
-## `pkgin`:
-##
 pkgin()                         { execute pkgin                     "$@"; }
 pkgin_list()                    { execute pkgin list                "$@"; }
 pkgin_avail()                   { execute pkgin avail               "$@"; }
@@ -1269,14 +1132,8 @@ pkgin_pkg_descr()               { execute pkgin pkg-descr           "$@"; }
 pkgin_pkg_build_defs()          { execute pkgin pkg-build-defs      "$@"; }
 pkgin_stats()                   { execute pkgin stats               "$@"; }
 
-##
-## `portage` (open for pull requests):
-##
 emerge()                        { execute emerge                    "$@"; }
 
-##
-## `qi`:
-##
 qi()          { execute qi 		   "$@"; }
 qi_warn()     { execute qi warn    "$@"; }
 qi_install()  { execute qi install "$@"; }
@@ -1287,9 +1144,6 @@ qi_create()   { execute qi create  "$@"; }
 qi_build()    { execute qi build   "$@"; }
 qi_order()    { execute qi order   "$@"; }
 
-##
-## `slackpkg`:
-##
 slackpkg()                     { execute slackpkg               "$@"; }
 slackpkg_search()              { execute slackpkg search        "$@"; }
 slackpkg_install()             { execute slackpkg install       "$@"; }
@@ -1305,9 +1159,6 @@ slackpkg_install_new()         { execute slackpkg install-new   "$@"; }
 slackpkg_check_updates()       { execute slackpkg check-updates "$@"; }
 slackpkg_update()              { execute slackpkg update        "$@"; }
 
-##
-## `trizen`:
-##
 trizen()          { execute trizen             "$@"; }
 trizen_sync()     { execute trizen --sync      "$@"; }
 trizen_comments() { execute trizen --comments  "$@"; }
@@ -1319,14 +1170,8 @@ trizen_database() { execute trizen --database  "$@"; }
 trizen_deptest()  { execute trizen --deptest   "$@"; }
 trizen_upgrade()  { execute trizen --upgrade   "$@"; }
 
-##
-## `xbps-install`:
-##
 xbps_install() { execute xbps-install "$@"; }
 
-##
-## `xbps-query`:
-##
 xbps_query()                  { execute xbps-query                    "$@"; }
 xbps_query_list_pkgs()        { execute xbps-query --list-pkgs        "$@"; }
 xbps_query_list_hold_pkgs()   { execute xbps-query --list-hold-pkgs   "$@"; }
@@ -1341,23 +1186,14 @@ xbps_query_deps()             { execute xbps-query --deps             "$@"; }
 xbps_query_revdeps()          { execute xbps-query --revdeps          "$@"; }
 xbps_query_cat()              { execute xbps-query cat                "$@"; }
 
-##
-## `xbps-remove`:
-##
 xbps_remove() { execute xbps-remove "$@"; }
 
-##
-## `yay`:
-##
 yay()             { execute yay                   "$@"; }
 yay_build()       { execute yay --build           "$@"; }
 yay_show()        { execute yay --show            "$@"; }
 yay_getpkgbuild() { execute yay --getpkgbuild     "$@"; }
 yay_web()         { execute yay --web             "$@"; }
 
-##
-## `yum`:
-##
 yum()                    { execute yum                    "$@"; }
 yum_advisory()           { execute yum advisory           "$@"; }
 yum_autoremove()         { execute yum autoremove         "$@"; }
@@ -1400,9 +1236,6 @@ yum_needs_restarting()   { execute yum needs-restarting   "$@"; }
 yum_repoclosure()        { execute yum repoclosure        "$@"; }
 yum_reposync()           { execute yum reposync           "$@"; }
 
-##
-## `zypper`:
-##
 zypper()                             { execute zypper                        "$@"; }
 zypper_addlocale()                   { execute zypper addlocale              "$@"; }
 zypper_addlock()                     { execute zypper addlock                "$@"; }
@@ -1458,14 +1291,8 @@ zypper_versioncmp()                  { execute zypper versioncmp             "$@
 zypper_verify()                      { execute zypper verify                 "$@"; }
 zypper_what_provides()               { execute zypper what-provides          "$@"; }
 
-##
-## `zypper-log`:
-##
 zypper_log()                         { execute zypper-log "$@"; }
 
-#
-# Main:
-#
 main()
 {
     cmd="$1"
@@ -1484,23 +1311,20 @@ main()
             printf "Check 'man tum' for more info.\n"
             exit 0
             ;;
-
         "c" | "-c" | "--commands")
             printf "[...] Available commands:\n"
             declare -F | awk '{print "  - " $3}' | grep -v '^main$' | sort
             exit 0
             ;;
-
         "v" | "-v" | "--version")
             printf "$VERSION\n"
         	exit 0
         	;;
-
         *)
             declare -F -- "$cmd" > /dev/null && {
                 "$cmd" "$@"
             } || { 
-                printf "${RED}[!] Error invoking '$cmd' or unknown command '$cmd'.\nCheck '--help'.${RESET}\n" >&2;
+                printf "[!] Error invoking '$cmd' or unknown command '$cmd'.\nCheck '--help'.\n";
                 exit 1;
             }
             ;;
