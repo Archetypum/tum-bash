@@ -26,10 +26,10 @@ readonly LANG="C"
 readonly VERSION="2.2.4-stable"
 readonly SUPPORTED_PMS="
 apt apt-get apt-cache apt-cdrom apt-config apt-extracttemplates apt-listchanges apt-mark apt-sortpkgs 
-aptitude aptitude-create-state-bundle aptitude-run-state-bundle apk dnf dpkg guix homebrew pkg pkgin
+aptitude aptitude-create-state-bundle aptitude-run-state-bundle apk dnf dpkg guix homebrew pkgman pkg pkgin
 pkg_add pkg_delete pkg_create pkg_info pacman yay pamac trizen portage qi slackpkg xbps-install xbps-remove
 xbps-query yum zypper zypper-log"
-readonly SUPPORTED_INITS="sysvinit openrc s6 runit systemd dinit launchd"
+readonly SUPPORTED_INITS="sysvinit openrc s6 runit systemd dinit launchd launch_roster"
 
 get_distro()
 {
@@ -96,7 +96,7 @@ get_init()
         printf "systemd\n";
         return;
     }
-    
+
     [ -d "/etc/rc.d" ] && {
         printf "rc\n";
         return;
@@ -136,7 +136,9 @@ get_init()
         printf "launchd\n";
         return;
     }
-    
+
+    if has launch_roster; then printf "launch_roster\n"; return; fi
+
     printf "unknown\n"
     return 
 }
@@ -148,7 +150,8 @@ get_pid_comm()
     } || {
         comm=$(ps -p $1 -o comm= 2>/dev/null)
     }
-    printf "$comm\n"
+
+    [ -z "$comm" ] && printf "[!] No such process.\n" || printf "$comm\n"
 }
 
 get_package_manager()
