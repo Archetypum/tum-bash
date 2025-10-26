@@ -96,9 +96,14 @@ get_init()
         printf "systemd\n";
         return;
     }
+    
+    [ -d "/etc/rc.d" ] && {
+        printf "rc\n";
+        return;
+    }
 
-    [ -d "/etc/init.d" ] && { 
-        [ -e "/etc/init.d/openrc" ] && {
+    [ "$init_comm" = "init" ] && { 
+        [ -e "/sbin/openrc" ] && {
             printf "openrc\n";
             return;
         } || { 
