@@ -23,7 +23,6 @@ This is the Bash implementation of `tum`.
 - [Supported Package Management Utilities (35)](#supported-package-management-utilities-35)
 - [Supported Initialization Systems (7)](#supported-initialization-systems-7)
 - [Example Usage](#example-usage)
-- [Other Implementations by Archetypum](#other-implementations-by-archetypum)
 - [Legal](#legal)
 
 ---
@@ -64,7 +63,7 @@ It gives you:
 
 - Prototype cross-distro sysadmin tools without rewriting core logic.
 
-`tum` executable consists of **1187 lines of pure bash** (without empty lines and comments) that makes your code support thousands GNU/Linux, BSD, Minix, Haiku, Android, iOS and macOS distros. That makes `tum` a _**very**_ small and lightweight dependency in your project.
+`tum` executable consists of **1186 lines of pure bash** (without empty lines and comments) that makes your code support thousands GNU/Linux, BSD, Minix, Haiku, Android, iOS and macOS distros. That makes `tum` a _**very**_ small and lightweight dependency in your project.
 
 Your users can install it in just three commands and forget about `tum` existence for forever, because their cross-platform scripts are working just like intended.
 
@@ -165,7 +164,7 @@ You can find `tum-bash` documentation inside the `doc/` directory (Mostly obsole
 
 - **launchd**
 
-## Usage Examples
+## Example Usage
 
 ### Information gathering:
 

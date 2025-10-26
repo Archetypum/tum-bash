@@ -38,8 +38,8 @@ Identifies apt, apt-get, aptitude, apk, dnf, dpkg, guix, homebrew, pkg, pkgin, p
 Identifies to identify the init system by checking known file paths and the name of PID 1.
 Identifies systemd, sysvinit, openrc, runit, s6, dinit, launchd, GNU shepherd.
 .TP
-.B tum get_pid1_comm
-Returns the COMM field for PID 1 using \fBps\fR utility.
+.B tum get_pid_comm
+Returns the COMM field for PID "$1" using \fBps\fR utility.
 .TP
 .B tum check_privileges
 Checks if user is root.
@@ -86,6 +86,6 @@ Project homepage: <\fIhttps://github.com/Archetypum/tum-bash\fR>
 
 \fBsh\fR(1), \fBash\fR(1), \fBdash\fR(1), \fBcsh\fR(1), \fBksh\fR(1), \fBbash\fR(1), \fBzsh\fR(1), \fBfish\fR(1)
 
-\fBsystemd\fR(1), \fBsystemctl\fR(1), \fBinit\fR(1), \fBservice\fR(1), \fBopenrc\fR(1), \fBrc-service\fR(1), \fBs6-svc\fR(1), \fBs6-svscan\fR(1), \fBrunit\fR(1), \fBsv\fR(1), \fBdinit\fR(1), \fBdinitctl\fR(1), \fBlaunchd\fR(1), \fBlaunchctl\fR(1)
+\fBsystemd\fR(1), \fBsystemctl\fR(1), \fBinit\fR(1), \fBservice\fR(1), \fBopenrc\fR(1), \fBrc-service\fR(1), \fBs6-svc\fR(1), \fBs6-svscan\fR(1), \fBrunit\fR(1), \fBsv\fR(1), \fBdinit\fR(1), \fBdinitctl\fR(1), \fBlaunchd\fR(1), \fBlaunchctl\fR(1), \fBshepherd\fR(1), \fBherd\fR(1)
 
 \fBapt\fR(1), \fBapt-get\fR(1), \fBaptitude\fR(1), \fBapk\fR(1), \fBapk\fR(1), \fBdpkg\fR(1), \fBguix\fR(1), \fBhomebrew\fR(1), \fBpkg\fR(1), \fBpkgin\fR(1), \fBpkg_add\fR(1), \fBpacman\fR(1), \fByay\fR(1), \fBpamac\fR(1), \fBtrizen\fR(1), \fBportage\fR(1), \fBqi\fR(1), \fBslackpkg\fR(1), \fBxbps-install\fR(1), \fByum\fR(1), \fBzypper\fR(1)

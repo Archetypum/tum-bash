@@ -29,3 +29,14 @@ Session.vim
 #
 .idea/
 .vscode/
+
+#
+# Tests:
+#
+test.sh
+test.c
+test.py
+test.pl
+test.rb
+test.go
+test.lua

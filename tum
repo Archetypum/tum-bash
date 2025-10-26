@@ -3,8 +3,8 @@
 # `tum`
 # 
 # A universal utility for UNIX-like operating systems created by Archetypum,
-# designed to simplify interactions with UNIX-like operating systems and streamline the
-# development of system-related bash/shell scripts.
+# designed to simplify interactions with UNIX-like operating systems and
+# streamline the development of system-related bash/shell scripts.
 #
 # Copyright (C) 2025 Archetypum
 #
@@ -64,7 +64,6 @@ get_distro()
                 done < /etc/os-release
             }
             ;;
-
         "Darwin")
             product_name=$(defaults read /System/Library/CoreServices/SystemVersion ProductName 2>/dev/null)
             case "$product_name" in
@@ -76,7 +75,6 @@ get_distro()
                     ;;
             esac
             ;;
-
         "Haiku" | "Minix" | "FreeBSD" | "OpenBSD" | "NetBSD" | "DragonFly")
             distro="$os"
             ;;
@@ -92,8 +90,8 @@ get_distro()
 
 get_init()
 {
-    init_comm=$(get_pid1_comm)
-    
+    init_comm=$(get_pid_comm 1)
+
     [ "$init_comm" = "systemd" ] && {
         printf "systemd\n";
         return;
@@ -135,20 +133,18 @@ get_init()
     }
     
     printf "unknown\n"
-    return
+    return 
 }
 
-get_pid1_comm()
+get_pid_comm()
 {
-    comm=$(ps -p 1 -o comm= 2>/dev/null)
+    comm=$(ps -p $1 -o comm= 2>/dev/null)
     printf "$comm\n"
 }
 
 get_package_manager()
 {
-    managers="apt apt-get aptitude apk dnf dpkg guix homebrew pkg pkgin pkg_add pacman yay pamac trizen portage qi slackpkg xbps-install yum zypper"
-    
-    for manager in $managers; do
+    for manager in $SUPPORTED_PMS; do
         if has "$manager"; then
             printf "$manager\n"
             return 0

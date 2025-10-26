@@ -73,7 +73,7 @@ Provide us next information about your issue:
 
 - Expected behavior;
 
-- The thing you encountered;
+- The thing you encountered.
 
 ## License
 

@@ -30,6 +30,8 @@ making the repository more bloated.
 
 - Slightly improved markdown documents;
 
+- Made `CODE_OF_CONDUCT.MD` better.
+
 - Other small improvements.
 
 ```text
@@ -37,15 +39,15 @@ making the repository more bloated.
       58 unique files.
        3 files ignored.
 
-github.com/AlDanial/cloc v 2.06  T=0.02 s (2608.4 files/s, 254588.6 lines/s)
+github.com/AlDanial/cloc v 2.06  T=0.02 s (2692.2 files/s, 262625.6 lines/s)
 --------------------------------------------------------------------------------
 Language                      files          blank        comment           code
 --------------------------------------------------------------------------------
-Markdown                         55           1434              0           2844
-Bourne Again Shell                1            119             21           1187
+Markdown                         55           1435              0           2844
+Bourne Again Shell                1            116             21           1186
 make                              1             10             16             29
 YAML                              1              0              0              1
 --------------------------------------------------------------------------------
-SUM:                             58           1563             37           4061
+SUM:                             58           1561             37           4060
 --------------------------------------------------------------------------------
 ```
