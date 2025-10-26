@@ -143,7 +143,11 @@ get_init()
 
 get_pid_comm()
 {
-    comm=$(ps -p $1 -o comm= 2>/dev/null)
+    [ -e "/bin/busybox" ] && {
+        comm=$(cat /proc/$1/comm)
+    } || {
+        comm=$(ps -p $1 -o comm= 2>/dev/null)
+    }
     printf "$comm\n"
 }
 
