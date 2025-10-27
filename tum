@@ -111,7 +111,7 @@ get_init()
             return;
         };
         
-        os=$(get_distro)
+        os=$(get_distro);
         [ "$os" = "Minix" ] && {
             printf "MINIX init\n";
             return;
