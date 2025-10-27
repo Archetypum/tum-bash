@@ -102,12 +102,18 @@ get_init()
         return;
     }
 
-    [ "$init_comm" = "init" ] && { 
+    [ "$init_comm" = "init" ] && {
         [ -e "/sbin/openrc" ] && {
             printf "openrc\n";
             return;
         } || { 
             printf "sysvinit\n";
+            return;
+        };
+        
+        os=$(get_distro)
+        [ "$os" = "Minix" ] && {
+            printf "MINIX init\n";
             return;
         };
     }
