@@ -6,6 +6,10 @@ making the repository more bloated.
 
 **New**:
 
+- Added `pkgman` to `$SUPPORTED_PMS` and `launch_roster` to `$SUPPORTED_INITS`;
+
+- Added `launch_roster` detection for Haiku in `get_init`;
+
 - Updated man page for `tum`;
 
 - Added `get_package_manager`;
@@ -22,7 +26,9 @@ making the repository more bloated.
 
 **Fixes**:
 
-- Function `prompt_user` is working now (holy FUCKING shit bro).
+- Function `prompt_user` is working now (holy FUCKING shit bro);
+
+- Function `get_init` identifies sysvinit and openrc correctly now;
 
 **Improvements**:
 
@@ -30,7 +36,9 @@ making the repository more bloated.
 
 - Slightly improved markdown documents;
 
-- Made `CODE_OF_CONDUCT.MD` better.
+- Improved `get_pid_comm` for busybox distributions;
+
+- Made `CODE_OF_CONDUCT.md` better;
 
 - Other small improvements.
 
@@ -39,15 +47,15 @@ making the repository more bloated.
       58 unique files.
        3 files ignored.
 
-github.com/AlDanial/cloc v 2.06  T=0.02 s (2692.2 files/s, 262625.6 lines/s)
+github.com/AlDanial/cloc v 2.06  T=0.11 s (542.3 files/s, 53084.8 lines/s)
 --------------------------------------------------------------------------------
 Language                      files          blank        comment           code
 --------------------------------------------------------------------------------
-Markdown                         55           1435              0           2844
-Bourne Again Shell                1            116             21           1186
+Markdown                         55           1439              0           2848
+Bourne Again Shell                1            119             21           1195
 make                              1             10             16             29
 YAML                              1              0              0              1
 --------------------------------------------------------------------------------
-SUM:                             58           1561             37           4060
+SUM:                             58           1568             37           4073
 --------------------------------------------------------------------------------
 ```
