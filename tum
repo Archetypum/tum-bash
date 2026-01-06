@@ -1320,7 +1320,7 @@ main()
             ;;
         "c" | "-c" | "--commands")
             printf "[...] Available commands:\n"
-            declare -F | awk '{print "  - " $3}' | grep -v '^main$' | sort
+            declare -F | awk '{print " - " $3}' | grep -v '^main$' | sort
             exit 0
             ;;
         "v" | "-v" | "--version")

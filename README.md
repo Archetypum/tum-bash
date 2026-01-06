@@ -63,7 +63,7 @@ It gives you:
 
 - Prototype cross-distro sysadmin tools without rewriting core logic.
 
-`tum` executable consists of **1195 lines of pure bash** (without empty lines and comments) that makes your code support thousands GNU/Linux, BSD, Minix, Haiku, Android, iOS and macOS distros. That makes `tum` a _**very**_ small and lightweight dependency in your project.
+`tum` executable consists of **1200 lines of pure bash** (without empty lines and comments) that makes your code support thousands GNU/Linux, BSD, Minix, Haiku, Android, iOS and macOS distros. That makes `tum` a _**very**_ small and lightweight dependency in your project.
 
 Your users can install it in just three commands and forget about `tum` existence for forever, because their cross-platform scripts are working just like intended.
 
@@ -88,7 +88,10 @@ sudo make install
 
 ## Documentation
 
-You can find `tum-bash` documentation inside the `doc/` directory (Mostly obsolete, man pages coming soon).
+```sh
+man tum
+```
+
 
 ## Supported Package Management Utilities (35)
 
@@ -175,7 +178,7 @@ source /usr/bin/tum
 
 distro=$(get_distro)
 init=$(get_init) 
-init_comm=$(get_pid1_comm)
+init_comm=$(get_pid_comm 1)
 pm=$(get_package_manager)
 check_privileges           # example: [*] Not running as root..
 
