@@ -6,9 +6,9 @@
 
 ## Overview
 
-`tum` (TheUnixManager) is a universal package management and system initialization library created by Archetypum, designed to simplify interactions with UNIX-like operating systems and streamline the development of system-related bash/shell scripts.
+`tum` (TheUnixManager) is a universal package management and system initialization library utility by Archetypum, designed to simplify interactions with UNIX-like operating systems and streamline the development of system-related bash/shell scripts.
 
-This is the Bash implementation of `tum`.
+This is the Bash implementation of `tum`. Perl version is experimental.
 
 ---
 
@@ -47,11 +47,13 @@ It gives you:
 
 1) A standardized way to install, remove, purge, update, upgrade packages (any many more!);
 
-2) Unified service control (status, start, stop, enable, etc.) across multiple init systems (and many more);
+2) Convenient tools to analyze running processes on the system;
 
-3) A modular approach to extend support for more tools and distros;
+3) Unified service control (status, start, stop, enable, etc.) across multiple init systems (and many more);
 
-4) Shell-friendly integration for faster development and cleaner scripts.
+4) A modular approach to extend support for more tools and distros;
+
+5) Shell-friendly integration for faster development and cleaner scripts.
 
 ## Use Cases
 
@@ -91,7 +93,6 @@ sudo make install
 ```sh
 man tum
 ```
-
 
 ## Supported Package Management Utilities (35)
 

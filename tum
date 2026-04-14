@@ -6,7 +6,7 @@
 # designed to simplify interactions with UNIX-like operating systems and
 # streamline the development of system-related bash/shell scripts.
 #
-# Copyright (C) 2025 Archetypum
+# Copyright (C) 2025-2026 Archetypum
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published by
@@ -23,7 +23,7 @@
 
 readonly LC_ALL="C"
 readonly LANG="C"
-readonly VERSION="2.2.4-stable"
+readonly VERSION="3.2.4-unstable"
 readonly SUPPORTED_PMS="
 apt apt-get apt-cache apt-cdrom apt-config apt-extracttemplates apt-listchanges apt-mark apt-sortpkgs 
 aptitude aptitude-create-state-bundle aptitude-run-state-bundle apk dnf dpkg guix homebrew pkgman pkg pkgin
@@ -40,26 +40,26 @@ get_distro()
         name="${name%\"}"
         name="${name#\'}"
         name="${name%\'}"
-        printf "$name"
+        printf "%s" "$name"
     }
 
     os=$(uname -s)
     case "$os" in
         "Linux")
-            if has lsb_release; then
+            if type -P "lsb_release" >/dev/null 2>&1; then
                 raw=$(lsb_release -sd)
                 distro=$(strip_name "$raw")
             fi
 
             [ -d /system/app ] && [ -d /system/priv-app ] && {
-                distro="Android";
+                distro="Android"
             }
 
             [ -f /etc/os-release ] && {
                 while IFS="=" read -r key val; do
                     [ "$key" = "PRETTY_NAME" ] && {
-                        distro=$(strip_name "$val");
-                        break;
+                        distro=$(strip_name "$val")
+                        break
                     }
                 done < /etc/os-release
             }
@@ -67,25 +67,19 @@ get_distro()
         "Darwin")
             product_name=$(defaults read /System/Library/CoreServices/SystemVersion ProductName 2>/dev/null)
             case "$product_name" in
-                *iPhone* | *iPad* | *iOS*)
-                    distro="iOS"
-                    ;;
-                *)
-                    distro="macOS"
-                    ;;
+                *iPhone* | *iPad* | *iOS*) distro="iOS" ;;
+                *) distro="macOS" ;;
             esac
             ;;
-        "Haiku" | "Minix" | "FreeBSD" | "OpenBSD" | "NetBSD" | "DragonFly")
-            distro="$os"
-            ;;
+        "Haiku" | "Minix" | "FreeBSD" | "OpenBSD" | "NetBSD" | "DragonFly") distro="$os" ;;
     esac
 
     [ -z "$distro" ] && {
-        printf "[!] Error: cannot detect your distribution.\n";
-        printf "[==>] Enter your OS: "; read -r distro;
+        printf "unknown\n"
+        return
     }
 
-    printf "$distro\n"
+    printf "%s\n" "$distro"
 }
 
 get_init()
@@ -93,57 +87,58 @@ get_init()
     init_comm=$(get_pid_comm 1)
 
     [ "$init_comm" = "systemd" ] && {
-        printf "systemd\n";
-        return;
+        printf "systemd\n"
+        return
     }
 
     [ -d "/etc/rc.d" ] && {
-        printf "rc\n";
-        return;
+        printf "rc\n"
+        return
     }
 
     [ "$init_comm" = "init" ] && {
-        [ -e "/sbin/openrc" ] && {
-            printf "openrc\n";
-            return;
-        } || { 
-            printf "sysvinit\n";
-            return;
-        };
-        
-        os=$(get_distro);
-        [ "$os" = "Minix" ] && {
-            printf "MINIX init\n";
-            return;
-        };
+        os=$(get_distro)
+        if [ -e "/sbin/openrc" ]; then
+            printf "openrc\n"
+            return
+        elif [ "$os" = "Minix" ]; then
+            printf "minix init\n"
+            return
+        else
+            printf "sysvinit\n"
+            return
+        fi
     }
 
     [ "$init_comm" = "s6-svscan" ] && { 
-        printf "s6\n";
-        return;
+        printf "s6\n"
+        return
     }
 
     [ "$init_comm" = "runit" ] && { 
-        printf "runit\n";
-        return;
+        printf "runit\n"
+        return
     }
 
     [ "$init_comm" = "dinit" ] && {
-        printf "dinit\n"; 
-        return;
+        printf "dinit\n";
+        return
     }
     
     [ "$init_comm" = "shepherd" ] && {
-        printf "shepherd\n";
-        return;
+        printf "shepherd\n"
+        return
     }
 
     [ "$init_comm" = "launchd" ] && {
-        printf "launchd\n";
-        return;
+        printf "launchd\n"
+        return
     }
 
-    if has launch_roster; then printf "launch_roster\n"; return; fi
+    if has launch_roster; then
+        printf "haiku launch_roster\n"
+        return
+    fi
 
     printf "unknown\n"
     return 
@@ -151,65 +146,69 @@ get_init()
 
 get_pid_comm()
 {
-    [ -e "/bin/busybox" ] && {
-        comm=$(cat /proc/$1/comm)
-    } || {
-        comm=$(ps -p $1 -o comm= 2>/dev/null)
-    }
+    if [ -e "/bin/busybox" ]; then
+        comm=$(cat /proc/"$1"/comm)
+    else
+        comm=$(ps -p "$1" -o comm= 2>/dev/null)
+    fi
 
-    [ -z "$comm" ] && printf "[!] No such process.\n" || printf "$comm\n"
+    if [ -z "$comm" ]; then
+        printf "no such process\n"
+    else
+        printf "%s\n" "$comm"
+    fi
 }
 
 get_package_manager()
 {
     for manager in $SUPPORTED_PMS; do
-        if has "$manager"; then
-            printf "$manager\n"
-            return 0
+        if type -P "$manager" >/dev/null 2>&1; then
+            printf "%s\n" "$manager"
+            return
         fi
     done
 
     printf "unknown\n"
-    return 1
+    return
 }
 
 prompt_user()
 {
     prompt="$1"
     default="${2:-N}"
-    default="$(printf "$default" | tr '[:upper:]' '[:lower:]')"
+    default="$(printf "%s" "$default" | tr '[:upper:]' '[:lower:]')"
 
-    printf "$prompt (y/n) [$default]: "; read user_input
-    user_input="$(printf "$user_input" | tr '[:upper:]' '[:lower:]' | xargs)"
+    printf "%s (y/n) [%s]: " "$prompt" "$default"; read -r user_input
+    user_input="$(printf "%s" "$user_input" | tr '[:upper:]' '[:lower:]' | xargs)"
 
     [ -z "$user_input" ] && user_input="$default"
     case "$user_input" in
-        "y" | "ye" | "yes")
-            return 0
-            ;;
-        "n" | "no")
-            return 1
-            ;;
-        *)
-            return 1
-            ;;
+        "y" | "ye" | "yes") return 0 ;;
+        "n" | "no") return 1 ;;
+        *) return 1 ;;
     esac
 }
 
 check_privileges()
 {
-    [ "$EUID" -ne 0 ] && { 
-        printf "[*] Not running as root.\n"; 
-        return 1;
-    } || {
-        printf "[*] Running as root.\n";
-        return 0;
-    }
+    if [ "$EUID" -ne 0 ]; then
+        printf "not running as root\n";
+        return
+    else
+        printf "running as root\n"
+        return
+    fi
 }
 
 has()
 {
-    type -P "$1" >/dev/null 2>&1
+    if type -P "$1" >/dev/null 2>&1; then
+        printf "has '%s'\n" "$1"
+        return
+    else
+        printf "not has '%s'\n" "$1"
+        return
+    fi
 }
 
 _run_dinitctl()
@@ -217,13 +216,13 @@ _run_dinitctl()
     action="$1"
     service="$2"
 
-    dinitctl "$action" "$service" >/dev/null 2>&1 && {
-        printf "[*] Success!\n";
-        return 0;
-    } || {
-        printf "[!] Error: 'dinitctl $action $service' failed.\n";
-        return 1;
-    }
+    if dinitctl "$action" "$service" >/dev/null 2>&1; then
+        printf "success\n"
+        return
+    else
+        printf "error: 'dinitctl %s %s' failed\n" "$action" "$service"
+        return
+    fi
 }
 
 start_dinitctl()      { _run_dinitctl "start"      "$1"; }
@@ -261,8 +260,8 @@ execute_dinitctl()
         "trigger" | "untrigger" | "setenv" | "unsetenv" | "catalog" | "signal")
             ;;
         *)
-            printf "[!] Error: Unsupported command: '$command'.\n"
-            return 1
+            printf "error: unsupported command: '%s'\n" "$command"
+            return
             ;;
     esac
 
@@ -275,13 +274,13 @@ _run_launchctl()
     action="$1"
     service="$2"
 
-    launchctl "$action" "$service" >/dev/null 2>&1 && {
-        printf "[*] Success!\n";
-        return 0;
-    } || {
-        printf "[!] Error: 'launchctl $action $service' failed.\n"; 
-        return 1;
-    }
+    if launchctl "$action" "$service" >/dev/null 2>&1; then
+        printf "success\n"
+        return
+    else
+        printf "error: 'launchctl %s %s' failed\n" "$action" "$service"
+        return
+    fi
 }
 
 bootstrap_launchctl()      { _run_launchctl "bootstrap"      "$1"; }
@@ -336,10 +335,10 @@ execute_launchctl()
         "resolveport" | "examine" | "reboot" | "error" | "variant" | "version" | "load" | "unload" | "submit" | \
         "remove" | "start" | "stop" | "list" | "setenv" | "unsetenv" | "getenv" | "export" | "limit" | "bsexec" | \
         "asuser" | "managerpid" | "manageruid" | "managername" | "help")
-        	;;
+            ;;
         *)
-            printf "[!] Error: Unsupported command: '$command'."
-            return 1
+            printf "error: unsupported command: '%s'" "$command"
+            return
             ;;
     esac
 
@@ -352,13 +351,13 @@ _run_rc_service()
     action="$1"
     service="$2"
 
-    rc-service "$service" "$action" >/dev/null 2>&1 && {
-        printf "[*] Success!\n";
-        return 0;
-    } || {
-        printf "[!] Error: 'rc-service $service $action' failed.\n";
-        return 1;
-    }
+    if rc-service "$service" "$action" >/dev/null 2>&1; then
+        printf "success\n"
+        return
+    else
+        printf "error: 'rc-service %s %s' failed\n" "$service" "$action"
+        return
+    fi
 }
 
 start_rc_service()        { _run_rc_service "start"        "$1"; }
@@ -378,8 +377,8 @@ execute_rc_service()
         "start" | "stop" | "restart" | "reload" | "force-reload" | "try-restart" | "status")
         	;;
         *)
-            printf "[!] Error: Unsupported command: '$command'.\n"
-            return 1
+            printf "error: unsupported command: '%s'\n" "$command"
+            return
             ;;
     esac
 
@@ -392,13 +391,13 @@ _run_sv()
     action="$1"
     service="$2"
 
-    sv "$action" "$service" >/dev/null 2>&1 && {
-        printf "[*] Success!\n";
-        return 0;
-    } || {
-        printf "[!] Error: 'sv $action $service' failed.\n";
-        return 1;
-    }
+    if sv "$action" "$service" >/dev/null 2>&1; then
+        printf "success"
+        return
+    else
+        printf "error: 'sv %s %s' failed\n" "$action" "$service"
+        return
+    fi
 }
 
 status_sv()           { _run_sv "status"           "$1"; }
@@ -438,8 +437,8 @@ execute_sv()
         "shutdown" | "force-stop" | "force-restart" | "force-shutdown" | "try-restart" | "check")
         	;;
         *)
-            printf "[!] Error: Unsupported command: '$command'.\n"
-            return 1
+            printf "error: unsupported command: '%s'\n" "$command"
+            return
             ;;
     esac
 
@@ -452,13 +451,13 @@ _run_s6_rc()
     action="$1"
     service="$2"
 
-    s6-rc "$action" "$service" >/dev/null 2>&1 && {
-        printf "[*] Success!\n";
-        return 0;
-    } || {
-        printf "[!] Error: 's6-rc $action $service' failed.\n";
-        return 1;
-    }
+    if s6-rc "$action" "$service" >/dev/null 2>&1; then
+        printf "success\n"
+        return
+    else
+        printf "error: 's6-rc %s %s' failed\n" "$action" "$service"
+        return
+    fi
 }
 
 help_s6_rc()     { _run_s6_rc "help"     "$1"; }
@@ -478,8 +477,8 @@ execute_s6_rc()
     	"help" | "list" | "listall" | "diff" | "start" | "stop" | "change")
     		;;
         *)
-            printf "[!] Error: Unsupported command: '$command'.\n"
-            return 1
+            printf "error: unsupported command: '%s'\n" "$command"
+            return
             ;;
     esac
 
@@ -492,13 +491,13 @@ _run_systemctl()
     action="$1"
     service="$2"
 
-    systemctl "$action" "$service" >/dev/null 2>&1 && {
-        printf "[*] Success!\n";
-        return 0;
-    } || { 
-        printf "[!] Error: 'systemctl $action $service' failed.\n";
-        return 1;
-    }
+    if systemctl "$action" "$service" >/dev/null 2>&1; then
+        printf "success\n"
+        return
+    else
+        printf "error: 'systemctl %s %s' failed.\n" "$action" "$service"
+        return
+    fi
 }
 
 add_requires_systemctl()           { _run_systemctl "add-requires"                 "$1"; }
@@ -592,8 +591,8 @@ execute_systemctl()
         "suspend-then-hibernate" | "switch-root" | "try-reload-or-restart" | "try-restart" | "unmask" | "unset-environment")
         	;;
     	*)
-        	printf "[!] Error: Unsupported command: '$command'.\n"
-        	return 1
+        	printf "error: unsupported command: '%s'\n" "$command"
+        	return
         	;;
     esac
 
@@ -606,13 +605,13 @@ _run_service()
     action="$1"
     service="$2"
 
-    service "$service" "$action" >/dev/null 2>&1 && {
-        printf "[*] Success!\n";
-        return 0;
-    } || { 
-        printf "[!] Error: 'service $service $action' failed.\n";
-        return 1; 
-    }
+    if service "$service" "$action" >/dev/null 2>&1; then
+        printf "success\n"
+        return
+    else
+        printf "error: 'service %s %s' failed\n" "$service" "$action"
+        return
+    fi
 }
 
 start_service()        { _run_service "start"        "$1"; }
@@ -630,8 +629,8 @@ execute_service()
         "start" | "stop" | "restart" | "force-reload" | "status")
         	;;
         *)
-            printf "[!] Error: Unsupported command: '$command'.\n"
-            return 1
+            printf "error: unsupported command: '%s'\n" "$command"
+            return
             ;;
     esac
 
@@ -653,14 +652,14 @@ validate_command()
     arg=
 
     (( $# == 0 )) && {
-        printf "[!] Error: Empty command.\n";
-        return 1;
+        printf "error: empty command\n"
+        return 1
     }
 
     for arg in "$@"; do
         ! is_safe_argument "$arg" && { 
-            printf "[!] Error: Unsafe or invalid argument detected: '$arg'";
-            return 1;
+            printf "error: unsafe or invalid argument detected: '%s'" "$arg"
+            return 1
         }
     done
 
@@ -673,14 +672,14 @@ execute()
 
     ! validate_command "${cmd[@]}" && return 1
 
-    printf "[<==] Executing '${cmd[*]}'...\n"
-    command "${cmd[@]}" && { 
-        printf "[*] Success!\n";
-        return 0; 
-    } || {
-        printf "[!] Error: Failed to execute: '${cmd[*]}'.\n";
-        return 1;
-    }
+    printf "executing '%s'...\n" "${cmd[*]}"
+    if command "${cmd[@]}"; then
+        printf "success\n"
+        return 0
+    else
+        printf "error: failed to execute: '%s'\n" "${cmd[*]}"
+        return 1
+    fi
 }
 
 apk()            { execute apk             "$@"; }
@@ -1309,31 +1308,31 @@ main()
 
     case "$cmd" in
         "h" | "-h" | "--help")
-        	printf "==== Archetypum TheUnixManager ====\n"
-            printf "[*] Usage: tum <command> [arguments]\n\n"
-            printf "[...] Options:\n"
-            printf "  h, -h, --help       Show this help message.\n"
-            printf "  c, -c, --commands   List all available commands.\n"
-            printf "  v, -v, --version    Show tum version.\n\n"
-            printf "Check 'man tum' for more info.\n"
+        	printf "==== archetypum tum ====\n"
+            printf "usage: tum <command> [arguments]\n\n"
+            printf "options:\n"
+            printf "  h, -h, --help       show this help message.\n"
+            printf "  c, -c, --commands   list all available commands.\n"
+            printf "  v, -v, --version    show tum version.\n\n"
+            printf "check 'man tum' for more info.\n"
             exit 0
             ;;
         "c" | "-c" | "--commands")
-            printf "[...] Available commands:\n"
+            printf "available commands:\n"
             declare -F | awk '{print " - " $3}' | grep -v '^main$' | sort
             exit 0
             ;;
         "v" | "-v" | "--version")
-            printf "$VERSION\n"
+            printf "%s\n" "$VERSION"
         	exit 0
         	;;
         *)
-            declare -F -- "$cmd" > /dev/null && {
+            if declare -F -- "$cmd" > /dev/null; then
                 "$cmd" "$@"
-            } || { 
-                printf "[!] Error invoking '$cmd' or unknown command '$cmd'.\nCheck '--help'.\n";
-                exit 1;
-            }
+            else
+                printf "error invoking '%s' or unknown command '%s'.\ncheck '--help'.\n" "$cmd" "$cmd"
+                exit 1
+            fi
             ;;
     esac
 }

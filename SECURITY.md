@@ -50,4 +50,3 @@ Please be aware that **shell injection vulnerabilities** might exist within `tum
 
 - [_LICENSE-LGPLv3.md_](./LICENSE-LGPLv3.md)  
 - [_CONTRIBUTING.md_](./CONTRIBUTING.md)  
-- [_CODE_OF_CONDUCT.md_](./CODE_OF_CONDUCT.md)
