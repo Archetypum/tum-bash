@@ -24,7 +24,7 @@
 use strict;
 use warnings;
 
-our $VERSION = "2.2.4-stable";
+our $VERSION = "3.2.4-unstable";
 our @SUPPORTED_PMS = (
     "apt", "apt-get", "apt-cache", "apt-cdrom", "apt-config", "apt-extracttemplates", "apt-listchanges", 
     "apt-mark", "apt-sortpkgs", "aptitude", "aptitude-create-state-bundle", "aptitude-run-state-bundle", "apk",

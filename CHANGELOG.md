@@ -1,1 +1,1 @@
-# tum-bash v2.2.4-stable
+# tum-bash v3.2.4-stable
